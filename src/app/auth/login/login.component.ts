@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { Login } from '../../Responses/auth';
+import { HttpServiceService } from '../../Services/http_service/http-service.service';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public router: Router,
+    private httpService:HttpServiceService
   ) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -24,7 +26,32 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-
+    let data = {
+      password: this.loginForm.value.password,
+      email: this.loginForm.value.email,
+    }
+      console.log(data);
+      this.httpService.doLogin(data).subscribe((res: Login) => {
+        if(res.success){
+          console.log(res);
+          localStorage.setItem("pspkey",res.data.token)
+          this.movetohome()
+        }
+        // else if(res.status===0)
+        // {
+        //   alert(res.message)
+        // }
+      },
+      );(err) => {
+        console.log(err);
+        alert(err.error.message)
+       // err.error.message
+      }
   }
+
+  movetohome(){
+    this.router.navigate(['/pages']);
+  }
+
 
 }

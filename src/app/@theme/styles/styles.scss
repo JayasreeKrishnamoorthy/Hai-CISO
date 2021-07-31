@@ -33,7 +33,83 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
+};
+
+
+
+// Loader
+.preloader {
+  //background-color: #f7f7f7;
+  background-color: #0009;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999999;
+  -webkit-transition: 0.6s;
+  -o-transition: 0.6s;
+  transition: 0.6s;
+  margin: 0 auto;
+ // opacity: 0.9;
 }
+
+.preloader .preloader-circle {
+  width: 100px;
+  height: 113px;  //100
+  position: relative;
+  border-style: solid;
+  border-width: 10px; //3
+  border-top-color: #ff5e00c2;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  z-index: 10;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 1px 5px 0 rgba(35, 181, 185, 0.15);
+  box-shadow: 0 1px 5px 0 rgba(35, 181, 185, 0.15);
+  background-color: #232020 ;
+  -webkit-animation: zoom 2000ms infinite ease;
+  animation: zoom 2000ms infinite ease;
+  -webkit-transition: 0.6s;
+  -o-transition: 0.6s;
+  transition: 0.6s;
+}
+
+.preloader .preloader-circle2 {
+  border-top-color: #ff5e00c2;
+}
+
+.preloader .preloader-img {
+  position: absolute;
+  top: 50%;
+  z-index: 200;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  display: inline-block;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding-top: 6px;
+  -webkit-transition: 0.6s;
+  -o-transition: 0.6s;
+  transition: 0.6s;
+}
+
+.preloader .preloader-img img {
+ // max-width: 55px;
+}
+
+.preloader .pere-text strong {
+  font-weight: 800;
+  color: #ff5e00c2;
+  text-transform: uppercase;
+}
+
 
 .bg {
   background-image: linear-gradient(310deg, #2152ff, #21d4fd);
