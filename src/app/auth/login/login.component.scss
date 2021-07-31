@@ -1,28 +1,99 @@
 .loginPage {
-    // height: 85vh;
-    .login-sec {
-      padding: 0 35% 0 15%;
-      .sign-txt {
-        font-size: 25px;
+  // height: 85vh;
+  .login-sec {
+    padding: 0 35% 0 15%;
+    .sign-txt {
+      font-size: 25px;
+      font-weight: 600;
+      color: #344767;
+    }
+    .des-txt {
+      color: #67748e;
+      font-size: 16px;
+      padding: 25px 0;
+    }
+    .input-fld {
+      padding-bottom: 25px;
+      input {
+        height: 45px;
+      }
+    }
+    .sign-btn {
+      background: linear-gradient(165deg, #2152ff, #21d4fd);
+      color: #fff;
+      border-radius: 10px;
+      height: 45px;
+    }
+    .forgot-txt {
+      background-color: #2152ff;
+      background-image: linear-gradient(165deg, #2152ff, #21d4fd);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      text-align: center;
+      padding-top: 30px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  .logo-sec {
+    nb-card {
+      background-image: linear-gradient(165deg, #2152ff, #21d4fd);
+      height: 86vh;
+      border-radius: 10px;
+      text-align: center;
+      color: #fff;
+      .we-txt {
+        font-size: 22px;
         font-weight: 600;
-        color: #344767;
+        padding-bottom: 10px;
+      }
+      .welcome-txt {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.loginPage {
+  padding: 15px 15px;
+  .login-bg {
+    background-image: url(../../../assets/img/loginBg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 50vh;
+    border-radius: 10px;
+    position: relative;
+    nb-card {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -60%;
+      margin: 0 470px;
+      padding: 15px 10px;
+      border-radius: 15px;
+      // background: rgba(225, 225, 225, 0.5);
+      .logo-sec {
+        padding-bottom: 25px;
       }
       .des-txt {
-        color: #67748e;
+        color: #242B2E;
         font-size: 16px;
-        padding: 25px 0;
+        padding: 0px 0 25px;
       }
       .input-fld {
-        padding-bottom: 25px;
-        input {
-          height: 45px;
-        }
+        padding-bottom: 15px;
       }
       .sign-btn {
         background: linear-gradient(165deg, #2152ff, #21d4fd);
         color: #fff;
         border-radius: 10px;
         height: 45px;
+        width: 50%;
+        margin-top: 10px;
       }
       .forgot-txt {
         background-color: #2152ff;
@@ -33,82 +104,11 @@
         -webkit-text-fill-color: transparent;
         -moz-text-fill-color: transparent;
         text-align: center;
-        padding-top: 30px;
+        padding-top: 25px;
+        padding-bottom: 5px;
         font-weight: 600;
         font-size: 16px;
       }
     }
-    .logo-sec {
-      nb-card {
-        background-image: linear-gradient(165deg, #2152ff, #21d4fd);
-        height: 86vh;
-        border-radius: 10px;
-        text-align: center;
-        color: #fff;
-        .we-txt {
-          font-size: 22px;
-          font-weight: 600;
-          padding-bottom: 10px;
-        }
-        .welcome-txt {
-          font-size: 18px;
-        }
-      }
-    }
   }
-  
-  .loginPage {
-    padding: 15px 15px;
-    .login-bg {
-      background-image: url(../../../assets/img/loginBg.jpg);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      height: 50vh;
-      border-radius: 10px;
-      position: relative;
-      nb-card {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -60%;
-        margin: 0 470px;
-        padding: 15px 10px;
-        border-radius: 15px;
-        // background: rgba(225, 225, 225, 0.5);
-        .logo-sec {
-          padding-bottom: 25px;
-        }
-        .des-txt {
-          color: #242B2E;
-          font-size: 16px;
-          padding: 0px 0 25px;
-        }
-        .input-fld {
-          padding-bottom: 15px;
-        }
-        .sign-btn {
-          background: linear-gradient(165deg, #2152ff, #21d4fd);
-          color: #fff;
-          border-radius: 10px;
-          height: 45px;
-          width: 50%;
-          margin-top: 10px;
-        }
-        .forgot-txt {
-          background-color: #2152ff;
-          background-image: linear-gradient(165deg, #2152ff, #21d4fd);
-          background-size: 100%;
-          -webkit-background-clip: text;
-          -moz-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          -moz-text-fill-color: transparent;
-          text-align: center;
-          padding-top: 25px;
-          padding-bottom: 5px;
-          font-weight: 600;
-          font-size: 16px;
-        }
-      }
-    }
-  }
+}

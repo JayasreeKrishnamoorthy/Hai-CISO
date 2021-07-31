@@ -1,29 +1,28 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap");
 
 // themes - our custom or/and out of the box themes
-@import 'themes';
+@import "themes";
 
 // framework component themes (styles tied to theme variables)
-@import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/globals';
+@import "~@nebular/theme/styles/globals";
+@import "~@nebular/auth/styles/globals";
 
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/grid';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/grid";
 
 // loading progress bar theme
-@import './pace.theme';
+@import "./pace.theme";
 
-@import './layout';
-@import './overrides';
+@import "./layout";
+@import "./overrides";
 
 // install the framework and custom global styles
 @include nb-install() {
-
   .nb-theme-default nb-menu .menu-item a:hover .menu-icon {
     color: #000000;
-}
+  }
 
   // framework global styles
   @include nb-theme-global();
@@ -109,4 +108,120 @@
   font-weight: 800;
   color: #ff5e00c2;
   text-transform: uppercase;
+}
+
+
+.bg {
+  background-image: linear-gradient(310deg, #2152ff, #21d4fd);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  // font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Open Sans, sans-serif !important;
+}
+
+.t-c {
+  text-align: center;
+}
+.t-r {
+  text-align: right;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.df-ac {
+  display: flex !important;
+  align-items: center;
+}
+
+.df-ac1 {
+  display: flex;
+  align-items: flex-start;
+}
+
+.df-c-a {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.df-c-b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.df-c-fe {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.df-c-jc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-p {
+  cursor: pointer;
+}
+
+.w10 {
+  width: 10%;
+}
+.w15 {
+  width: 15%;
+}
+.w20 {
+  width: 20%;
+}
+.w25 {
+  width: 25%;
+}
+.w30 {
+  width: 30%;
+}
+.w33 {
+  width: 33%;
+}
+.w35 {
+  width: 35%;
+}
+.w40 {
+  width: 40%;
+}
+.w45 {
+  width: 45%;
+}
+.w50 {
+  width: 50%;
+}
+.w55 {
+  width: 55%;
+}
+.w60 {
+  width: 60%;
+}
+.w70 {
+  width: 70%;
+}
+.w75 {
+  width: 75%;
+}
+.w80 {
+  width: 80%;
+}
+.w90 {
+  width: 90%;
+}
+.w100 {
+  width: 100%;
 }

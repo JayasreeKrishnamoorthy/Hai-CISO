@@ -6,6 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule, NbInputModule, NbLayoutModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NebularModule } from '../nebular/nebular.module';
+
+
 @NgModule({
   declarations: [LoginComponent],
   imports: [
@@ -15,6 +18,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbInputModule,
     NbButtonModule,
     NbCardModule,
-  ]
+    AuthRoutingModule,
+    NebularModule,
+  ],
 })
 export class AuthModule { }
