@@ -58,46 +58,59 @@
 }
 
 .loginPage {
-  padding: 15px 15px;
+  // padding: 15px 15px;
   .login-bg {
-    background-image: url(../../../assets/img/loginBg.jpg);
+    background-image: url(../../../assets/img/login3.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 50vh;
-    border-radius: 10px;
+    height: 100vh;
+    // border-radius: 10px;
     position: relative;
     nb-card {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -60%;
-      margin: 0 470px;
+      // position: absolute;
+      // left: 0;
+      // right: 0;
+      // bottom: -60%;
+      // margin: 0 470px;
+      // margin: 0px 400px 0;
+      width: 35%;
       padding: 15px 10px;
       border-radius: 15px;
-      // background: rgba(225, 225, 225, 0.5);
+      background: rgba(225, 225, 225, 0.5);
       .logo-sec {
         padding-bottom: 25px;
       }
       .des-txt {
-        color: #242B2E;
+        // color: #242b2e;
+        // font-size: 16px;
+        // padding: 0px 0 25px;
+        color: #000;
         font-size: 16px;
         padding: 0px 0 25px;
+        font-weight: 700;
+        font-family: Open Sans, sans-serif;
       }
       .input-fld {
         padding-bottom: 15px;
+        input {
+          background: rgba(225, 225, 225, 0.5);
+        }
       }
       .sign-btn {
-        background: linear-gradient(165deg, #2152ff, #21d4fd);
+        // background: linear-gradient(165deg, #2152ff, #21d4fd);
+        background: linear-gradient(165deg, #ff4a00, #f3895f);
         color: #fff;
         border-radius: 10px;
         height: 45px;
         width: 50%;
         margin-top: 10px;
+        border-color: unset !important;
+        border-style: unset !important;
       }
       .forgot-txt {
-        background-color: #2152ff;
-        background-image: linear-gradient(165deg, #2152ff, #21d4fd);
+        background-color: #ff4a00;
+        background-image: linear-gradient(165deg, #ff4a00, #f3895f);
         background-size: 100%;
         -webkit-background-clip: text;
         -moz-background-clip: text;

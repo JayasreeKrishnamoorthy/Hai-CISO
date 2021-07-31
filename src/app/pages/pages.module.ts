@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { NebularModule } from '../nebular/nebular.module';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { NebularModule } from '../nebular/nebular.module';
   ],
   declarations: [
     PagesComponent,
+    UserComponent,
   ],
 })
 export class PagesModule {
