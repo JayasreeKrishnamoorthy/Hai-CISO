@@ -13,13 +13,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Customers',
     icon: 'people-outline',
-    link: '/pages/dashboard',
+    link: '/pages/customers',
     home: true,
   },
   {
     title: 'Analyse',
     icon: 'cast-outline',
-    link: '/pages/dashboard',
+    link: '/pages/analyze',
     home: true,
   },
   {

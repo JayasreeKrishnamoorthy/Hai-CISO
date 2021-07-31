@@ -1,20 +1,25 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbMenuModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
+import { AnalyzeComponent } from './analyze/analyze.component';
+import { CustomersComponent } from './customers/customers.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   imports: [
     PagesRoutingModule,
     ThemeModule,
-    NbMenuModule,
-    DashboardModule,
+    NbMenuModule,NbTabsetModule,
+    DashboardModule,NbCardModule,NbTreeGridModule,Ng2SmartTableModule,NbButtonModule
   ],
   declarations: [
     PagesComponent,
+    AnalyzeComponent,
+    CustomersComponent,
   ],
 })
 export class PagesModule {

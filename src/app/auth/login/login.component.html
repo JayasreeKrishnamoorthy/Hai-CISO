@@ -1,9 +1,31 @@
-<nb-layout>
-
+<nb-layout >
   <nb-layout-column>
-    <input type="text" nbInput fullWidth status="basic" placeholder="Default">
 
 
-  </nb-layout-column>
 
+
+
+<div class="loginPage">
+  <div class="login-bg">
+    <nb-card class="t-c">
+      <div class="logo-sec"><img src="assets/img/logo.png" class="w40"></div>
+      <div class="des-txt">Enter your email and password to sign in</div>
+      <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="loginForm.valid && login()">
+        <div class="input-fld">
+          <input type="text" placeholder="Email" nbInput formControlName="email"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="w100">
+        </div>
+        <div class="input-fld">
+          <input type="password" autocomplete="on" placeholder="Password" nbInput formControlName="password" class="w100">
+        </div>
+        <div>
+          <button nbButton class="sign-btn">SIGN IN</button>
+        </div>
+        <div class="forgot-txt"> Forgot Password ? </div>
+      </form>
+    </nb-card>
+  </div>
+</div>
+
+</nb-layout-column>
 </nb-layout>
