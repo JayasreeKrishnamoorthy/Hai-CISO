@@ -46,7 +46,12 @@ body {
 body {
   margin: 0;
   // font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-family: Open Sans, sans-serif !important;
+  // font-family: Open Sans, sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
+}
+
+.nb-theme-default nb-card {
+  font-family: "Roboto", sans-serif !important;
 }
 
 .t-c {
