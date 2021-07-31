@@ -8,7 +8,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthService {
 
   public getToken(): string {
-    return localStorage.getItem('psp_token');
+    return localStorage.getItem('pspkey');
   }
   public isAuthenticated(): boolean {
     // get the token

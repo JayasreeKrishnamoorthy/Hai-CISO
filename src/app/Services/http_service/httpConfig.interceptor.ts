@@ -11,7 +11,7 @@ declare var $: any;
   
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
   
-      const token = "my-token-string-from-server";
+      const token = localStorage.getItem('pspkey');//"my-token-string-from-server";
   
       //Authentication by setting header with token value
       if (token) {

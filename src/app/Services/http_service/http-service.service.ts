@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { Login } from '../../Responses/auth';
 
 //import { environment } from 'src/environments/environment.prod';  // prod
 
@@ -52,7 +53,7 @@ export class HttpServiceService {
 
 // https://jsonplaceholder.typicode.com/todos/1
 
-getTest(): Observable<any> {
+getTest(): Observable<any> {  //  For Testing
   return this.http.get("https://jsonplaceholder.typicode.com/todos/1")
     .pipe(
       tap(_ => console.log('response received')),
@@ -62,7 +63,7 @@ getTest(): Observable<any> {
 
 doLogin(obj): Observable<any> {
 console.log(obj);
-  return this.http.post<any>(this.apiUrl+"/login",obj)
+  return this.http.post<Login>(this.apiUrl+"/auth/login",obj)
     .pipe(
       tap(_ => console.log('response received')),
       catchError(this.handleError('Login', []))
