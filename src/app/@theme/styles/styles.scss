@@ -17,7 +17,13 @@
 
 @import "./layout";
 @import "./overrides";
-
+nb-icon{
+  font-size: 2rem;
+  background: #3366ffe0;
+  color: aliceblue;
+  border-radius: 3px;
+  padding: 2%;
+  }
 // install the framework and custom global styles
 @include nb-install() {
   .nb-theme-default nb-menu .menu-item a:hover .menu-icon {
@@ -34,6 +40,60 @@
 
   @include nb-overrides();
 };
+
+.nb-theme-default nb-layout .layout .layout-container nb-sidebar.fixed, .nb-theme-default nb-layout .layout .layout-container nb-sidebar .main-container-fixed {
+  top: 0;//4.75rem; 
+}
+.nb-theme-default nb-action nb-icon {
+   color: #00000060; 
+   background: rgb(255, 255, 255);
+   border-radius: 12%;
+   margin: 6%;
+   font-size: 1.6rem;
+}
+.nb-theme-default nb-menu .menu-item a.active {
+  //background-color: transparent;
+  color: #3366ff;
+  background: rgb(255, 255, 255);
+  border-radius: 12%;
+  margin: 6%;
+   }
+   .nb-theme-default nb-menu .menu-item a.active .menu-icon{
+    //color: #f4f6ffe1;
+    color: #ffffff;
+    font-size: 1.6rem;
+    background: rgb(255, 255, 255);
+    background-color: #3366ff;
+    border-radius: 12%;
+    margin: 6%;
+   }
+   .nb-theme-default nb-menu .menu-item .menu-icon {
+     color: rgba(0, 0, 0, 0.575);
+     background: rgb(255, 255, 255);
+     border-radius: 12%;
+     margin: 6%;
+     font-size: 1.8em;
+   }
+   .menu-group span {
+    display: flex;
+    font-size: 1.5rem;
+}
+.nb-theme-default nb-menu .menu-item .expand-state {
+  color: #ffffff;
+  font-size: 1.4rem;
+}
+
+
+   ngx-one-column-layout{
+    // nb-icon{
+    // font-size: 167%;
+    // background: #3366ffe0;
+    // color: aliceblue;
+    // border-radius: 3px;
+    // padding: 2%;
+    // }
+
+  }
 
 
 
@@ -109,6 +169,13 @@
   color: #ff5e00c2;
   text-transform: uppercase;
 }
+
+
+
+
+
+
+
 
 
 .bg {
