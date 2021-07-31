@@ -6,4 +6,23 @@
   .menu-sidebar ::ng-deep .scrollable {
     padding-top: nb-theme(layout-padding-top);
   }
+
+  nb-layout-header{
+    align-items: center;
+    justify-content: flex-start;
+  //  display: flex;
+    background: rgba(255, 255, 255, 0);
+    margin: 5px;
+    border-radius: 17px;
+    
+  }
+
+  .slide-img{
+
+  }
+
+  // .menu-up{
+  //   background-image: url("assets/PSP/ciso.png");
+  // }
+
 }

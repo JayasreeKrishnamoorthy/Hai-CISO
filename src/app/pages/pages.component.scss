@@ -1,6 +1,11 @@
 @import '../@theme/styles/themes';
 
 @include nb-install-component() {
+  .nb-theme-default nb-menu .menu-item a:hover .menu-icon {
+    color: #010203;
+}
+
+
   ::ng-deep router-outlet + * {
     display: block;
     animation: fade 1s;
