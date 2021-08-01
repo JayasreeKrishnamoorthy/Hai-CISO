@@ -53,7 +53,7 @@ nb-icon{
 }
 .nb-theme-default nb-menu .menu-item a.active {
   //background-color: transparent;
-  color: #3366ff;
+  color: linear-gradient(165deg, #2152ff, #21d4fd);//#3366ff;
   background: rgb(255, 255, 255);
   border-radius: 12%;
   margin: 6%;
@@ -63,7 +63,8 @@ nb-icon{
     color: #ffffff;
     font-size: 1.6rem;
     background: rgb(255, 255, 255);
-    background-color: #3366ff;
+    //background-color: #3366ff;
+    background: linear-gradient(165deg, #2152ff, #21d4fd);
     border-radius: 12%;
     margin: 6%;
    }
@@ -94,6 +95,10 @@ nb-icon{
     // }
 
   }
+
+
+
+
 
 
 
