@@ -17,7 +17,7 @@ declare var $: any;
       if (token) {
         request = request.clone({
           setHeaders: {
-            'Authorization': token
+            'Authorization': 'Bearer ${token}'
           }
         });
       }
