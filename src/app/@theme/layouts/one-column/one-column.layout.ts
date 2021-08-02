@@ -4,12 +4,12 @@ import { Component } from '@angular/core';
   selector: 'ngx-one-column-layout',
   styleUrls: ['./one-column.layout.scss'],
   template: `
-    <nb-layout windowMode >
-      <nb-layout-header subheader>
+    <nb-layout windowMode style="background:#f8f9fa!important;">
+      <nb-layout-header class="fixed-header" subheader style="background:#f8f9fa!important;">
         <ngx-header></ngx-header>
       </nb-layout-header>
 
-      <nb-sidebar style="background-color:rgba(255, 255, 255, 0);" class="menu-sidebar "  tag="menu-sidebar"  responsive>
+      <nb-sidebar style="background-color:#f8f9fa!important;" class="menu-sidebar "  tag="menu-sidebar"  responsive>
  
         <ng-content select="nb-menu">
         
@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
         </ng-content>
       </nb-sidebar>
 
-      <nb-layout-column style="background:rgb(223, 227, 230);">
+      <nb-layout-column style="background:#f8f9fa!important;">
         <ng-content select="router-outlet"></ng-content>
       </nb-layout-column>
 

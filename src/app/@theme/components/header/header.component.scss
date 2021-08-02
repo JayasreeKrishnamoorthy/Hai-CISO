@@ -14,13 +14,21 @@
     align-items: center;
     justify-content: flex-start;
     display: flex;
-    background: rgba(255, 255, 255, 0);
+   // background: rgba(255, 255, 255, 0);
+    background:#f8f9fa!important;
     margin: 5px;
     border-radius: 17px;
     
   }
 
-  
+//   .nb-theme-default nb-action nb-icon {
+//    //  color: #ffffff; 
+//    font-size: 1.75rem;
+//    color: #3366ff;
+//    background: rgb(255, 255, 255);
+//    border-radius: 12%;
+// }
+
   .logo-container {
     display: flex;
     align-items: center;
@@ -31,6 +39,8 @@
     height: auto;
     display: flex;
     align-content: center;
+   
+
   }
 
   nb-user {
@@ -53,6 +63,9 @@
       color: nb-theme(text-hint-color);
       nb-icon {
         font-size: 1.75rem;
+        color: #3366ff;
+        background: rgb(255, 255, 255);
+        border-radius: 12%;
       }
     }
 

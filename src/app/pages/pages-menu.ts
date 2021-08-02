@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Operattionalize',
+    title: 'Operationalize',
     icon: 'loader-outline',
     link: '/pages/dashboard',
     home: true,

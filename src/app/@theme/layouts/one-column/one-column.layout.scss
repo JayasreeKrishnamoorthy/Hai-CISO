@@ -17,9 +17,12 @@
     
   }
 
-  .slide-img{
+  .fixed-header {
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    }
 
-  }
 
   // .menu-up{
   //   background-image: url("assets/PSP/ciso.png");
