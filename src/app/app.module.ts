@@ -21,19 +21,20 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { NebularModule } from './nebular/nebular.module';
-import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { AUTH_PROVIDERS, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { LoggedinauthgaurdService } from './Services/auth_guard/loggedinauthgaurd.service';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpConfigInterceptor } from './Services/http_service/httpConfig.interceptor';
+import { Http, RequestOptions } from '@angular/http';
 
 @NgModule({
-  providers: [AUTH_PROVIDERS,LoggedinauthgaurdService,,
-    {provide : LocationStrategy , useClass: HashLocationStrategy},   {
+  providers: [AUTH_PROVIDERS, LoggedinauthgaurdService, ,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }, {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpConfigInterceptor,
-      multi: true
-    }
-    ],
+      multi: true,
+    },
+  ],
   declarations: [AppComponent],
   imports: [
     BrowserModule,

@@ -13,7 +13,7 @@ import { NebularModule } from '../nebular/nebular.module';
   declarations: [LoginComponent],
   imports: [
     CommonModule,
-    AuthRoutingModule,FormsModule,ReactiveFormsModule,   NbLayoutModule,
+    AuthRoutingModule, FormsModule, ReactiveFormsModule, NbLayoutModule,
     NbEvaIconsModule,
     NbInputModule,
     NbButtonModule,

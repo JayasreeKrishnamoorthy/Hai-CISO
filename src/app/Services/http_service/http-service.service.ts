@@ -6,14 +6,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Login } from '../../Responses/auth';
 
-//import { environment } from 'src/environments/environment.prod';  // prod
+// import { environment } from 'src/environments/environment.prod';  // prod
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HttpServiceService {
 
-  apiUrl = environment.apiUrl //'https://localhost:8080/api/getdetails';
+  apiUrl = environment.apiUrl; // 'https://localhost:8080/api/getdetails';
 
   constructor(private http: HttpClient) { }
 
@@ -21,15 +21,15 @@ export class HttpServiceService {
     return this.http.get(this.apiUrl)
       .pipe(
         tap(_ => this.log('response received')),
-        catchError(this.handleError('getDetails', []))
+        catchError(this.handleError('getDetails', [])),
       );
   }
 
   postDetails(j): Observable<any> {
-    return this.http.post(this.apiUrl,j)
+    return this.http.post(this.apiUrl, j)
       .pipe(
         tap(_ => this.log('response received')),
-        catchError(this.handleError('getDetails', []))
+        catchError(this.handleError('getDetails', [])),
       );
   }
   private handleError<T>(operation = 'operation', result?: T) {
@@ -48,28 +48,28 @@ export class HttpServiceService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
-// https://jsonplaceholder.typicode.com/todos/1
+  // https://jsonplaceholder.typicode.com/todos/1
 
-getTest(): Observable<any> {  //  For Testing
-  return this.http.get("https://jsonplaceholder.typicode.com/todos/1")
-    .pipe(
-      tap(_ => console.log('response received')),
-      catchError(this.handleError('GETTest', []))
-    );
-}
+  getTest(): Observable<any> {  //  For Testing
+    return this.http.get('https://jsonplaceholder.typicode.com/todos/1')
+      .pipe(
+        // tslint:disable-next-line:no-console
+        tap(_ => console.log('response received')),
+        catchError(this.handleError('GETTest', [])),
+      );
+  }
 
-doLogin(obj): Observable<any> {
-console.log(obj);
-  return this.http.post<Login>(this.apiUrl+"/auth/login",obj)
-    .pipe(
-      tap(_ => console.log('response received')),
-      catchError(this.handleError('Login', []))
-    );
-    
-}
-              
-          
+  doLogin(obj): Observable<any> {
+    return this.http.post<Login>(this.apiUrl + '/auth/login', obj)
+      .pipe(
+        // tslint:disable-next-line:no-console
+        tap(_ => console.log('response received')),
+        catchError(this.handleError('Login', [])),
+      );
+
+  }
+
+
 }
