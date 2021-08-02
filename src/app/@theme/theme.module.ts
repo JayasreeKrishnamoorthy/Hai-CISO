@@ -53,7 +53,7 @@ const NB_MODULES = [
   NbButtonModule,
   NbSelectModule,
   NbIconModule,
-  NbEvaIconsModule,NbTabsetModule,NbCardModule
+  NbEvaIconsModule, NbTabsetModule, NbCardModule,
 ];
 const COMPONENTS = [
   HeaderComponent,
@@ -86,7 +86,7 @@ export class ThemeModule {
           {
             name: 'default',
           },
-          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME ],
+          [DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME],
         ).providers,
       ],
     };

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
-//import decode from 'jwt-decode';
+// import decode from 'jwt-decode';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
@@ -13,7 +13,7 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // get the token
     const token = this.getToken();
-    // return a boolean reflecting 
+    // return a boolean reflecting
     // whether or not the token is expired
     return tokenNotExpired(null, token);
   }

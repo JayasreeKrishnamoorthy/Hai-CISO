@@ -52,15 +52,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'User List',
-        link: '/pages/editors/tinymce',
+        link: '/pages/user',
       },
       {
         title: 'Roles',
-        link: '/pages/editors/ckeditor',
+        link: '/pages/role',
       },
       {
         title: 'User Groups',
-        link: '/pages/editors/ckeditor',
+        link: '/pages/user-group',
       },
     ],
   },

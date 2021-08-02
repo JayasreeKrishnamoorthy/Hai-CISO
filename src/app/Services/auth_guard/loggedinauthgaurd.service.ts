@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { AuthService } from './auth.service';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoggedinauthgaurdService implements CanActivate {
 
@@ -10,10 +10,10 @@ export class LoggedinauthgaurdService implements CanActivate {
 
   canActivate(): boolean {
       if (this._authService.isAuthenticated()) {
-          this._router.navigate(['/pages'])
-          return false
+          this._router.navigate(['/pages']);
+          return false;
       } else {
-          return true
+          return true;
       }
   }
 }

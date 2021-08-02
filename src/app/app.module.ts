@@ -28,8 +28,11 @@ import { HttpConfigInterceptor } from './Services/http_service/httpConfig.interc
 import { Http, RequestOptions } from '@angular/http';
 
 @NgModule({
-  providers: [AUTH_PROVIDERS, LoggedinauthgaurdService, ,
-    { provide: LocationStrategy, useClass: HashLocationStrategy }, {
+  providers: [AUTH_PROVIDERS, LoggedinauthgaurdService,
+
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpConfigInterceptor,
       multi: true,

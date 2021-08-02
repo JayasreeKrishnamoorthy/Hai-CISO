@@ -1,0 +1,55 @@
+<div class="colored-line"></div>
+<mat-toolbar class="dialog-header">
+  <div class="df-c-b w100">
+    <div class="dialog-title">{{data?.name | titlecase}}</div>
+    <div>
+      <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-dialog-content class="dialog-content">
+  <div class="user-view-page">
+    <form [formGroup]="roleForm" #f="ngForm" (ngSubmit)="roleForm.valid && onboardRole()" autocomplete="off"
+      class="form-sec">
+
+      <div class="data-input">
+        <div class="df-a-f-e f-w pb-4">
+          <div class="w25">
+            <div class="form-lable-name">Role</div>
+            <mat-form-field appearance="outline" class="w90">
+              <input matInput formControlName="role" placeholder="Role">
+            </mat-form-field>
+          </div>
+          <div class="w12">
+            <mat-checkbox formControlName="read">Read</mat-checkbox>
+          </div>
+          <div class="w12">
+            <mat-checkbox formControlName="add">Add</mat-checkbox>
+          </div>
+          <div class="w12">
+            <mat-checkbox formControlName="edit">Edit</mat-checkbox>
+          </div>
+          <div class="w12">
+            <mat-checkbox formControlName="delete">Delete</mat-checkbox>
+          </div>
+          <div class="w12">
+            <mat-checkbox formControlName="execute">Execute</mat-checkbox>
+          </div>
+          <div class="w12">
+            <mat-checkbox formControlName="schedule">Schedule</mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="submit-btn t-c" *ngIf="data?.name !== 'View User'">
+        <button type="submit" mat-raised-button>Submit</button>
+      </div>
+
+
+    </form>
+  </div>
+</mat-dialog-content>

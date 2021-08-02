@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -15,7 +15,46 @@ export class HttpServiceService {
 
   apiUrl = environment.apiUrl; // 'https://localhost:8080/api/getdetails';
 
+  token = localStorage.getItem('pspkey');
+
   constructor(private http: HttpClient) { }
+
+
+  post(url: any, data: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}${url}`, data);
+  }
+
+  get(url: any): Observable<any> {
+    return this.http.get(`${environment.apiUrl}${url}`);
+  }
+
+  getToken(url: string) {
+    const Header = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Accept': 'application/json',
+    });
+    Header.append('Authorization', 'Bearer' + localStorage.getItem('pspkey'));
+    return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: Header });
+  }
+
+  delToken(url: string) {
+    const Header = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Accept': 'application/json',
+    });
+    Header.append('Authorization', 'Bearer' + localStorage.getItem('pspkey'));
+    return this.http.delete<any>(`${environment.apiUrl}${url}`, { headers: Header });
+  }
+
+  postToken(url: string, data: any) {
+    const Header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.post<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
+  }
+
+
 
   getDetails(): Observable<any> {
     return this.http.get(this.apiUrl)

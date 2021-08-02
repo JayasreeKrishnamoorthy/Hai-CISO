@@ -25,6 +25,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+//   pravin@mailpsl.com
+// root@12345
+
   login(): void {
     const data = {
       password: this.loginForm.value.password,
@@ -33,16 +37,12 @@ export class LoginComponent implements OnInit {
     this.httpService.doLogin(data).subscribe((res: Login) => {
       if (res.success) {
         localStorage.setItem('pspkey', res.data.token);
+        localStorage.setItem('PSPUser', JSON.stringify(res.data));
         this.movetohome();
       }
-      // else if(res.status===0)
-      // {
-      //   alert(res.message)
-      // }
     },
     ); (err) => {
       alert(err.error.message);
-      // err.error.message
     };
   }
 

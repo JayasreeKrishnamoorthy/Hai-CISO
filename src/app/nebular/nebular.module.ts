@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbButtonModule, NbCardModule, NbInputModule, NbLayoutModule, NbTreeGridModule } from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbCardModule,
+  NbDialogModule,
+  NbIconModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbTreeGridModule,
+} from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -15,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbButtonModule,
     NbCardModule,
     NbTreeGridModule,
+    NbIconModule,
+    NbDialogModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -25,6 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbButtonModule,
     NbCardModule,
     NbTreeGridModule,
+    NbIconModule,
+    NbDialogModule,
     FormsModule,
     ReactiveFormsModule,
   ],
