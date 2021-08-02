@@ -1,0 +1,20 @@
+.confirmation {
+  text-align: center;
+  p {
+    color: #535c68;
+    font-size: 17px;
+  }
+  button {
+    padding: 0px 29px;
+    font-size: 13px;
+    border-radius: 0;
+    color: #ffffff;
+    line-height: 30px;
+  }
+  .yesBtn {
+    background: #ff4800f3;
+  }
+  .noBtn {
+    background: #ff9b74;
+  }
+}

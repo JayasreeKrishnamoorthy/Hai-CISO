@@ -5,6 +5,9 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AnalyzeComponent } from './analyze/analyze.component';
 import { CustomersComponent } from './customers/customers.component';
+import { UserComponent } from './user/user.component';
+import { RoleComponent } from './role/role.component';
+import { UserGroupComponent } from './user-group/user-group.component';
 
 const routes: Routes = [{
   path: '',
@@ -23,15 +26,30 @@ const routes: Routes = [{
       component: CustomersComponent,
     },
     {
+      path: 'user',
+      component: UserComponent,
+    },
+    {
+      path: 'role',
+      component: RoleComponent,
+    },
+    {
+      path: 'user-group',
+      component: UserGroupComponent,
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',
     },
-    {
-      path: '**',
-      component: DashboardComponent,
-    },
+    // {
+    //   path: '**',
+    //   component: DashboardComponent,
+    // },
   ],
+
+
+
 }];
 
 @NgModule({

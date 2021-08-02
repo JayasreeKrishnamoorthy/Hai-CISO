@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public router: Router,
-    private httpService:HttpServiceService
+    private httpService: HttpServiceService,
   ) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -25,31 +25,28 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+//   pravin@mailpsl.com
+// root@12345
+
   login(): void {
-    let data = {
+    const data = {
       password: this.loginForm.value.password,
       email: this.loginForm.value.email,
-    }
-      console.log(data);
-      this.httpService.doLogin(data).subscribe((res: Login) => {
-        if(res.success){
-          console.log(res);
-          localStorage.setItem("pspkey",res.data.token)
-          this.movetohome()
-        }
-        // else if(res.status===0)
-        // {
-        //   alert(res.message)
-        // }
-      },
-      );(err) => {
-        console.log(err);
-        alert(err.error.message)
-       // err.error.message
+    };
+    this.httpService.doLogin(data).subscribe((res: Login) => {
+      if (res.success) {
+        localStorage.setItem('pspkey', res.data.token);
+        localStorage.setItem('PSPUser', JSON.stringify(res.data));
+        this.movetohome();
       }
+    },
+    ); (err) => {
+      alert(err.error.message);
+    };
   }
 
-  movetohome(){
+  movetohome() {
     this.router.navigate(['/pages']);
   }
 

@@ -58,51 +58,82 @@
 }
 
 .loginPage {
-  padding: 15px 15px;
+  // padding: 15px 15px;
   .login-bg {
-    background-image: url(../../../assets/img/loginBg.jpg);
+    background: linear-gradient(
+        to bottom,
+        rgba(225, 225, 225, 0.3) 0%,
+        rgba(225, 225, 225, 0.3) 59%,
+        rgba(225, 225, 225, 0.3) 100%
+      ),
+      url(../../../assets/img/login5.jpg) no-repeat;
+    // height: 200px;
+
+    // background-image: url(../../../assets/img/login5.jpg),
+    //   linear-gradient(165deg, rgba(225, 225, 225, 0.2), rgba(225, 225, 225, 0.2));
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 50vh;
-    border-radius: 10px;
+    height: 100vh;
+    // border-radius: 10px;
     position: relative;
     nb-card {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -60%;
-      margin: 0 470px;
+      // position: absolute;
+      // left: 0;
+      // right: 0;
+      // bottom: -60%;
+      // margin: 0 470px;
+      // margin: 0px 400px 0;
+      width: 35%;
       padding: 15px 10px;
       border-radius: 15px;
-      // background: rgba(225, 225, 225, 0.5);
+      background: rgba(0, 0, 0, 0.5);
+      border: unset !important;
       .logo-sec {
         padding-bottom: 25px;
       }
       .des-txt {
-        color: #242B2E;
+        // color: #242b2e;
+        // font-size: 16px;
+        // padding: 0px 0 25px;
+        color: #fff;
         font-size: 16px;
         padding: 0px 0 25px;
+        font-weight: 700;
+        font-family: Open Sans, sans-serif;
       }
       .input-fld {
         padding-bottom: 15px;
+        input {
+          background: rgba(0, 0, 0, 0.5);
+          border: unset !important;
+          color: #fff !important;
+          border-radius: 11px;
+        }
+        input-basic-placeholder-text-color {
+          color: #000 !important;
+        }
       }
       .sign-btn {
-        background: linear-gradient(165deg, #2152ff, #21d4fd);
+        // background: linear-gradient(165deg, #2152ff, #21d4fd);
+        background: linear-gradient(165deg, #ff4a00, #f3895f);
         color: #fff;
         border-radius: 10px;
         height: 45px;
         width: 50%;
         margin-top: 10px;
+        border-color: unset !important;
+        border-style: unset !important;
       }
       .forgot-txt {
-        background-color: #2152ff;
-        background-image: linear-gradient(165deg, #2152ff, #21d4fd);
-        background-size: 100%;
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-text-fill-color: transparent;
+        color: #fff;
+        // background-color: #000;
+        // background-image: linear-gradient(165deg, #000, rgb(41, 41, 41));
+        // background-size: 100%;
+        // -webkit-background-clip: text;
+        // -moz-background-clip: text;
+        // -webkit-text-fill-color: transparent;
+        // -moz-text-fill-color: transparent;
         text-align: center;
         padding-top: 25px;
         padding-bottom: 5px;

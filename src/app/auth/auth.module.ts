@@ -7,13 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule, NbInputModule, NbLayoutModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NebularModule } from '../nebular/nebular.module';
+import { SelectCompanyComponent } from './select-company/select-company.component';
 
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, SelectCompanyComponent],
   imports: [
     CommonModule,
-    AuthRoutingModule,FormsModule,ReactiveFormsModule,   NbLayoutModule,
+    AuthRoutingModule, FormsModule, ReactiveFormsModule, NbLayoutModule,
     NbEvaIconsModule,
     NbInputModule,
     NbButtonModule,

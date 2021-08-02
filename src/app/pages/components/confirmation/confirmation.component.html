@@ -1,0 +1,10 @@
+<div class="confirmation">
+  <p>{{data?.message}}</p>
+  <div class="df-c-a" *ngIf="!data?.type">
+    <button mat-raised-button class="yesBtn c-w" (click)="close('yes')">Yes</button>
+    <button mat-raised-button class="noBtn c-w" (click)="close('no')">No</button>
+  </div>
+  <div class="df-c-a" *ngIf="data?.type == 'single'">
+    <button mat-raised-button class="yesBtn c-w" (click)="close('yes')">OK</button>
+  </div>
+</div>

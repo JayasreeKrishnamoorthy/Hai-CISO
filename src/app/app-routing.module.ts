@@ -8,56 +8,22 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
-import {  AuthGuardService as AuthGuard } from './Services/auth_guard/auth-guard.service';
+import { AuthGuardService as AuthGuard } from './Services/auth_guard/auth-guard.service';
 import { LoginComponent } from './auth/login/login.component';
 import { LoggedinauthgaurdService as LoggedInAuthGuard } from './Services/auth_guard/loggedinauthgaurd.service';
 export const routes: Routes = [
+
+
   {
-    path: 'pages',canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule),
+    path: '',
+    loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule),
+    canActivate: [LoggedInAuthGuard],
   },
   {
-    path: 'auth',canActivate:[LoggedInAuthGuard],
-    loadChildren: () => import('./auth/auth.module')
-      .then(m => m.AuthModule),
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule),
+    canActivate: [AuthGuard],
   },
-  {
-    path: 'auth/logiin',
-    component: LoginComponent,canActivate:[LoggedInAuthGuard]
-  },
-  {
-    path: 'authw',
-    component: NbAuthComponent,
-    children: [
-      {
-        path: '',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'login',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
-      {
-        path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
-    ],
-  },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' },
 ];
 
 const config: ExtraOptions = {
@@ -70,4 +36,3 @@ const config: ExtraOptions = {
 })
 export class AppRoutingModule {
 }
-//,canActivate:[LoggedInAuthGuard]
