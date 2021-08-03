@@ -54,7 +54,7 @@ export class UserComponent implements OnInit {
     const dialogRef = this.dialog.open(UserViewComponent, {
       width: 'auto',
       height: '60%',
-      minWidth: '45%',
+      minWidth: '55%',
       disableClose: true,
       panelClass: 'full-screen-popup',
       data: {

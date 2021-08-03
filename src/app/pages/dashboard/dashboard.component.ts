@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 
 
@@ -10,30 +10,28 @@ import {Component, OnDestroy} from '@angular/core';
 })
 export class DashboardComponent implements OnDestroy {
 
-  
+
   constructor() {
     this.loadScript('assets/globe/globe.js');
   }
 
 
- 
+
+  // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
-    window.onload
-
-      this.loadScript('assets/globe/globe.js');
-  
-
-
+    window.onload;
+    this.loadScript('assets/globe/globe.js');
   }
 
 
-  ngAfterViewInit(){
-    window.onload
- }
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngAfterViewInit(): void {
+    window.onload;
+  }
 
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement> document.body;
+    const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -43,7 +41,7 @@ export class DashboardComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    window.onload
+    window.onload;
   }
 
 }

@@ -1,0 +1,43 @@
+.select-sec {
+  background: linear-gradient(165deg, #ff4a00, #f3895f);
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .data-txt {
+    color: #fff;
+    font-size: 25px;
+    text-transform: uppercase;
+    padding-bottom: 5%;
+    font-weight: 700;
+  }
+  .card-sec {
+    .com-item {
+      width: 10%;
+      // padding: 10px 15px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      mat-card {
+        width: 90px;
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 20px;
+        color: #3a416f;
+        cursor: pointer;
+      }
+      .com-name {
+        padding-top: 10px;
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+}

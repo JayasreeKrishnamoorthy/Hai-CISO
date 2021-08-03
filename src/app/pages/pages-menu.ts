@@ -17,13 +17,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Analyse',
+    title: 'Analyze',
     icon: 'cast-outline',
     link: '/pages/analyze',
     home: true,
   },
   {
-    title: 'Statergize',
+    title: 'Stratergize',
     icon: 'compass-outline',
     link: '/pages/dashboard',
     home: true,
@@ -41,7 +41,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Resource',
+    title: 'Resources',
     icon: 'award-outline',
     link: '/pages/dashboard',
     home: true,

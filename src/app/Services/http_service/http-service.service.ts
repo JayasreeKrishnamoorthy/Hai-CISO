@@ -55,6 +55,14 @@ export class HttpServiceService {
     return this.http.post<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
   }
 
+  putToken(url: string, data: any) {
+    const Header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.put<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
+  }
+
 
 
   getDetails(): Observable<any> {
