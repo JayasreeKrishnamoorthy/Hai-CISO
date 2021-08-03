@@ -1,0 +1,74 @@
+<!-- <ngx-one-column-layout>
+  <nb-menu [items]="menu"></nb-menu>
+  <router-outlet></router-outlet>
+</ngx-one-column-layout> -->
+
+
+
+
+<nb-layout>
+  <nb-layout-column>
+    <div class="page-layout">
+      <mat-drawer-container class="example-container" autosize>
+        <mat-drawer #drawer class="example-sidenav w20" mode="side"
+          [ngClass]="menuToggle == false ? 'sideMenuIcon' : ''">
+          <div>
+            <nav class="navList">
+              <ul class="main-h-list">
+                <li class="t-c logo-sec">
+                  <img src="assets/img/Hai-Ciso.png" class="w70">
+                </li>
+                <ng-container *ngFor="let link of navLinks; let i=index">
+                  <li routerLinkActive="active-menu" class="nav__item ripple" (click)="subFunc(i)">
+                    <a [routerLink]="link.path" class="a-menu" *ngIf="!link?.subitems">
+                      <mat-icon class="menu-icon">{{link.icon}}</mat-icon>
+                      <span class="underline-closing link-name" *ngIf="menuToggle">{{link.name}}</span>
+                    </a>
+                    <a class="a-menu" *ngIf="link?.subitems" style="position: relative;" (click)="subMenuSelect(link)">
+                      <mat-icon class="menu-icon">{{link.icon}}</mat-icon>
+                      <span class="underline-closing link-name" *ngIf="menuToggle">{{link.name}}</span>
+                      <mat-icon *ngIf="!link?.drop && menuToggle">
+                        keyboard_arrow_right</mat-icon>
+                      <mat-icon *ngIf="link?.drop && menuToggle">
+                        keyboard_arrow_down</mat-icon>
+                    </a>
+                  </li>
+                  <div *ngIf="link?.subitems && link?.drop == true && menuToggle">
+                    <ng-container *ngFor="let sub of link.subitems">
+                      <li routerLinkActive="active-menu1" class="nav__item ripple" *ngIf="sub?.path">
+                        <a [routerLink]="sub?.path" class="a-menu1">
+                          <!-- <mat-icon>{{sub?.icon}}</mat-icon> -->
+                          <span class="underline-closing link-name">{{sub?.name}}</span>
+                        </a>
+                      </li>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </ul>
+            </nav>
+          </div>
+        </mat-drawer>
+
+        <div class="example-sidenav-content" [ngClass]="menuToggle == false ? 'bodyContent' : ''">
+          <div class="header-sec df-c-b">
+            <div class="w10">
+              <mat-icon (click)="drawer.toggle(); menuToggle = !menuToggle" class="c-p">menu</mat-icon>
+            </div>
+            <div class="df-ac w60">
+              <div *ngFor="let h of headerMenu">
+                <div class="c-p header-item">{{h?.name}}</div>
+              </div>
+            </div>
+            <!-- <div class="w10" (click)="logOut()">
+              <mat-icon>power_settings_new</mat-icon>
+            </div> -->
+          </div>
+          <div class="data-cnt">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+
+      </mat-drawer-container>
+    </div>
+  </nb-layout-column>
+</nb-layout>

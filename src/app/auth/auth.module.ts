@@ -8,6 +8,7 @@ import { NbButtonModule, NbCardModule, NbInputModule, NbLayoutModule } from '@ne
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NebularModule } from '../nebular/nebular.module';
 import { SelectCompanyComponent } from './select-company/select-company.component';
+import { MaterialModule } from '../material/material.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SelectCompanyComponent } from './select-company/select-company.componen
     NbCardModule,
     AuthRoutingModule,
     NebularModule,
+    MaterialModule,
   ],
 })
 export class AuthModule { }

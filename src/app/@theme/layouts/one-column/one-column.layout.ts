@@ -10,10 +10,10 @@ import { Component } from '@angular/core';
       </nb-layout-header>
 
       <nb-sidebar style="background-color:#f8f9fa!important;" class="menu-sidebar "  tag="menu-sidebar"  responsive>
- 
+
         <ng-content select="nb-menu">
-        
-       
+
+
         </ng-content>
       </nb-sidebar>
 
@@ -25,8 +25,8 @@ import { Component } from '@angular/core';
     </nb-layout>
   `,
 
-        // <nb-layout-footer fixed>
-      //   <ngx-footer></ngx-footer>
-      // </nb-layout-footer>
+  // <nb-layout-footer fixed>
+  //   <ngx-footer></ngx-footer>
+  // </nb-layout-footer>
 })
-export class OneColumnLayoutComponent {}
+export class OneColumnLayoutComponent { }

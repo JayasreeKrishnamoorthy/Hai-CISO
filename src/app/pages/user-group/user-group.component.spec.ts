@@ -8,7 +8,7 @@ describe('UserGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserGroupComponent ]
+      declarations: [ UserGroupComponent ],
     })
     .compileComponents();
   });

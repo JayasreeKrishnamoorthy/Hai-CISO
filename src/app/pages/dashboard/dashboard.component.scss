@@ -24,7 +24,7 @@
     // padding: 2px;
 
 
-// Globe 3JS 
+// Globe 3JS
 
     html, body, *, *:before, *:after {
       margin: 0;
@@ -147,4 +147,8 @@
       white-space: nowrap;
       transform: translateY(-50%);
   }
-  
+
+
+  .globe-sec {
+    overflow: hidden;
+  }

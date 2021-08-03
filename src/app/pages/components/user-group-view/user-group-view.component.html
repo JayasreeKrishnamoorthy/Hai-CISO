@@ -1,1 +1,47 @@
-<p>user-group-view works!</p>
+<div class="colored-line"></div>
+<mat-toolbar class="dialog-header">
+  <div class="df-c-b w100">
+    <div class="dialog-title">{{data?.name | titlecase}}</div>
+    <div>
+      <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-dialog-content class="dialog-content">
+  <div class="user-view-page">
+    <form [formGroup]="userForm" #f="ngForm" (ngSubmit)="userForm.valid && onboardUser()" autocomplete="off"
+      class="form-sec">
+
+      <div class="data-input">
+        <div class="df-ac f-w pb-1">
+          <div class="w50">
+            <div class="form-lable-name">Group Name</div>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="usergroupname" placeholder="Group Name">
+            </mat-form-field>
+          </div>
+          <div class="w50">
+            <div class="form-lable-name">Role</div>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="roleid" placeholder="Role">
+                <mat-option *ngFor="let r of roleList" [value]="r?.iid">
+                  {{r?.srolename}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="submit-btn t-c" *ngIf="data?.name !== 'View User Group'">
+        <button type="submit" mat-raised-button>Submit</button>
+      </div>
+
+
+    </form>
+  </div>
+</mat-dialog-content>

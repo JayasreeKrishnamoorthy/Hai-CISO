@@ -16,30 +16,30 @@
 
       <div class="data-input">
         <div class="df-ac f-w pb-1">
-          <div class="w50">
+          <div class="w33">
             <div class="form-lable-name">User Name</div>
             <mat-form-field appearance="outline">
               <input matInput formControlName="sname" placeholder="User Name">
             </mat-form-field>
           </div>
-          <div class="w50">
+          <div class="w33">
             <div class="form-lable-name">Mobile No.</div>
             <mat-form-field appearance="outline">
               <input matInput formControlName="icontectnumber" placeholder="Mobile No." maxlength="10" minlength="10"
                 pattern="(^0$)|(^[1-9]\d{0,9}$)">
             </mat-form-field>
           </div>
-        </div>
-
-        <div class="df-ac f-w pb-1">
-          <div class="w50">
+          <div class="w33">
             <div class="form-lable-name">Email</div>
             <mat-form-field appearance="outline">
               <input matInput formControlName="semailid" placeholder="Email"
                 pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
             </mat-form-field>
           </div>
-          <div class="w50">
+        </div>
+
+        <div class="df-ac f-w pb-1">
+          <div class="w33">
             <div class="form-lable-name">User Group</div>
             <mat-form-field appearance="outline">
               <mat-select formControlName="group" placeholder="User Group">
@@ -48,6 +48,12 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+          </div>
+          <div class="w33" *ngIf="data?.name !== 'Add User'">
+            <mat-checkbox formControlName="accountLock">Lock Account</mat-checkbox>
+          </div>
+          <div class="w33" *ngIf="data?.name !== 'Add User'">
+            <mat-checkbox formControlName="resetpass">Reset Password</mat-checkbox>
           </div>
         </div>
       </div>
