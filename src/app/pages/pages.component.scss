@@ -44,12 +44,14 @@
       .a-menu {
         text-decoration: unset !important;
         // color: #ffffff !important;
-        color: #3a416f !important;
+        // color: #3a416f !important;
+        color: #000000 !important;
         display: flex;
         align-items: center;
         column-gap: 5%;
         padding: 7px 2px 3px 20px;
         font-size: 13px;
+        text-transform: uppercase;
         .menu-icon {
           font-size: 17px !important;
           box-shadow: 0 0.25rem 0.375rem -0.0625rem hsla(0, 0%, 8%, 0.12),
@@ -72,6 +74,7 @@
         align-items: center;
         column-gap: 5%;
         padding: 7px 2px 3px 20px;
+        text-transform: uppercase;
         mat-icon {
           font-size: 17px !important;
           height: 16px !important;
@@ -107,7 +110,10 @@
     padding-left: 10px;
     padding-right: 10px;
     .header-item {
+      text-transform: uppercase;
       margin-right: 19px;
+      font-size: 13px;
+      color: #000000 !important;
     }
   }
   .data-cnt {
