@@ -5,6 +5,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Login } from '../../Responses/auth';
+import { Roles } from '../../Responses/usr-management';
+import { Datum, SelectCompany, UserGroupID } from '../../Responses/select-companies';
 
 // import { environment } from 'src/environments/environment.prod';  // prod
 
@@ -13,7 +15,7 @@ import { Login } from '../../Responses/auth';
 })
 export class HttpServiceService {
 
-  apiUrl = environment.apiUrl; // 'https://localhost:8080/api/getdetails';
+  apiUrl = environment.apiUrl; // '/http://3.108.210.142:5000/api/getdetails';
 
   token = localStorage.getItem('pspkey');
 
@@ -118,5 +120,21 @@ export class HttpServiceService {
 
   }
 
+
+  getRoles(url: string): Observable<any> {
+    return this.http.get<Roles>(`${environment.apiUrl}${url}`)
+      .pipe(
+        tap(_ => console.log('response received')),
+        catchError(this.handleError('GETRoles', []))
+      );
+  }
+
+  getcompanies(){
+    return this.http.get<any>(this.apiUrl+"/companies")
+    .pipe(
+      tap(_ => console.log('response received')),
+      catchError(this.handleError('GETcopanies', []))
+    );
+  }
 
 }

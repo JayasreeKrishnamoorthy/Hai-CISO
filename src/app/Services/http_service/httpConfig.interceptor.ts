@@ -90,7 +90,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     setTimeout(() => {
       // tslint:disable-next-line:ban
       $('#preloader-active').css('display', 'none');
-    }, 2000);
+    }, 1000);
   }
 
 

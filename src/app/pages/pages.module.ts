@@ -8,6 +8,7 @@ import {
   NbMenuModule,
   NbTabsetModule,
   NbTreeGridModule,
+  NbUserModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -36,7 +37,7 @@ import { RoleComponent } from './role/role.component';
     NbIconModule,
     NbDialogModule.forRoot(),
     MaterialModule,
-    ComponentsModule,
+    ComponentsModule,NbUserModule
   ],
   declarations: [
     PagesComponent,
