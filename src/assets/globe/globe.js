@@ -1,25 +1,25 @@
 /* VARIABLES */
-let canvas;
-let scene;
-let renderer;
-let data;
-let globeElement;
+var canvas;
+var scene;
+var renderer;
+var data;
+var globeElement;
 
 // Cache DOM selectors
-const container = document.querySelector('.js-globe');
+var container = document.querySelector('.js-globe');
 
 // Object for country HTML elements and variables
-const elements = {};
+var elements = {};
 
 // Three group objects
-const groups = {
+var groups = {
     main: null, // A group containing everything
     globe: null, // A group containing the globe sphere (and globe dots)
     globeDots: null, // A group containing the globe dots
 };
 
 // Map properties for creation and rendering
-const props = {
+var props = {
     mapSize: {
         // Size of the map from the intial source image (on which the dots are positioned on)
         width: 2048 / 2,
@@ -36,7 +36,7 @@ const props = {
 };
 
 // Angles used for animating the camera
-const camera = {
+var camera = {
     object: null, // Three object of the camera
     controls: null, // Three object of the orbital controls
     angles: {
@@ -53,7 +53,7 @@ const camera = {
 };
 
 // Booleans and values for animations
-const animations = {
+var animations = {
     finishedIntro: false, // Boolean of when the intro animations have finished
     dots: {
         current: 0, // Animation frames of the globe dots introduction animation
@@ -68,7 +68,7 @@ const animations = {
 
 /* SETUP */
 
-const getData = async () => {
+var getData = async () => {
     try {
         const results = await fetch('https://s3-us-west-2.amazonaws.com/s.cdpn.io/617753/globe-points.json');
         data = await results.json();
@@ -78,7 +78,7 @@ const getData = async () => {
     }
 };
 
-const setupScene = () => {
+var setupScene = () => {
     canvas = container.querySelector('.js-canvas');
 
     scene = new THREE.Scene();
@@ -133,13 +133,13 @@ const setupScene = () => {
 
 /* CAMERA AND CONTROLS */
 
-const addCamera = () => {
+var addCamera = () => {
     const { clientWidth, clientHeight } = canvas;
     camera.object = new THREE.PerspectiveCamera(60, clientWidth / clientHeight, 1, 10000);
     camera.object.position.z = props.globeRadius * 2.2;
 };
 
-const addControls = () => {
+var addControls = () => {
     camera.controls = new OrbitControls(camera.object, canvas);
     camera.controls.enableKeys = false;
     camera.controls.enablePan = false;
@@ -323,7 +323,7 @@ const test = () => {
     const azimuthalDifference = (camera.angles.current.azimuthal - camera.angles.target.azimuthal) * 1.1;
     camera.controls.setAzimuthalAngle(camera.angles.current.azimuthal - azimuthalDifference);
 
-    console.log('rotating', props.position, azimuthal, polar)
+  //  console.log('rotating', props.position, azimuthal, polar)
 };
 
 const rotateGlobeToPosition = (x, y, progress = 1) => {
@@ -388,7 +388,7 @@ const returnCameraAngles = (latitude, longitude) => {
 /* INITIALISATION */
 
 if (!window.WebGLRenderingContext) {
-    console.warn('WebGL not supported, please use a browser that supports WebGL')
+  //  console.warn('WebGL not supported, please use a browser that supports WebGL')
 } else {
     getData();
 }

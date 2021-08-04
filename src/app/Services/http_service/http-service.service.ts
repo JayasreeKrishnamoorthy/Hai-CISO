@@ -6,6 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Login } from '../../Responses/auth';
 import { Roles } from '../../Responses/usr-management';
+import { Datum, SelectCompany, UserGroupID } from '../../Responses/select-companies';
 
 // import { environment } from 'src/environments/environment.prod';  // prod
 
@@ -128,6 +129,12 @@ export class HttpServiceService {
       );
   }
 
-  
+  getcompanies(){
+    return this.http.get<any>(this.apiUrl+"/companies")
+    .pipe(
+      tap(_ => console.log('response received')),
+      catchError(this.handleError('GETcopanies', []))
+    );
+  }
 
 }

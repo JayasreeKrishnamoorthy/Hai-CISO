@@ -13,16 +13,20 @@ import { LoginComponent } from './auth/login/login.component';
 import { LoggedinauthgaurdService as LoggedInAuthGuard } from './Services/auth_guard/loggedinauthgaurd.service';
 export const routes: Routes = [
 
-
   {
     path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
+  {
+    path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule),
-    canActivate: [LoggedInAuthGuard],
+   // canActivate: [LoggedInAuthGuard],
   },
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule),
-    canActivate: [AuthGuard],
+   // canActivate: [AuthGuard],
   },
 ];
 

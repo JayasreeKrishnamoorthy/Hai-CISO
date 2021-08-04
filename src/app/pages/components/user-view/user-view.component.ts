@@ -31,6 +31,7 @@ export class UserViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data)
     this.getGroup();
     if (this.data?.userDetails?.iuserid) {
       this.userForm.controls?.accountLock.patchValue(false);

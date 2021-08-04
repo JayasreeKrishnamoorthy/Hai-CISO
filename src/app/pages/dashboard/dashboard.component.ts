@@ -19,14 +19,14 @@ export class DashboardComponent implements OnDestroy {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
-    window.onload;
+ 
     this.loadScript('assets/globe/globe.js');
   }
 
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
-    window.onload;
+
   }
 
 
@@ -41,7 +41,7 @@ export class DashboardComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    window.onload;
+
   }
 
 }

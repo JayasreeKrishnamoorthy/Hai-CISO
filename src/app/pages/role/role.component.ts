@@ -88,7 +88,7 @@ export class RoleComponent implements OnInit {
 
 
   deleteRole(val: any): void {
-    this.http.delToken(`/user-management/${val?.iuserid}`).subscribe(data => {
+    this.http.delToken(`/roles/${val?.iid}`).subscribe(data => {
       this.getRoleList();
     });
   }
