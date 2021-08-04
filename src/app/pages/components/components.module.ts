@@ -19,6 +19,7 @@ import { MaterialModule } from '../../material/material.module';
 import { RoleViewComponent } from './role-view/role-view.component';
 import { UserGroupViewComponent } from './user-group-view/user-group-view.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { CustomerViewComponent } from './customer-view/customer-view.component';
 
 
 
@@ -28,12 +29,14 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     RoleViewComponent,
     UserGroupViewComponent,
     ConfirmationComponent,
+    CustomerViewComponent,
   ],
   entryComponents: [
     UserViewComponent,
     RoleViewComponent,
     UserGroupViewComponent,
     ConfirmationComponent,
+    CustomerViewComponent,
   ],
   imports: [
     CommonModule,

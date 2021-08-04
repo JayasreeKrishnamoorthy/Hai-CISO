@@ -23,6 +23,7 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   userList: any = [];
+  userDetails: any;
 
   constructor(
     private service: SmartTableData,
@@ -35,6 +36,8 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userDetails = localStorage.getItem('PSPUser');
+    this.userDetails = JSON.parse(this.userDetails);
     this.getUserList();
   }
 
@@ -48,6 +51,14 @@ export class UserComponent implements OnInit {
         this.userList = [];
       }
     });
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.userList.filter = filterValue.trim().toLowerCase();
+    if (this.userList.paginator) {
+      this.userList.paginator.firstPage();
+    }
   }
 
   addRequest(name: any, val?: any): void {

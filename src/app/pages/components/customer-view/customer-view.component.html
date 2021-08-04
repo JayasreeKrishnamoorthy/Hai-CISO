@@ -1,0 +1,413 @@
+<div class="colored-line"></div>
+<mat-toolbar class="dialog-header">
+  <div class="df-c-b w100">
+    <div class="dialog-title">{{data?.name | titlecase}}</div>
+    <div>
+      <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-dialog-content class="dialog-content">
+  <div class="user-view-page">
+    <form [formGroup]="userForm" #f="ngForm" (ngSubmit)="userForm.valid && onboardUser()" autocomplete="off"
+      class="form-sec">
+
+
+      <mat-stepper #stepper>
+        <mat-step>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Account ID</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="accountId" placeholder="Account ID">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Company Name</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="companyName" placeholder="Company Name">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Business Unit</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="businessUnit" placeholder="Business Unit">
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">No. of Employee</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="noOfEmp" placeholder="No. of Employee">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Public Traded Comp</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="publicTradedComp" placeholder="Public Traded Comp">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Government Owned</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="governmentOwned" placeholder="Government Owned">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Anual Revenu</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="annualRevenu" placeholder="Anual Revenu">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Saasapp Platform</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="saassPlatform" placeholder="Saasapp Platform">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">CISO Present</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="cisoPresent" placeholder="CISO Present">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">No. of Sectem Member</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="noOfSectem" placeholder="No. of Sectem Member">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Cheif Privacy Officer</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="cheifPrivacy" placeholder="Cheif Privacy Officer">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">HIPAA Officer</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="hippaOffice" placeholder="HIPAA Officer">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Risk Officer</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="riseOffice" placeholder="Risk Officer">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Security Operating Team</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="secOperating" placeholder="Security Operating Team">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Have you been in US before</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="usPresence" placeholder="Have you been in US before">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">EMEA Presence</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="emeaPresence" placeholder="EMEA Presence">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">APAC Presence ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="apacPresence" placeholder="APAC Presence ?">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">LATM Presence ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="latmPresence" placeholder="LATM Presence ?">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">CHINA Presence ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="chinaPresence" placeholder="CHINA Presence ?">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">PSP Account Executive ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="papAccount" placeholder="PSP Account Executive ?">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Is Active ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isActive1" placeholder="Is Active ?">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+
+          <div class="submit-btn setper-btn">
+            <button mat-raised-button type="button" matStepperNext>Next</button>
+          </div>
+
+
+        </mat-step>
+        <mat-step>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">User ID</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="userId" placeholder="User ID">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Address Type</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="addressType" placeholder="Address Type">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">City</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="city" placeholder="City">
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">State</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="state" placeholder="State">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Country</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="country" placeholder="Country">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Zip Code</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="zipCode" placeholder="Zip Code">
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Contact no.</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="contactNo" placeholder="Contact no.">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Latitude</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="latitude" placeholder="Latitude">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Longitude</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="logitude" placeholder="Longitude">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Land Mark</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="landMark" placeholder="Land Mark">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Is Active ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isActive2" placeholder="Is Active ?">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="submit-btn setper-btn">
+            <button mat-raised-button type="button" matStepperPrevious>Back</button>
+            <button mat-raised-button type="button" matStepperNext>Next</button>
+          </div>
+
+        </mat-step>
+        <mat-step>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">User ID</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="userId2" placeholder="User ID">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer contact no.(primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="contactPrimary" placeholder="Customer contact no.(primary)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer contact no.(secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="contactSecondary" placeholder="Customer contact no.(secondary)">
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Customer Email(primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="emailPrimary" placeholder="Customer Email(primary)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer Email(secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="emailSecondary" placeholder="Customer Email(secondary)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Telephone (primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="telephonePrimary" placeholder="Telephone (primary)">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Customer Designation(primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="designationPrimary" placeholder="Customer Designation(primary)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer Designation(secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="designationSecondary" placeholder="Customer Designation(secondary)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Is Active ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isActive3" placeholder="Is Active ?">
+                  <mat-option *ngFor="let g of groupList" [value]="g?.iid">
+                    {{g?.susergroupname}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="submit-btn setper-btn">
+            <button mat-raised-button type="button" matStepperPrevious>Back</button>
+            <button mat-raised-button type="submit" matStepperNext>Submit</button>
+          </div>
+
+        </mat-step>
+      </mat-stepper>
+
+
+
+
+    </form>
+  </div>
+</mat-dialog-content>

@@ -1,32 +1,67 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
 
 @Component({
-  selector: 'ngx-user-view',
-  templateUrl: './user-view.component.html',
-  styleUrls: ['./user-view.component.scss'],
+  selector: 'ngx-customer-view',
+  templateUrl: './customer-view.component.html',
+  styleUrls: ['./customer-view.component.scss'],
 })
-export class UserViewComponent implements OnInit {
+export class CustomerViewComponent implements OnInit {
   userForm: FormGroup;
   usergroup: any;
   groupList: any = [];
   groupId: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<UserViewComponent>,
+    public dialogRef: MatDialogRef<CustomerViewComponent>,
     public fb: FormBuilder,
     public dialog: MatDialog,
     public http: HttpServiceService,
   ) {
     this.userForm = this.fb.group({
-      sname: ['', Validators.required],
-      group: ['', Validators.required],
-      semailid: ['', Validators.required],
-      icontectnumber: ['', Validators.required],
-      accountLock: [''],
-      resetpass: [''],
+      accountId: ['', Validators.required],
+      companyName: ['', Validators.required],
+      businessUnit: ['', Validators.required],
+      noOfEmp: ['', Validators.required],
+      publicTradedComp: ['', Validators.required],
+      governmentOwned: ['', Validators.required],
+      annualRevenu: ['', Validators.required],
+      saassPlatform: ['', Validators.required],
+      cisoPresent: ['', Validators.required],
+      noOfSectem: ['', Validators.required],
+      cheifPrivacy: ['', Validators.required],
+      hippaOffice: ['', Validators.required],
+      riseOffice: ['', Validators.required],
+      secOperating: ['', Validators.required],
+      usPresence: ['', Validators.required],
+      emeaPresence: ['', Validators.required],
+      apacPresence: ['', Validators.required],
+      latmPresence: ['', Validators.required],
+      chinaPresence: ['', Validators.required],
+      papAccount: ['', Validators.required],
+      isActive1: ['', Validators.required],
+      userId: ['', Validators.required],
+      addressType: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      country: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      contactNo: ['', Validators.required],
+      latitude: ['', Validators.required],
+      logitude: ['', Validators.required],
+      landMark: ['', Validators.required],
+      isActive2: ['', Validators.required],
+      userId2: ['', Validators.required],
+      contactPrimary: ['', Validators.required],
+      contactSecondary: ['', Validators.required],
+      emailPrimary: ['', Validators.required],
+      emailSecondary: ['', Validators.required],
+      telephonePrimary: ['', Validators.required],
+      designationPrimary: ['', Validators.required],
+      designationSecondary: ['', Validators.required],
+      isActive3: ['', Validators.required],
     });
   }
 

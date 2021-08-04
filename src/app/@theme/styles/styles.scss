@@ -202,6 +202,10 @@ body {
   flex-wrap: wrap;
 }
 
+.df {
+  display: flex;
+}
+
 .df-ac {
   display: flex !important;
   align-items: center;
@@ -210,6 +214,11 @@ body {
 .df-a-f-e {
   display: flex;
   align-items: flex-end;
+}
+
+.df-ab {
+  display: flex;
+  align-items: baseline;
 }
 
 .df-ac1 {
@@ -221,6 +230,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+.df-b-b {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .df-c-b {
@@ -235,10 +250,20 @@ body {
   justify-content: flex-end;
 }
 
-.df-c-jc {
+.df-b-fe {
   display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+}
+
+.df-c-jc {
+  display: flex !important;
   align-items: center;
   justify-content: center;
+}
+
+.a-s-e {
+  align-self: end;
 }
 
 .c-p {
@@ -301,7 +326,7 @@ body {
 }
 
 .pb-1 {
-  padding-bottom: 1%;
+  padding-bottom: 1% !important;
 }
 .pb-4 {
   padding-bottom: 3%;
@@ -316,14 +341,60 @@ nb-layout-column {
 }
 
 .data-table {
-  .card-header {
+  .table-name-header {
+    padding: 20px 20px 0px;
+    .table-title {
+      color: #000;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
     .add-btn {
       background: #ff4a00;
       color: #fff;
       padding: 6px 10px;
       border-radius: 5px;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .search-add-sec {
+      .search-input {
+        padding-right: 15px;
+      }
+    }
+    .ref-btn {
+      padding-left: 15px;
+      mat-icon {
+        background: #ff4a00;
+        color: #fff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+      }
     }
   }
+}
+
+.search-input .mat-form-field-appearance-legacy .mat-form-field-infix {
+  border: 1px solid #ff4a00 !important;
+  padding-left: 10px !important;
+}
+
+.search-input .mat-form-field.mat-focused .mat-form-field-label {
+  color: #ff4a00;
+  font-weight: 500;
+}
+
+.search-input .mat-form-field-appearance-legacy .mat-form-field-label {
+  padding-left: 10px !important;
+}
+
+.search-input .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #ff4a00 !important;
+}
+
+.search-input .mat-form-field.mat-focused .mat-form-field-ripple {
+  background: #ff4a00;
 }
 
 .table-card {
@@ -357,7 +428,7 @@ nb-layout-column {
   .table-sec {
     height: 400px;
     overflow: auto;
-    margin: 2%;
+    margin: 0% 2% 2%;
     td > span > mat-icon {
       font-size: 17px;
     }
@@ -365,7 +436,7 @@ nb-layout-column {
 }
 
 .table-sec td.mat-cell {
-  text-align: center;
+  text-align: left;
   padding: 0 5px 0 0;
   font-size: 11px;
   color: #2c3e50;
@@ -377,7 +448,7 @@ nb-layout-column {
 }
 
 .table-sec .mat-sort-header-container {
-  justify-content: center;
+  // justify-content: center;
   // color: white;
 }
 
@@ -398,6 +469,13 @@ nb-layout-column {
     overflow: auto !important;
     max-height: 89vh;
     -webkit-overflow-scrolling: touch !important;
+  }
+  .dialog-header {
+    height: 45px !important;
+    .dialog-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
   }
 }
 
@@ -496,6 +574,15 @@ nb-layout-column {
 
 button {
   outline: unset !important;
+}
+
+.profile-menu-sec {
+  margin-top: 15px !important;
+  button {
+    color: #000;
+    font-size: 13px;
+    font-weight: 500;
+  }
 }
 
 // .mat-drawer-opened {

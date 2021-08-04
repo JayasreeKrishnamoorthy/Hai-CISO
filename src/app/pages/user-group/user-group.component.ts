@@ -44,6 +44,14 @@ export class UserGroupComponent implements OnInit {
     });
   }
 
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.userGroupList.filter = filterValue.trim().toLowerCase();
+    if (this.userGroupList.paginator) {
+      this.userGroupList.paginator.firstPage();
+    }
+  }
+
   addRequest(name: any, val?: any): void {
     const dialogRef = this.dialog.open(UserGroupViewComponent, {
       width: 'auto',

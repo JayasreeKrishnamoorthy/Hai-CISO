@@ -1,10 +1,65 @@
-  <div>
-    <h1 class="text-primary">Customers</h1>
-  </div>
+<nb-layout>
+  <nb-layout-column class="app-layout-column">
+    <div class="data-table">
+      <nb-card>
+        <div class="df-b-b table-name-header">
+          <div class="table-title">Customer</div>
 
-
-    <button  class="add-but" nbButton  hero status="info">Add new customer</button>
-
-<br>
-
-<ng2-smart-table [settings]="settings" ></ng2-smart-table>
+          <div class="df-b-fe w50 search-add-sec">
+            <div class="search-input">
+              <mat-form-field floatLabel="never">
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search.....">
+              </mat-form-field>
+            </div>
+            <div>
+              <span class="add-btn c-p" (click)="addRequest('Add Customer')">Add New</span>
+            </div>
+            <div class="a-s-e ref-btn">
+              <mat-icon class="df-c-jc">refresh</mat-icon>
+            </div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-sec">
+            <table mat-table [dataSource]="customerList" matSort style="width: 100%;">
+              <ng-container matColumnDef="sNo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
+              </ng-container>
+              <ng-container matColumnDef="companyName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.scompanyname | titlecase}} </td>
+              </ng-container>
+              <ng-container matColumnDef="customerName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.icontectnumber | titlecase}} </td>
+              </ng-container>
+              <ng-container matColumnDef="userGroup">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> User Group </th>
+                <td mat-cell *matCellDef="let row"> {{row.semailid}} </td>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                <td mat-cell *matCellDef="let row">
+                  <span (click)="addRequest('Edit Customer', row)" class="c-p">
+                    <mat-icon matTooltip="Edit">edit</mat-icon>
+                  </span>
+                  <span (click)="addRequest('View Customer', row)" class="c-p">
+                    <mat-icon matTooltip="View">visibility</mat-icon>
+                  </span>
+                  <span (click)="confirmation(row)" class="c-p">
+                    <mat-icon matTooltip="Delete">delete</mat-icon>
+                  </span>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+              </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </div>
+        </div>
+      </nb-card>
+    </div>
+  </nb-layout-column>
+</nb-layout>
