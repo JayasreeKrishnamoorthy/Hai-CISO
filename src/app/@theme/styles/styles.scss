@@ -168,6 +168,59 @@ ngx-one-column-layout {
   text-transform: uppercase;
 }
 
+.align-items-center {
+  -ms-flex-align: center!important;
+  align-items: center!important;
+}
+.justify-content-center {
+  -ms-flex-pack: center!important;
+  justify-content: center!important;
+}
+.d-flex {
+  display: -ms-flexbox!important;
+  display: flex!important;
+}
+.position-relative {
+  position: relative!important;
+}
+
+
+@-webkit-keyframes zoom {
+0% {
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+-webkit-transition: 0.6s;
+-o-transition: 0.6s;
+transition: 0.6s;
+}
+100% {
+-webkit-transform: rotate(360deg);
+transform: rotate(360deg);
+-webkit-transition: 0.6s;
+-o-transition: 0.6s;
+transition: 0.6s;
+}
+}
+
+@keyframes zoom {
+0% {
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+-webkit-transition: 0.6s;
+-o-transition: 0.6s;
+transition: 0.6s;
+}
+100% {
+-webkit-transform: rotate(360deg);
+transform: rotate(360deg);
+-webkit-transition: 0.6s;
+-o-transition: 0.6s;
+transition: 0.6s;
+}
+}
+// Loader End
+
+
 .bg {
   background-image: linear-gradient(310deg, #2152ff, #21d4fd);
 }

@@ -137,4 +137,21 @@ export class HttpServiceService {
     );
   }
 
+putroles(obj){
+  return this.http.put(this.apiUrl+"/roles",obj)
+    .pipe(
+      tap(_ => console.log('response received')),
+      catchError(this.handleError('PUTroles', []))
+    );
+}
+
+postroles(obj){
+  return this.http.post(this.apiUrl+"/roles",obj)
+    .pipe(
+      tap(_ => console.log('response received')),
+      catchError(this.handleError('POSTroles', []))
+    );
+}
+
+
 }

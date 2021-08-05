@@ -1,3 +1,4 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
@@ -85,12 +86,17 @@ updateRole(): void {
     add: this.roleForm.controls.add.value,
     id: this.data?.roleDetails?.iid,
   };
-  this.http.putToken(`/roles`, obj).subscribe(data => {
+ 
+  let old0 =JSON.stringify(obj,this.replacer);
+  let old = JSON.stringify(old0).replace(/true/g, "YES");
+  let old2 = old.replace(/false/g, "NO");
+  this.http.putroles(JSON.parse(old2)).subscribe(data => {
     if (data[`success`] === true) {
       this.dialogRef.close();
     }
   });
-}
+} 
+
 
 addRole(): void {
   const obj = {
@@ -103,13 +109,22 @@ addRole(): void {
     add: this.roleForm.controls.add.value,
     id: this.data?.roleDetails?.iid,
   };
-  this.http.postToken(`/roles`, obj).subscribe(data => {
+  let old0 =JSON.stringify(obj,this.replacer);
+  let old = JSON.stringify(old0).replace(/true/g, "YES");
+  let old2 = old.replace(/false/g, "NO");
+  this.http.postroles(JSON.parse(old2)).subscribe(data => {
     if (data[`success`] === true) {
       this.dialogRef.close();
     }
   });
 }
 
+replacer(key, value) {
+  if (typeof value === "boolean"||typeof value === "number") {
+    return String(value);
+  }
+  return value;
+}
 
 
   onboardRole(): void {
