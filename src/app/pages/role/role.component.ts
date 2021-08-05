@@ -10,13 +10,14 @@ import { HttpServiceService } from '../../Services/http_service/http-service.ser
 import { RoleViewComponent } from '../components/role-view/role-view.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
+import { GeoService } from '../../Services/geo.service';
 @Component({
   selector: 'ngx-role',
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.scss'],
 })
 export class RoleComponent implements OnInit {
-  
+
   displayedColumns: string[] = ['sNo', 'role', 'read', 'add', 'edit', 'delete', 'execute', 'schedule', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
@@ -27,11 +28,16 @@ export class RoleComponent implements OnInit {
     private dialogService: NbDialogService,
     public dialog: MatDialog,
     public router: Router,
-    private httpService: HttpServiceService
+    private httpService: HttpServiceService,
+    public geo: GeoService,
   ) { }
 
   ngOnInit(): void {
-    this.getRoleList()
+    this.getRoleList();
+  }
+
+  refresh(): void {
+    this.ngOnInit();
   }
 
 
@@ -67,6 +73,14 @@ export class RoleComponent implements OnInit {
     };
   }
 
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.roleList.filter = filterValue.trim().toLowerCase();
+    if (this.roleList.paginator) {
+      this.roleList.paginator.firstPage();
+    }
+  }
+
 
   confirmation(val: any): void {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
@@ -76,7 +90,7 @@ export class RoleComponent implements OnInit {
       disableClose: true,
       panelClass: '',
       data: {
-        message: 'Are you sure, you want to delete this User ?',
+        message: 'Are you sure, you want to delete this Role ?',
       },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -89,7 +103,10 @@ export class RoleComponent implements OnInit {
 
   deleteRole(val: any): void {
     this.http.delToken(`/roles/${val?.iid}`).subscribe(data => {
-      this.getRoleList();
+      if (data[`success`] === true) {
+        this.getRoleList();
+      }
+      this.geo.openToast(data[`message`]);
     });
   }
 

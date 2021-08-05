@@ -77,7 +77,7 @@
     </div>
 
     <mat-menu #menu="matMenu" class="profile-menu-sec">
-      <button mat-menu-item *ngFor="let p of profileMenu">
+      <button mat-menu-item *ngFor="let p of profileMenu" (click)="profileAction(p)">
         <mat-icon>{{p?.icon}}</mat-icon>
         <span>{{p?.name}}</span>
       </button>

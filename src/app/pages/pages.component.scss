@@ -155,10 +155,15 @@
   padding-bottom: 25px;
 }
 
+.example-sidenav {
+  z-index: unset !important;
+}
+
 .sideMenuIcon {
   visibility: unset !important;
   width: 6% !important;
   left: 96px !important;
+  z-index: unset !important;
   .a-menu {
     background-color: unset !important;
     box-shadow: unset !important;
@@ -174,6 +179,9 @@
     img {
       width: 120%;
     }
+  }
+  &:hover {
+    z-index: 1 !important;
   }
 }
 

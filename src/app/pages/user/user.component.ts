@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
+import { GeoService } from '../../Services/geo.service';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class UserComponent implements OnInit {
     public http: HttpServiceService,
     private dialogService: NbDialogService,
     public dialog: MatDialog,
+    public geo: GeoService,
   ) {
     // const data = this.service.getData();
     // this.source.load(data);
@@ -39,6 +41,10 @@ export class UserComponent implements OnInit {
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
     this.getUserList();
+  }
+
+  refresh(): void {
+    this.ngOnInit();
   }
 
   getUserList() {
@@ -107,7 +113,10 @@ export class UserComponent implements OnInit {
 
   deleteUser(val: any): void {
     this.http.delToken(`/user-management/${val?.iuserid}`).subscribe(data => {
-      this.getUserList();
+      if (data[`success`] === true) {
+        this.getUserList();
+      }
+      this.geo.openToast(data[`message`]);
     });
   }
 

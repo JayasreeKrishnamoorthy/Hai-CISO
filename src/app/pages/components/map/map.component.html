@@ -1,0 +1,47 @@
+<div class="colored-line"></div>
+<mat-toolbar class="dialog-header">
+  <div class="df-c-b w100">
+    <div class="dialog-title">Search Address</div>
+    <div>
+      <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+
+<mat-dialog-content class="dialog-content">
+  <div>
+    <form [formGroup]="addressForm" autocomplete="off" (ngSubmit)="addressForm.valid && getCurrentAddress()"
+      class="form-sec">
+      <div class="address-cont">
+        <div class="df-c-b ">
+          <div class="w70">
+            <div class="form-lable-name">Search Address</div>
+            <mat-form-field appearance="outline" class="w90">
+              <input matInput formControlName="currentAddress" [matAutocomplete]="auto" (keyup)="getAddressList($event)" placeholder="Search Address"
+                id="dragAddress">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getOptionText"
+                (optionSelected)='getlatlong($event.option.value)'>
+                <mat-option *ngFor="let a of addressList" [value]="a" class="d-none">
+                  {{a}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="w20">
+            <button mat-raised-button type="submit" class="choose-btn w80">Submit</button>
+          </div>
+        </div>
+        <input matInput style="display: none;" id="latitude">
+        <input matInput style="display: none;" id="longitude">
+        <div>
+          <div class="mapView">
+            <div #map class="mapFld">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

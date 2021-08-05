@@ -3,10 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { GeoService } from '../../Services/geo.service';
 import { HttpServiceService } from '../../Services/http_service/http-service.service';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
 import { CustomerViewComponent } from '../components/customer-view/customer-view.component';
-import { UserViewComponent } from '../components/user-view/user-view.component';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { UserViewComponent } from '../components/user-view/user-view.component';
   styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit {
-  displayedColumns: string[] = ['sNo', 'companyName', 'customerName', 'userGroup', 'action'];
+  displayedColumns: string[] = ['sNo', 'companyName', 'email', 'contact', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   customerList: any = [];
@@ -23,6 +23,7 @@ export class CustomersComponent implements OnInit {
 
   constructor(
     public http: HttpServiceService,
+    public geo: GeoService,
     public dialog: MatDialog,
   ) {
   }
@@ -33,8 +34,12 @@ export class CustomersComponent implements OnInit {
     this.getCustomerList();
   }
 
+  refresh(): void {
+    this.ngOnInit();
+  }
+
   getCustomerList() {
-    this.http.getToken(`/customer-onboard`).subscribe(data => {
+    this.http.getToken(`/customer-onboard?count=${100}&page=${1}`).subscribe(data => {
       if (data[`success`] === true) {
         this.customerList = new MatTableDataSource(data?.data?.data);
         this.customerList.paginator = this.paginator;
@@ -70,14 +75,6 @@ export class CustomersComponent implements OnInit {
     });
   }
 
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
 
   confirmation(val: any): void {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
@@ -98,8 +95,11 @@ export class CustomersComponent implements OnInit {
   }
 
   deleteCustomer(val: any): void {
-    this.http.delToken(`/customer-onboard/${val?.iuserid}`).subscribe(data => {
-      this.getCustomerList();
+    this.http.delToken(`/customer-onboard/${val?.cusid}`).subscribe(data => {
+      if (data[`success`] === true) {
+        this.getCustomerList();
+      }
+      this.geo.openToast(data[`message`]);
     });
   }
 

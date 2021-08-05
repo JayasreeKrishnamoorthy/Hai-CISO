@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { GeoService } from '../../../Services/geo.service';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class UserGroupViewComponent implements OnInit {
     public fb: FormBuilder,
     public dialog: MatDialog,
     public http: HttpServiceService,
+    public geo: GeoService,
   ) {
     this.userForm = this.fb.group({
       usergroupname: ['', Validators.required],
@@ -70,6 +72,7 @@ export class UserGroupViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.dialogRef.close();
       }
+      this.geo.openToast(data[`message`]);
     });
   }
 
@@ -83,6 +86,7 @@ export class UserGroupViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.dialogRef.close();
       }
+      this.geo.openToast(data[`message`]);
     });
   }
 

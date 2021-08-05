@@ -585,6 +585,11 @@ button {
   }
 }
 
+mat-drawer-content {
+  position: unset !important;
+  z-index: unset !important;
+}
+
 // .mat-drawer-opened {
 //   overflow: hidden !important;
 //   margin-left: 205px !important;

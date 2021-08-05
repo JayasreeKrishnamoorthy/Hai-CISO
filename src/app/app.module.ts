@@ -26,6 +26,7 @@ import { LoggedinauthgaurdService } from './Services/auth_guard/loggedinauthgaur
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpConfigInterceptor } from './Services/http_service/httpConfig.interceptor';
 import { Http, RequestOptions } from '@angular/http';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   providers: [AUTH_PROVIDERS, LoggedinauthgaurdService,
@@ -56,6 +57,7 @@ import { Http, RequestOptions } from '@angular/http';
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    MatDialogModule,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,4 +1,6 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpServiceService } from '../Services/http_service/http-service.service';
 
 import { MENU_ITEMS } from './pages-menu';
 
@@ -137,6 +139,11 @@ export class PagesComponent {
   menuToggle = false;
   userDetails: any;
 
+  constructor(
+    public http: HttpServiceService,
+    public router: Router,
+  ) { }
+
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
     this.userDetails = localStorage.getItem('PSPUser');
@@ -150,6 +157,15 @@ export class PagesComponent {
         element[`drop`] = false;
       }
     });
+  }
+
+  profileAction(val) {
+    if (val?.name === 'Logout') {
+      localStorage.removeItem('pspkey');
+      localStorage.removeItem('PSPUser');
+      this.http.updateUserDetails();
+      this.router.navigate(['/auth/login']);
+    }
   }
 
 }

@@ -20,6 +20,7 @@ import { RoleViewComponent } from './role-view/role-view.component';
 import { UserGroupViewComponent } from './user-group-view/user-group-view.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { CustomerViewComponent } from './customer-view/customer-view.component';
+import { MapComponent } from './map/map.component';
 
 
 
@@ -30,6 +31,7 @@ import { CustomerViewComponent } from './customer-view/customer-view.component';
     UserGroupViewComponent,
     ConfirmationComponent,
     CustomerViewComponent,
+    MapComponent,
   ],
   entryComponents: [
     UserViewComponent,
@@ -37,6 +39,7 @@ import { CustomerViewComponent } from './customer-view/customer-view.component';
     UserGroupViewComponent,
     ConfirmationComponent,
     CustomerViewComponent,
+    MapComponent,
   ],
   imports: [
     CommonModule,
