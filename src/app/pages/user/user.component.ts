@@ -20,7 +20,7 @@ import { GeoService } from '../../Services/geo.service';
 export class UserComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['sNo', 'name', 'contact', 'mail', 'userGroup', 'action'];
+  displayedColumns: string[] = ['name', 'contact', 'mail', 'userGroup', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   userList: any = [];

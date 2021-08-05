@@ -30,7 +30,7 @@ export class GeoService {
 
   updatePredictions(text: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this.addressAutocomplete.getPlacePredictions({ input: text, componentRestrictions: { country: 'IN' } },
+      this.addressAutocomplete.getPlacePredictions({ input: text },
         (predictions: any[], status: string) => {
           if (status === 'OK') {
             const data = (predictions.map((p: { description: any; }) => p.description));

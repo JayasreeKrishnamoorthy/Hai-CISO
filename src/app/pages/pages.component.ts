@@ -33,31 +33,31 @@ export class PagesComponent {
     },
     {
       path: '/pages/analyze',
-      name: 'Analyse',
+      name: 'Analyze',
       icon: 'cast',
       drop: false,
     },
     {
-      path: '/pages/Statergize',
-      name: 'Statergize',
+      path: '/pages/stratergize',
+      name: 'Stratergize',
       icon: 'next_plan',
       drop: false,
     },
     {
-      path: '/pages/Operationalize',
+      path: '/pages/operationalize',
       name: 'Operationalize',
       icon: 'cached',
       drop: false,
     },
     {
-      path: '/pages/Integration',
+      path: '/pages/integration',
       name: 'Integration',
       icon: 'integration_instructions',
       drop: false,
     },
     {
-      path: '/pages/Resource',
-      name: 'Resource',
+      path: '/pages/resources',
+      name: 'Resources',
       icon: 'person',
       drop: false,
     },
@@ -85,17 +85,17 @@ export class PagesComponent {
       drop: false,
     },
     {
-      path: '/layout/logs',
+      path: '/pages/logs',
       name: 'Logs',
       icon: 'view_in_ar',
       drop: false,
     },
-    {
-      path: '/layout/domin',
-      name: 'Domain Analyser',
-      icon: 'language',
-      drop: false,
-    },
+    // {
+    //   path: '/layout/domin',
+    //   name: 'Domain Analyser',
+    //   icon: 'language',
+    //   drop: false,
+    // },
   ];
 
   headerMenu: any = [
@@ -110,6 +110,9 @@ export class PagesComponent {
     },
     {
       name: 'My Quicklinks',
+    },
+    {
+      name: 'Support & Contact',
     },
   ];
 

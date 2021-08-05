@@ -98,17 +98,16 @@ export class UserViewComponent implements OnInit {
     const obj = {
       sname: this.userForm.controls.sname.value,
       semailid: this.userForm.controls.semailid.value,
-      iusergroupid: this.userForm.controls.group.value,
       icontectnumber: this.userForm.controls.icontectnumber.value,
       accountLock: this.userForm.controls.accountLock.value,
       resetpass: this.userForm.controls.resetpass.value,
       id: this.data?.userDetails?.iuserid,
     };
-    console.log("checkbox",this.userForm.controls.accountLock.value)
     if (this.userForm.controls.group.value !== this.groupId) {
       obj[`old_group_id`] = this.groupId;
+      obj[`iusergroupid`] = this.userForm.controls.group.value;
     } else {
-      obj[`old_group_id`] = this.usergroup;
+      obj[`old_group_id`] = this.userForm.controls.group.value;
     }
     this.http.putToken(`/user-management`, obj).subscribe(data => {
       if (data[`success`] === true) {

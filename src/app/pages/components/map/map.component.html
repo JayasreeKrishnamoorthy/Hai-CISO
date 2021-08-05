@@ -11,25 +11,25 @@
 </mat-toolbar>
 
 <mat-dialog-content class="dialog-content">
-  <div>
+  <div class="user-view-page">
     <form [formGroup]="addressForm" autocomplete="off" (ngSubmit)="addressForm.valid && getCurrentAddress()"
       class="form-sec">
       <div class="address-cont">
-        <div class="df-c-b ">
+        <div class="df-fe-b">
           <div class="w70">
             <div class="form-lable-name">Search Address</div>
             <mat-form-field appearance="outline" class="w90">
-              <input matInput formControlName="currentAddress" [matAutocomplete]="auto" (keyup)="getAddressList($event)" placeholder="Search Address"
-                id="dragAddress">
+              <input matInput formControlName="currentAddress" [matAutocomplete]="auto" (keyup)="getAddressList($event)"
+                placeholder="Search Address" id="dragAddress">
               <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getOptionText"
                 (optionSelected)='getlatlong($event.option.value)'>
-                <mat-option *ngFor="let a of addressList" [value]="a" class="d-none">
+                <mat-option *ngFor="let a of addressList" [value]="a">
                   {{a}}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
           </div>
-          <div class="w20">
+          <div class="w30 submit-btn">
             <button mat-raised-button type="submit" class="choose-btn w80">Submit</button>
           </div>
         </div>

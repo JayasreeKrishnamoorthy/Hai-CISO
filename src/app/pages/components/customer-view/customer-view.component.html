@@ -14,16 +14,50 @@
     <form [formGroup]="customerForm" #f="ngForm" (ngSubmit)="customerForm.valid && onboardCustomer()" autocomplete="off"
       class="form-sec">
 
-      <mat-stepper #stepper>
 
-        <mat-step>
+      <div class="stepper df-c-a">
+        <div class="w10 df-c-jc c-p" (click)="stepControl(1)">
+          <div class="step-title" [ngStyle]="{'background': step == 1 ? '#ff4a00' : '#242939'}">
+            <span *ngIf="step == 1">1</span>
+            <span *ngIf="step !== 1">
+              <mat-icon class="df-c-jc">edit</mat-icon>
+            </span>
+          </div>
+        </div>
+        <div class="w35 line-sec"></div>
+        <div class="w10 df-c-jc c-p" (click)="stepControl(2)">
+          <div class="step-title" [ngStyle]="{'background': step == 2 ? '#ff4a00' : '#242939'}">
+            <span *ngIf="step == 2">2</span>
+            <span *ngIf="step !== 2">
+              <mat-icon class="df-c-jc">edit</mat-icon>
+            </span>
+          </div>
+        </div>
+        <div class="w35 line-sec"></div>
+        <div class="w10 df-c-jc c-p" (click)="stepControl(3)">
+          <div class="step-title" [ngStyle]="{'background': step == 3 ? '#ff4a00' : '#242939'}">
+            <span *ngIf="step == 3">3</span>
+            <span *ngIf="step !== 3">
+              <mat-icon class="df-c-jc">edit</mat-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="input-cnt-sec">
+        <!-- <mat-stepper #stepper> -->
+
+        <div *ngIf="step == 1">
+
+
           <div class="df-ac f-w pb-1">
-            <div class="w33">
+            <!-- <div class="w33">
               <div class="form-lable-name">Account ID</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="iaccountid" placeholder="Account ID">
               </mat-form-field>
-            </div>
+            </div> -->
             <div class="w33">
               <div class="form-lable-name">Company Name</div>
               <mat-form-field appearance="outline">
@@ -33,22 +67,26 @@
             <div class="w33">
               <div class="form-lable-name">Company Type</div>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="scompanytype" placeholder="Company Type">
+                <mat-select formControlName="scompanytype" placeholder="Company Type">
+                  <mat-option *ngFor="let c of companyType" [value]="c">
+                    {{c | uppercase}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
-          </div>
-          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Business Unit</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="sbusinessunti" placeholder="Business Unit">
               </mat-form-field>
             </div>
+          </div>
+          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">No. of Employee</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="snumofemployee" placeholder="No. of Employee"
-                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+                  pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
             <div class="w33">
@@ -56,36 +94,17 @@
               <mat-form-field appearance="outline">
                 <mat-select formControlName="ispublictradedcomp" placeholder="Public Traded Comp">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-          </div>
-          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Government Owned</div>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="isgovowned" placeholder="Government Owned">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="w33">
-              <div class="form-lable-name">Anual Revenu</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="dannualrevenue" placeholder="Anual Revenu"
-                pattern="(^0$)|(^[1-9]\d{0,9}$)">
-              </mat-form-field>
-            </div>
-            <div class="w33">
-              <div class="form-lable-name">Saasapp Platform</div>
-              <mat-form-field appearance="outline">
-                <mat-select formControlName="issaasappplatform" placeholder="Saasapp Platform">
-                  <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -93,20 +112,39 @@
           </div>
           <div class="df-ac f-w pb-1">
             <div class="w33">
-              <div class="form-lable-name">CISO Present</div>
+              <div class="form-lable-name">Anual Revenu</div>
               <mat-form-field appearance="outline">
-                <mat-select formControlName="iscisopresent" placeholder="CISO Present">
+                <input matInput formControlName="dannualrevenue" placeholder="Anual Revenu"
+                  pattern="(^0$)|(^[1-9]\d{0,30}$)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">SaaS App Platform</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="issaasappplatform" placeholder="SaaS App Platform">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div class="w33">
-              <div class="form-lable-name">No. of Sectem Member</div>
+              <div class="form-lable-name">CISO Present</div>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="noofsectemmember" placeholder="No. of Sectem Member"
-                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+                <mat-select formControlName="iscisopresent" placeholder="CISO Present">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">No. of Security Team Member</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="noofsectemmember" placeholder="No. of Security Team Member"
+                  pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
             <div class="w33">
@@ -114,7 +152,17 @@
               <mat-form-field appearance="outline">
                 <mat-select formControlName="ischeifprivacyofficer" placeholder="Cheif Privacy Officer">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">HIPAA Officer</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="ishipaaofficer" placeholder="HIPAA Officer">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -122,21 +170,11 @@
           </div>
           <div class="df-ac f-w pb-1">
             <div class="w33">
-              <div class="form-lable-name">HIPAA Officer</div>
-              <mat-form-field appearance="outline">
-                <mat-select formControlName="ishipaaofficer" placeholder="HIPAA Officer">
-                  <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="w33">
               <div class="form-lable-name">Risk Officer</div>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="isriskofficer" placeholder="Risk Officer">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -146,7 +184,17 @@
               <mat-form-field appearance="outline">
                 <mat-select formControlName="issecopsteam" placeholder="Security Operating Team">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Have you been in US before</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isuspresence" placeholder="Have you been in US before">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -154,21 +202,11 @@
           </div>
           <div class="df-ac f-w pb-1">
             <div class="w33">
-              <div class="form-lable-name">Have you been in US before</div>
-              <mat-form-field appearance="outline">
-                <mat-select formControlName="isuspresence" placeholder="Have you been in US before">
-                  <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="w33">
               <div class="form-lable-name">EMEA Presence</div>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="isemeapresence" placeholder="EMEA Presence">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -178,7 +216,17 @@
               <mat-form-field appearance="outline">
                 <mat-select formControlName="isapacpresence" placeholder="APAC Presence ?">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">LATM Presence ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="islatmpresence" placeholder="LATM Presence ?">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -186,21 +234,11 @@
           </div>
           <div class="df-ac f-w pb-1">
             <div class="w33">
-              <div class="form-lable-name">LATM Presence ?</div>
-              <mat-form-field appearance="outline">
-                <mat-select formControlName="islatmpresence" placeholder="LATM Presence ?">
-                  <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="w33">
               <div class="form-lable-name">CHINA Presence ?</div>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="ischinapresence" placeholder="CHINA Presence ?">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -209,24 +247,26 @@
               <div class="form-lable-name">PSP Account Executive ?</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="ipspacctexec" placeholder="PSP Account Executive ?"
-                pattern="(^0$)|(^[1-9]\d{0,9}$)">
-                <!-- <mat-select formControlName="ipspacctexec" placeholder="PSP Account Executive ?">
-                  <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
-                  </mat-option>
-                </mat-select> -->
+                  pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
-          </div>
-          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Risk Team</div>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="isriskTeam" placeholder="Risk Team">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
-                    {{g}}
+                    {{g | uppercase}}
                   </mat-option>
                 </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Website Link</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="website_url" placeholder="Website Link"
+                  pattern="[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}(.[a-z]{2,4})?\b(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?">
               </mat-form-field>
             </div>
             <div class="w33">
@@ -247,85 +287,193 @@
             </div>
           </div>
           <div class="submit-btn setper-btn">
-            <button mat-raised-button type="button" matStepperNext>Next</button>
+            <button mat-raised-button type="button" (click)="pageNavigation('next', 2)">Next</button>
           </div>
-        </mat-step>
 
-        <mat-step>
-          <div class="df-ac f-w pb-1">
-            <div class="w33">
-              <div class="form-lable-name">Address</div>
-              <mat-form-field appearance="outline" (click)="data?.name !== 'View Customer' ? openMap() : ''">
-                <input matInput formControlName="address" placeholder="Address">
-              </mat-form-field>
+        </div>
+
+        <div *ngIf="step == 2">
+
+          <form [formGroup]="addressForm" #f1="ngForm" autocomplete="off" class="form-sec"
+            (ngSubmit)="addressForm.valid && addAddress(f1)" *ngIf="data?.name !== 'View Customer'">
+            <div class="df-ac f-w pb-1">
+              <div class="w33">
+                <div class="form-lable-name">Address</div>
+                <mat-form-field appearance="outline" (click)="data?.name !== 'View Customer' ? openMap() : ''">
+                  <input matInput formControlName="address" placeholder="Address" readonly>
+                </mat-form-field>
+              </div>
+              <div class="w33">
+                <div class="form-lable-name">Address Type</div>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="addresstype" placeholder="Address Type">
+                </mat-form-field>
+              </div>
+              <div class="w33">
+                <div class="form-lable-name">Country</div>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="country" placeholder="Country">
+                </mat-form-field>
+              </div>
             </div>
-            <div class="w33">
-              <div class="form-lable-name">Address Type</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="addresstype" placeholder="Address Type">
-              </mat-form-field>
+            <div class="df-ac f-w pb-1">
+              <div class="w33">
+                <div class="form-lable-name">State</div>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="state" placeholder="State">
+                </mat-form-field>
+              </div>
+              <div class="w33">
+                <div class="form-lable-name">City</div>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="city" placeholder="City">
+                </mat-form-field>
+              </div>
+              <div class="w33">
+                <div class="form-lable-name">Zip Code</div>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="zipcode" placeholder="Zip Code" pattern="(^0$)|(^[1-9]\d{0,30}$)">
+                </mat-form-field>
+              </div>
             </div>
-            <div class="w33">
-              <div class="form-lable-name">City</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="city" placeholder="City">
-              </mat-form-field>
+            <div class="df-ac f-w pb-1">
+              <div class="w33">
+                <div class="form-lable-name">Land Mark</div>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="landmark" placeholder="Land Mark">
+                </mat-form-field>
+              </div>
+              <div class="w33">
+                <div class="form-lable-name">Contact no.</div>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="contectnum" placeholder="Contact no."
+                    pattern="(^0$)|(^[1-9]\d{0,30}$)">
+                </mat-form-field>
+              </div>
             </div>
+
+
+            <div class="submit-btn t-c setper-btn">
+              <button mat-raised-button type="submit">
+                <span *ngIf="!editAddBtn">ADD</span>
+                <span *ngIf="editAddBtn">UPDATE</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="data-table customer-view">
+            <nb-card class="add-card">
+              <div class="df-b-b table-name-header">
+                <div class="table-title">Address</div>
+
+                <div class="df-b-fe w50 search-add-sec">
+                  <div class="search-input">
+                    <mat-form-field floatLabel="never">
+                      <input matInput (keyup)="applyFilter($event)" placeholder="Search.....">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="table-card">
+                <div class="table-sec">
+                  <table mat-table [dataSource]="addressListTable" matSort style="width: 100%;">
+                    <ng-container matColumnDef="address">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+                      <td mat-cell *matCellDef="let row"> {{row.address}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="addressType">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Address Type </th>
+                      <td mat-cell *matCellDef="let row"> {{row.addresstype}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="country">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+                      <td mat-cell *matCellDef="let row"> {{row.country}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="state">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+                      <td mat-cell *matCellDef="let row"> {{row?.state}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="city">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
+                      <td mat-cell *matCellDef="let row"> {{row?.city}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="zipCode">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Zip Code </th>
+                      <td mat-cell *matCellDef="let row"> {{row?.zipcode}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="landMark">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Land Mark </th>
+                      <td mat-cell *matCellDef="let row"> {{row?.landmark}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="contact">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact no. </th>
+                      <td mat-cell *matCellDef="let row"> {{row?.contectnum}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action" *ngIf="data?.name !== 'View Customer'">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                      <td mat-cell *matCellDef="let row;let i = index">
+                        <span (click)="editAddress(row)" class="c-p">
+                          <mat-icon matTooltip="Edit">edit</mat-icon>
+                        </span>
+                        <span (click)="confirmation(row, i)" class="c-p">
+                          <mat-icon matTooltip="Delete">delete</mat-icon>
+                        </span>
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                  </table>
+                  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+              </div>
+            </nb-card>
           </div>
-          <div class="df-ac f-w pb-1">
-            <div class="w33">
-              <div class="form-lable-name">State</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="state" placeholder="State">
-              </mat-form-field>
-            </div>
-            <div class="w33">
-              <div class="form-lable-name">Country</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="country" placeholder="Country">
-              </mat-form-field>
-            </div>
-            <div class="w33">
-              <div class="form-lable-name">Zip Code</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="zipcode" placeholder="Zip Code" pattern="(^0$)|(^[1-9]\d{0,9}$)">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="df-ac f-w pb-1">
-            <div class="w33">
-              <div class="form-lable-name">Land Mark</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="landmark" placeholder="Land Mark">
-              </mat-form-field>
-            </div>
-            <div class="w33">
-              <div class="form-lable-name">Contact no.</div>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="contectnum" placeholder="Contact no." pattern="(^0$)|(^[1-9]\d{0,9}$)">
-              </mat-form-field>
-            </div>
-          </div>
+
           <div class="submit-btn setper-btn">
-            <button mat-raised-button type="button" matStepperPrevious>Back</button>
-            <button mat-raised-button type="button" matStepperNext>Next</button>
+            <button mat-raised-button type="button" (click)="pageNavigation('back', 1)">Back</button>
+            <button mat-raised-button type="button" (click)="pageNavigation('next', 3)">Next</button>
           </div>
-        </mat-step>
 
-        <mat-step>
+
+        </div>
+
+
+
+
+
+        <div *ngIf="step == 3">
+
+
           <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Customer Contact Name(primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contect_primary_name"
+                  placeholder="Customer Contact Name(primary)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer Contact Name(secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contect_secondary_name"
+                  placeholder="Customer Contact Name(secondary)">
+              </mat-form-field>
+            </div>
             <div class="w33">
               <div class="form-lable-name">Customer contact no.(primary)</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="customer_contact_primary" placeholder="Customer contact no.(primary)"
-                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+                  pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
+          </div>
+          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Customer contact no.(secondary)</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="customer_contact_secondary"
-                  placeholder="Customer contact no.(secondary)" pattern="(^0$)|(^[1-9]\d{0,9}$)">
+                  placeholder="Customer contact no.(secondary)" pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
             <div class="w33">
@@ -335,8 +483,6 @@
                   pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
               </mat-form-field>
             </div>
-          </div>
-          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Customer Email(secondary)</div>
               <mat-form-field appearance="outline">
@@ -344,22 +490,22 @@
                   placeholder="Customer Email(secondary)" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
               </mat-form-field>
             </div>
+          </div>
+          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Telephone (primary)</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="customer_contact_primary_phone" placeholder="Telephone (primary)"
-                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+                  pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
             <div class="w33">
               <div class="form-lable-name">Telephone (secondary)</div>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="customer_contact_secondary_phone" placeholder="Telephone (primary)"
-                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+                  pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
-          </div>
-          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Customer Designation(primary)</div>
               <mat-form-field appearance="outline">
@@ -367,6 +513,8 @@
                   placeholder="Customer Designation(primary)">
               </mat-form-field>
             </div>
+          </div>
+          <div class="df-ac f-w pb-1">
             <div class="w33">
               <div class="form-lable-name">Customer Designation(secondary)</div>
               <mat-form-field appearance="outline">
@@ -375,13 +523,20 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="submit-btn setper-btn">
-            <button mat-raised-button type="button" matStepperPrevious>Back</button>
-            <button mat-raised-button type="submit" matStepperNext>Submit</button>
-          </div>
-        </mat-step>
 
-      </mat-stepper>
+          <div class="submit-btn setper-btn">
+            <button mat-raised-button type="button" (click)="pageNavigation('back', 2)">Back</button>
+            <button mat-raised-button type="submit" *ngIf="data?.name !== 'View Customer'">Submit</button>
+          </div>
+
+
+        </div>
+
+        <!-- </mat-stepper> -->
+      </div>
+
+
+
 
 
 

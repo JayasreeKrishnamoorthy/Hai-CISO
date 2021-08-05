@@ -17,7 +17,7 @@ import { GeoService } from '../../Services/geo.service';
   styleUrls: ['./user-group.component.scss'],
 })
 export class UserGroupComponent implements OnInit {
-  displayedColumns: string[] = ['sNo', 'name', 'role', 'created', 'createdBy', 'modified', 'modifiedBy', 'action'];
+  displayedColumns: string[] = ['name', 'role', 'created', 'createdBy', 'modified', 'modifiedBy', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   userGroupList: any = [];

@@ -11,8 +11,8 @@ import { HttpServiceService } from '../../Services/http_service/http-service.ser
   styleUrls: ['./analyze.component.scss'],
 })
 export class AnalyzeComponent implements OnInit {
-  displayedColumns: string[] = ['sNo', 'name', 'url', 'action'];
-  displayedColumnsSub: string[] = ['sNo', 'url', 'test', 'cve', 'action'];
+  displayedColumns: string[] = ['name', 'url', 'action'];
+  displayedColumnsSub: string[] = ['url', 'test', 'cve', 'action'];
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   domainList: any = [];

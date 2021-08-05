@@ -15,7 +15,7 @@ import { CustomerViewComponent } from '../components/customer-view/customer-view
   styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit {
-  displayedColumns: string[] = ['sNo', 'companyName', 'email', 'contact', 'action'];
+  displayedColumns: string[] = ['companyName', 'email', 'contact', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   customerList: any = [];

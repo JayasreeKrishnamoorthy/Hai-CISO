@@ -27,6 +27,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpConfigInterceptor } from './Services/http_service/httpConfig.interceptor';
 import { Http, RequestOptions } from '@angular/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   providers: [AUTH_PROVIDERS, LoggedinauthgaurdService,
@@ -52,12 +53,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
-    NbChatModule.forRoot({
-      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    }),
+    // NbChatModule.forRoot({
+    //   messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+    // }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
     MatDialogModule,
+    MaterialModule,
   ],
   bootstrap: [AppComponent],
 })

@@ -5,3 +5,35 @@
     margin-right: 10px;
   }
 }
+
+.add-card {
+  height: 55vh;
+}
+
+.data-table {
+  padding: 25px 0 0;
+}
+
+.stepper {
+  .step-title {
+    // background: #ff4a00;
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+  .line-sec {
+    border-bottom: 1px solid #d6d5d5;
+  }
+}
+
+.input-cnt-sec {
+  padding: 35px 0px 10px 42px;
+}

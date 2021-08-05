@@ -36,22 +36,26 @@ export class MapComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
+
   async getAddressList(event: any) {
+    // tslint:disable-next-line:no-console
+    console.log('event.target.value', event.target.value);
     if (event.target.value) {
       this.addressList = await this.geo.updatePredictions(event.target.value);
+      // tslint:disable-next-line:no-console
+      console.log('addressList', this.addressList);
     } else {
       this.addressList = [];
     }
   }
 
-  // tslint:disable-next-line:typedef
+
   getOptionText(option: any) {
     return option;
   }
 
 
-  // tslint:disable-next-line:typedef
+
   async getlatlong(val: any) {
     const res = await this.geo.updateAddressAndLatLong(val);
     this.lat = res[`latitude`];
@@ -102,7 +106,7 @@ export class MapComponent implements OnInit {
   }
 
 
-  // tslint:disable-next-line:typedef
+
   async getCurrentAddress() {
     // tslint:disable-next-line:no-angle-bracket-type-assertion
     const value = (<HTMLInputElement>document.getElementById('dragAddress')).value;

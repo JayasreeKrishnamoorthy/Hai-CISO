@@ -24,6 +24,11 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { MaterialModule } from '../material/material.module';
 import { UserGroupComponent } from './user-group/user-group.component';
 import { RoleComponent } from './role/role.component';
+import { StratergizeComponent } from './stratergize/stratergize.component';
+import { OperationalizeComponent } from './operationalize/operationalize.component';
+import { IntegrationComponent } from './integration/integration.component';
+import { ResourcesComponent } from './resources/resources.component';
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
   imports: [
@@ -46,6 +51,11 @@ import { RoleComponent } from './role/role.component';
     CustomersComponent,
     UserGroupComponent,
     RoleComponent,
+    StratergizeComponent,
+    OperationalizeComponent,
+    IntegrationComponent,
+    ResourcesComponent,
+    LogsComponent,
   ],
 })
 export class PagesModule {
