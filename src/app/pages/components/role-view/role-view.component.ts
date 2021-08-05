@@ -2,6 +2,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { GeoService } from '../../../Services/geo.service';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
 
 @Component({
@@ -16,7 +17,9 @@ export class RoleViewComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<RoleViewComponent>,
     public fb: FormBuilder,
-    public dialog: MatDialog,public http: HttpServiceService,
+    public dialog: MatDialog,
+    public http: HttpServiceService,
+    public geo: GeoService,
   ) {
     this.roleForm = this.fb.group({
       role: ['', Validators.required],
@@ -30,7 +33,6 @@ export class RoleViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.getroles(this.data?.roleDetails?.iid);
     if (this.data?.roleDetails?.iid) {
       // this.roleForm.controls?.accountLock.patchValue(false);
@@ -43,23 +45,21 @@ export class RoleViewComponent implements OnInit {
   }
 
 
-  
+
   getroles(id): void {
     this.http.getToken(`/roles/${id}`).subscribe(data => {
-      console.log(data)
       if (data[`success`] === true) {
-       this.userDetails = data?.data;
-    var old = JSON.stringify( this.userDetails).replace(/YES/g, JSON.parse("true"));
-    var old2 = JSON.stringify( old).replace(/NO/g, JSON.parse("false"));
-    var newArray = JSON.parse(old2);
-     this.roleForm.controls.role.patchValue(JSON.parse(newArray).srolename);
-     this.roleForm.controls.delete.patchValue(this.convertToBoolean(JSON.parse(newArray).edelete)); 
-     this.roleForm.controls.read.patchValue(this.convertToBoolean(JSON.parse(newArray).ereadonly));
-     this.roleForm.controls.execute.patchValue(this.convertToBoolean(JSON.parse(newArray).eexecute));
-     this.roleForm.controls.edit.patchValue(this.convertToBoolean(JSON.parse(newArray).eedit));
-     this.roleForm.controls.add.patchValue(this.convertToBoolean(JSON.parse(newArray).eadd));
-     this.roleForm.controls.schedule.patchValue(this.convertToBoolean(JSON.parse(newArray).eschedule));
-
+        this.userDetails = data?.data;
+        const old = JSON.stringify(this.userDetails).replace(/YES/g, JSON.parse('true'));
+        const old2 = JSON.stringify(old).replace(/NO/g, JSON.parse('false'));
+        const newArray = JSON.parse(old2);
+        this.roleForm.controls.role.patchValue(JSON.parse(newArray).srolename);
+        this.roleForm.controls.delete.patchValue(this.convertToBoolean(JSON.parse(newArray).edelete));
+        this.roleForm.controls.read.patchValue(this.convertToBoolean(JSON.parse(newArray).ereadonly));
+        this.roleForm.controls.execute.patchValue(this.convertToBoolean(JSON.parse(newArray).eexecute));
+        this.roleForm.controls.edit.patchValue(this.convertToBoolean(JSON.parse(newArray).eedit));
+        this.roleForm.controls.add.patchValue(this.convertToBoolean(JSON.parse(newArray).eadd));
+        this.roleForm.controls.schedule.patchValue(this.convertToBoolean(JSON.parse(newArray).eschedule));
       } else {
         this.userDetails = [];
       }

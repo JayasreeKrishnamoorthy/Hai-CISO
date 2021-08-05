@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { GeoService } from '../../../Services/geo.service';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class UserViewComponent implements OnInit {
     public fb: FormBuilder,
     public dialog: MatDialog,
     public http: HttpServiceService,
+    public geo: GeoService,
   ) {
     this.userForm = this.fb.group({
       sname: ['', Validators.required],
@@ -31,7 +33,6 @@ export class UserViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.getGroup();
     if (this.data?.userDetails?.iuserid) {
       this.userForm.controls?.accountLock.patchValue(false);
@@ -44,7 +45,7 @@ export class UserViewComponent implements OnInit {
   }
 
   getGroup(): void {
-    this.http.getToken(`/user-group?count=${4}&page=${1}`).subscribe(data => {
+    this.http.getToken(`/user-group`).subscribe(data => {
       if (data[`success`] === true) {
         this.groupList = data?.data?.data;
       } else {
@@ -60,8 +61,10 @@ export class UserViewComponent implements OnInit {
     this.http.postToken(`/user-management/geteachuserinfo`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.userForm.patchValue(data?.data);
-        this.userForm.controls.group.patchValue(data?.data?.groups[0]?.iid);
-        this.groupId = data?.data?.groups[0]?.iid;
+        // tslint:disable-next-line:no-console
+        console.log('data?.data?.groups[0]?.iid', data?.data?.groups[0]?.userGroupId?.iid);
+        this.userForm.controls.group.patchValue(data?.data?.groups[0]?.userGroupId?.iid);
+        this.groupId = data?.data?.groups[0]?.userGroupId?.iid;
       }
     });
   }
@@ -87,6 +90,7 @@ export class UserViewComponent implements OnInit {
       } else {
 
       }
+      this.geo.openToast(data[`message`]);
     });
   }
 
@@ -110,6 +114,7 @@ export class UserViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.dialogRef.close();
       }
+      this.geo.openToast(data[`message`]);
     });
   }
 

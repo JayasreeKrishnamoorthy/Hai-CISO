@@ -16,17 +16,17 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule),
-   // canActivate: [LoggedInAuthGuard],
+    canActivate: [LoggedInAuthGuard],
   },
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule),
-   // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
 ];
 

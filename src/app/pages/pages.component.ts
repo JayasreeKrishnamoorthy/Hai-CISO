@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpServiceService } from '../Services/http_service/http-service.service';
 
 import { MENU_ITEMS } from './pages-menu';
 
@@ -67,14 +69,17 @@ export class PagesComponent {
         {
           path: '/pages/user',
           name: 'User List',
+          icon: 'format_list_bulleted',
         },
         {
           path: '/pages/role',
           name: 'Roles',
+          icon: 'admin_panel_settings',
         },
         {
           path: '/pages/user-group',
           name: 'User Groups',
+          icon: 'groups',
         },
       ],
       drop: false,
@@ -106,12 +111,44 @@ export class PagesComponent {
     {
       name: 'My Quicklinks',
     },
+  ];
+
+  profileMenu: any = [
     {
-      name: 'My Profile & Settings',
+      name: 'Profile',
+      icon: 'account_circle',
+    },
+    {
+      name: 'PSP',
+      icon: 'domain',
+    },
+    {
+      name: 'Password Reset',
+      icon: 'password',
+    },
+    {
+      name: 'Settings',
+      icon: 'settings',
+    },
+    {
+      name: 'Logout',
+      icon: 'logout',
     },
   ];
 
   menuToggle = false;
+  userDetails: any;
+
+  constructor(
+    public http: HttpServiceService,
+    public router: Router,
+  ) { }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnInit(): void {
+    this.userDetails = localStorage.getItem('PSPUser');
+    this.userDetails = JSON.parse(this.userDetails);
+  }
 
   subMenuSelect(val): void {
     val.drop = !val?.drop;
@@ -120,6 +157,15 @@ export class PagesComponent {
         element[`drop`] = false;
       }
     });
+  }
+
+  profileAction(val) {
+    if (val?.name === 'Logout') {
+      localStorage.removeItem('pspkey');
+      localStorage.removeItem('PSPUser');
+      this.http.updateUserDetails();
+      this.router.navigate(['/auth/login']);
+    }
   }
 
 }

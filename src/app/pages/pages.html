@@ -16,7 +16,7 @@
             <nav class="navList">
               <ul class="main-h-list">
                 <li class="t-c logo-sec">
-                  <img src="assets/img/Hai-Ciso.png" class="w70">
+                  <img src="assets/img/sideLogo.png" class="w50">
                 </li>
                 <ng-container *ngFor="let link of navLinks; let i=index">
                   <li routerLinkActive="active-menu" class="nav__item ripple" (click)="subFunc(i)">
@@ -37,7 +37,7 @@
                     <ng-container *ngFor="let sub of link.subitems">
                       <li routerLinkActive="active-menu1" class="nav__item ripple" *ngIf="sub?.path">
                         <a [routerLink]="sub?.path" class="a-menu1">
-                          <!-- <mat-icon>{{sub?.icon}}</mat-icon> -->
+                          <mat-icon class="menu-icon1">{{sub?.icon}}</mat-icon>
                           <span class="underline-closing link-name">{{sub?.name}}</span>
                         </a>
                       </li>
@@ -50,18 +50,23 @@
         </mat-drawer>
 
         <div class="example-sidenav-content" [ngClass]="menuToggle == false ? 'bodyContent' : ''">
-          <div class="header-sec df-c-b">
+          <div class="header-sec df-b-b">
             <div class="w10">
               <mat-icon (click)="drawer.toggle(); menuToggle = !menuToggle" class="c-p">menu</mat-icon>
             </div>
-            <div class="df-ac w60">
+            <div class="df-c-fe w80 header-menu-txt">
               <div *ngFor="let h of headerMenu">
-                <div class="c-p header-item">{{h?.name}}</div>
+                <p class="right header-item c-p"><a>{{h?.name}}</a></p>
               </div>
             </div>
-            <!-- <div class="w10" (click)="logOut()">
-              <mat-icon>power_settings_new</mat-icon>
-            </div> -->
+            <div class="w20 df-ab c-p" [matMenuTriggerFor]="menu">
+              <div class="w20"><img src="" onError="this.src='assets/img/user.png'" class="w80"></div>
+              <div class="user-name df">{{userDetails?.name | uppercase}}
+                <span>
+                  <mat-icon>expand_more</mat-icon>
+                </span>
+              </div>
+            </div>
           </div>
           <div class="data-cnt">
             <router-outlet></router-outlet>
@@ -70,5 +75,14 @@
 
       </mat-drawer-container>
     </div>
+
+    <mat-menu #menu="matMenu" class="profile-menu-sec">
+      <button mat-menu-item *ngFor="let p of profileMenu" (click)="profileAction(p)">
+        <mat-icon>{{p?.icon}}</mat-icon>
+        <span>{{p?.name}}</span>
+      </button>
+    </mat-menu>
+
+
   </nb-layout-column>
 </nb-layout>

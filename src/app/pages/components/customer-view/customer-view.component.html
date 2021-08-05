@@ -1,0 +1,391 @@
+<div class="colored-line"></div>
+<mat-toolbar class="dialog-header">
+  <div class="df-c-b w100">
+    <div class="dialog-title">{{data?.name | titlecase}}</div>
+    <div>
+      <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-dialog-content class="dialog-content">
+  <div class="user-view-page">
+    <form [formGroup]="customerForm" #f="ngForm" (ngSubmit)="customerForm.valid && onboardCustomer()" autocomplete="off"
+      class="form-sec">
+
+      <mat-stepper #stepper>
+
+        <mat-step>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Account ID</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="iaccountid" placeholder="Account ID">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Company Name</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="scompanyname" placeholder="Company Name">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Company Type</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="scompanytype" placeholder="Company Type">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Business Unit</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="sbusinessunti" placeholder="Business Unit">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">No. of Employee</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="snumofemployee" placeholder="No. of Employee"
+                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Public Traded Comp</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="ispublictradedcomp" placeholder="Public Traded Comp">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Government Owned</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isgovowned" placeholder="Government Owned">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Anual Revenu</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="dannualrevenue" placeholder="Anual Revenu"
+                pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Saasapp Platform</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="issaasappplatform" placeholder="Saasapp Platform">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">CISO Present</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="iscisopresent" placeholder="CISO Present">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">No. of Sectem Member</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="noofsectemmember" placeholder="No. of Sectem Member"
+                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Cheif Privacy Officer</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="ischeifprivacyofficer" placeholder="Cheif Privacy Officer">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">HIPAA Officer</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="ishipaaofficer" placeholder="HIPAA Officer">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Risk Officer</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isriskofficer" placeholder="Risk Officer">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Security Operating Team</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="issecopsteam" placeholder="Security Operating Team">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Have you been in US before</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isuspresence" placeholder="Have you been in US before">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">EMEA Presence</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isemeapresence" placeholder="EMEA Presence">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">APAC Presence ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isapacpresence" placeholder="APAC Presence ?">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">LATM Presence ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="islatmpresence" placeholder="LATM Presence ?">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">CHINA Presence ?</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="ischinapresence" placeholder="CHINA Presence ?">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">PSP Account Executive ?</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="ipspacctexec" placeholder="PSP Account Executive ?"
+                pattern="(^0$)|(^[1-9]\d{0,9}$)">
+                <!-- <mat-select formControlName="ipspacctexec" placeholder="PSP Account Executive ?">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Risk Team</div>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="isriskTeam" placeholder="Risk Team">
+                  <mat-option *ngFor="let g of selectOption" [value]="g">
+                    {{g}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Account Start Date</div>
+              <mat-form-field appearance="outline" (click)="picker.open()">
+                <input readonly formControlName="accountstartdate" placeholder="Account Start Date" matInput
+                  [matDatepicker]="picker">
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Account End Date</div>
+              <mat-form-field appearance="outline" (click)="picker1.open()">
+                <input readonly formControlName="accountenddate" placeholder="Account End Date" matInput
+                  [matDatepicker]="picker1">
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="submit-btn setper-btn">
+            <button mat-raised-button type="button" matStepperNext>Next</button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Address</div>
+              <mat-form-field appearance="outline" (click)="data?.name !== 'View Customer' ? openMap() : ''">
+                <input matInput formControlName="address" placeholder="Address">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Address Type</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="addresstype" placeholder="Address Type">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">City</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="city" placeholder="City">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">State</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="state" placeholder="State">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Country</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="country" placeholder="Country">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Zip Code</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="zipcode" placeholder="Zip Code" pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Land Mark</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="landmark" placeholder="Land Mark">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Contact no.</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="contectnum" placeholder="Contact no." pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="submit-btn setper-btn">
+            <button mat-raised-button type="button" matStepperPrevious>Back</button>
+            <button mat-raised-button type="button" matStepperNext>Next</button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Customer contact no.(primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_primary" placeholder="Customer contact no.(primary)"
+                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer contact no.(secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_secondary"
+                  placeholder="Customer contact no.(secondary)" pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer Email(primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_primary_email" placeholder="Customer Email(primary)"
+                  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Customer Email(secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_secondary_email"
+                  placeholder="Customer Email(secondary)" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Telephone (primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_primary_phone" placeholder="Telephone (primary)"
+                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Telephone (secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_secondary_phone" placeholder="Telephone (primary)"
+                  pattern="(^0$)|(^[1-9]\d{0,9}$)">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="df-ac f-w pb-1">
+            <div class="w33">
+              <div class="form-lable-name">Customer Designation(primary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_primary_designation"
+                  placeholder="Customer Designation(primary)">
+              </mat-form-field>
+            </div>
+            <div class="w33">
+              <div class="form-lable-name">Customer Designation(secondary)</div>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="customer_contact_secondary_designation"
+                  placeholder="Customer Designation(secondary)">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="submit-btn setper-btn">
+            <button mat-raised-button type="button" matStepperPrevious>Back</button>
+            <button mat-raised-button type="submit" matStepperNext>Submit</button>
+          </div>
+        </mat-step>
+
+      </mat-stepper>
+
+
+
+
+    </form>
+  </div>
+</mat-dialog-content>

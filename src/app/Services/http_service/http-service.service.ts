@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Login } from '../../Responses/auth';
@@ -14,10 +14,11 @@ import { Datum, SelectCompany, UserGroupID } from '../../Responses/select-compan
   providedIn: 'root',
 })
 export class HttpServiceService {
-
   apiUrl = environment.apiUrl; // '/http://3.108.210.142:5000/api/getdetails';
-
   token = localStorage.getItem('pspkey');
+
+  private getUserDetail = new Subject<any>();
+  userdetails = this.getUserDetail.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -64,6 +65,9 @@ export class HttpServiceService {
     return this.http.put<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
   }
 
+  updateUserDetails(): void {
+    this.getUserDetail.next();
+  }
 
 
   getDetails(): Observable<any> {
@@ -124,17 +128,19 @@ export class HttpServiceService {
   getRoles(url: string): Observable<any> {
     return this.http.get<Roles>(`${environment.apiUrl}${url}`)
       .pipe(
+        // tslint:disable-next-line:no-console
         tap(_ => console.log('response received')),
-        catchError(this.handleError('GETRoles', []))
+        catchError(this.handleError('GETRoles', [])),
       );
   }
 
-  getcompanies(){
-    return this.http.get<any>(this.apiUrl+"/companies")
-    .pipe(
-      tap(_ => console.log('response received')),
-      catchError(this.handleError('GETcopanies', []))
-    );
+  getcompanies() {
+    return this.http.get<any>(this.apiUrl + '/companies')
+      .pipe(
+        // tslint:disable-next-line:no-console
+        tap(_ => console.log('response received')),
+        catchError(this.handleError('GETcopanies', [])),
+      );
   }
 
 putroles(obj){

@@ -9,6 +9,7 @@ import { SmartTableData } from '../../@core/data/smart-table';
 import { HttpServiceService } from '../../Services/http_service/http-service.service';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
 import { UserViewComponent } from '../components/user-view/user-view.component';
+import { GeoService } from '../../Services/geo.service';
 
 @Component({
   selector: 'ngx-user-group',
@@ -22,14 +23,17 @@ export class UserGroupComponent implements OnInit {
   userGroupList: any = [];
 
   constructor(
-    private service: SmartTableData,
     public http: HttpServiceService,
-    private dialogService: NbDialogService,
+    public geo: GeoService,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     this.getUserGroupList();
+  }
+
+  refresh(): void {
+    this.ngOnInit();
   }
 
   getUserGroupList() {
@@ -42,6 +46,14 @@ export class UserGroupComponent implements OnInit {
         this.userGroupList = [];
       }
     });
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.userGroupList.filter = filterValue.trim().toLowerCase();
+    if (this.userGroupList.paginator) {
+      this.userGroupList.paginator.firstPage();
+    }
   }
 
   addRequest(name: any, val?: any): void {
@@ -82,7 +94,10 @@ export class UserGroupComponent implements OnInit {
 
   deleteUser(val: any): void {
     this.http.delToken(`/user-group/${val?.iid}`).subscribe(data => {
-      this.getUserGroupList();
+      if (data[`success`] === true) {
+        this.getUserGroupList();
+      }
+      this.geo.openToast(data[`message`]);
     });
   }
 

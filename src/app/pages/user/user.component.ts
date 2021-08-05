@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
+import { GeoService } from '../../Services/geo.service';
 
 
 @Component({
@@ -23,19 +24,27 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   userList: any = [];
+  userDetails: any;
 
   constructor(
     private service: SmartTableData,
     public http: HttpServiceService,
     private dialogService: NbDialogService,
     public dialog: MatDialog,
+    public geo: GeoService,
   ) {
     // const data = this.service.getData();
     // this.source.load(data);
   }
 
   ngOnInit(): void {
+    this.userDetails = localStorage.getItem('PSPUser');
+    this.userDetails = JSON.parse(this.userDetails);
     this.getUserList();
+  }
+
+  refresh(): void {
+    this.ngOnInit();
   }
 
   getUserList() {
@@ -48,6 +57,14 @@ export class UserComponent implements OnInit {
         this.userList = [];
       }
     });
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.userList.filter = filterValue.trim().toLowerCase();
+    if (this.userList.paginator) {
+      this.userList.paginator.firstPage();
+    }
   }
 
   addRequest(name: any, val?: any): void {
@@ -96,7 +113,10 @@ export class UserComponent implements OnInit {
 
   deleteUser(val: any): void {
     this.http.delToken(`/user-management/${val?.iuserid}`).subscribe(data => {
-      this.getUserList();
+      if (data[`success`] === true) {
+        this.getUserList();
+      }
+      this.geo.openToast(data[`message`]);
     });
   }
 

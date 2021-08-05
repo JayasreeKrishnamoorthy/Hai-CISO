@@ -2,13 +2,24 @@
   <nb-layout-column class="app-layout-column">
     <div class="data-table">
       <nb-card>
-        <div class="df-c-b card-header">
+        <div class="df-c-b table-name-header">
           <div>Roles</div>
-          <div>
-            <span class="add-btn c-p" (click)="addRequest('Add Role')">Add New</span>
+
+          <div class="df-b-fe w50 search-add-sec">
+            <div class="search-input">
+              <mat-form-field floatLabel="never">
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search.....">
+              </mat-form-field>
+            </div>
+            <div>
+              <span class="add-btn c-p" (click)="addRequest('Add Role')">Add New</span>
+            </div>
+            <div class="a-s-e ref-btn">
+              <mat-icon class="df-c-jc c-p" (click)="refresh()">refresh</mat-icon>
+            </div>
           </div>
         </div>
-        <div>
+        <div class="table-card">
           <div class="table-sec">
             <table mat-table [dataSource]="roleList" matSort style="width: 100%;">
               <ng-container matColumnDef="sNo">

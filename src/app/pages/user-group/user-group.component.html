@@ -2,12 +2,26 @@
   <nb-layout-column class="app-layout-column">
     <div class="data-table">
       <nb-card>
-        <div class="df-c-b card-header">
-          <div>User Groups</div>
-          <div>
-            <span class="add-btn c-p" (click)="addRequest('Add User')">Add New</span>
+
+        <div class="df-b-b table-name-header">
+          <div class="table-title">User Groups</div>
+
+          <div class="df-b-fe w50 search-add-sec">
+            <div class="search-input">
+              <mat-form-field floatLabel="never">
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search.....">
+              </mat-form-field>
+            </div>
+            <div>
+              <span class="add-btn c-p" (click)="addRequest('Add User Group')">Add New</span>
+            </div>
+            <div class="a-s-e ref-btn">
+              <mat-icon class="df-c-jc c-p" (click)="refresh()">refresh</mat-icon>
+            </div>
           </div>
         </div>
+
+
         <div class="table-card">
           <div class="table-sec">
             <table mat-table [dataSource]="userGroupList" matSort style="width: 100%;">
