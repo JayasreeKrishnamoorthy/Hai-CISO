@@ -104,6 +104,7 @@ export class UserViewComponent implements OnInit {
       resetpass: this.userForm.controls.resetpass.value,
       id: this.data?.userDetails?.iuserid,
     };
+    console.log("checkbox",this.userForm.controls.accountLock.value)
     if (this.userForm.controls.group.value !== this.groupId) {
       obj[`old_group_id`] = this.groupId;
     } else {

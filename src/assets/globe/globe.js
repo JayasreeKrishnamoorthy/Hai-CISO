@@ -29,7 +29,7 @@ var props = {
         x: 350,
         y: 350
     },
-    globeRadius: 200, // Radius of the globe (used for many calculations)
+    globeRadius: 100, // Radius of the globe (used for many calculations)
     colours: {
         globeDots: '#000', // No need to use the Three constructor as this value is used for the HTML canvas drawing 'fillStyle' property
     }
@@ -154,9 +154,9 @@ var addControls = () => {
 
 /* RENDERING */
 
-const render = () => renderer.render(scene, camera.object);
+var render = () => renderer.render(scene, camera.object);
 
-const animate = () => {
+var animate = () => {
     requestAnimationFrame(animate);
 
     if (groups.globeDots) {
@@ -169,7 +169,7 @@ const animate = () => {
 
 /* GLOBE */
 
-const addGlobe = () => {
+var addGlobe = () => {
     const textureLoader = new THREE.TextureLoader();
     textureLoader.setCrossOrigin(true);
 
@@ -213,7 +213,7 @@ const addGlobe = () => {
     addGlobeDots();
 };
 
-const addGlobeDots = () => {
+var addGlobeDots = () => {
     const geometry = new THREE.Geometry();
 
     // Make circle
@@ -260,9 +260,9 @@ const addGlobeDots = () => {
 
 // Easing reference: https://gist.github.com/gre/1650294
 
-const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+var easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 
-const introAnimate = () => {
+var introAnimate = () => {
     const { dots, countries } = animations;
 
     if (dots.current <= dots.total) {
@@ -308,13 +308,13 @@ const introAnimate = () => {
     }
 };
 
-const cycleGlobe = () => {
+var cycleGlobe = () => {
     setInterval(() => {
         test();
     }, 10)
 };
 
-const test = () => {
+var test = () => {
     props.position.x += 1;
 
     const { azimuthal, polar } = returnCameraAngles(props.position.x, props.position.y);
@@ -326,7 +326,7 @@ const test = () => {
   //  console.log('rotating', props.position, azimuthal, polar)
 };
 
-const rotateGlobeToPosition = (x, y, progress = 1) => {
+var rotateGlobeToPosition = (x, y, progress = 1) => {
     const { azimuthal, polar } = returnCameraAngles(x, y);
     camera.angles.target.azimuthal = azimuthal;
     camera.angles.target.polar = polar;
@@ -341,7 +341,7 @@ const rotateGlobeToPosition = (x, y, progress = 1) => {
 /* COORDINATE CALCULATIONS */
 
 // Returns an object of 3D spherical coordinates
-const returnSphericalCoordinates = (latitude, longitude) => {
+var returnSphericalCoordinates = (latitude, longitude) => {
     /*
         This function will take a latitude and longitude and calcualte the
         projected 3D coordiantes using Mercator projection relative to the
@@ -364,7 +364,7 @@ const returnSphericalCoordinates = (latitude, longitude) => {
 };
 
 // Returns an object of the azimuthal and polar angles of a given map latitude and longitude
-const returnCameraAngles = (latitude, longitude) => {
+var returnCameraAngles = (latitude, longitude) => {
     /*
         This function will convert given latitude and longitude coordinates that are
         proportional to the map dimensions into values relative to PI (which the
