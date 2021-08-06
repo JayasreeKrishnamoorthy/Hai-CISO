@@ -193,10 +193,10 @@
     <div class="table-card">
       <div class="table-sec">
         <table mat-table [dataSource]="domainList" matSort style="width: 100%;">
-          <ng-container matColumnDef="sNo">
+          <!-- <ng-container matColumnDef="sNo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
             <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-          </ng-container>
+          </ng-container> -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
             <td mat-cell *matCellDef="let row"> {{row?.scompanyname | titlecase}} </td>
@@ -222,7 +222,7 @@
     </div>
   </nb-card>
 </div>
- 
+
 <!-- CHANGED -->
 
 <div class="card-one" [hidden]='companys'>
@@ -434,10 +434,10 @@
         <div class="table-card">
           <div class="table-sec">
             <table mat-table [dataSource]="subDomain" matSort style="width: 100%;">
-              <ng-container matColumnDef="sNo">
+              <!-- <ng-container matColumnDef="sNo">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
                 <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-              </ng-container>
+              </ng-container> -->
               <ng-container matColumnDef="url">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
                 <td mat-cell *matCellDef="let row"> {{domain?.url}} </td>
@@ -448,7 +448,7 @@
                   <span (click)="testdomain(row?.testssl_output)" class="c-p">
                     <mat-icon matTooltip="Test SSL">info</mat-icon>
                   </span>
-                  
+
                   <!-- <div class="dot-sec" [ngStyle]="{'background': row?.testssl == 1 ? '#3DBE29' : '#E21717'}"
                     [matTooltip]="row?.testssl == 1 ? 'Testssl output found' : 'Testssl not found'"></div> -->
                 </td>
@@ -493,7 +493,7 @@
       <img src="assets/PSP/under_cons.gif" class="w20">
     </div>
   </mat-tab>
-  
+
   <mat-tab label="CURRENT SEQURITY STATUS">
     <div class="t-c">
       <img src="assets/PSP/under_cons.gif" class="w20">

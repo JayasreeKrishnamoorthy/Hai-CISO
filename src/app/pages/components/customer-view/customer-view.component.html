@@ -424,6 +424,15 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                     </tr>
                   </table>
+
+
+                  <div *ngIf="addressList?.length === 0" class="nodataFound">
+                    <p class="nodataError">
+                      ** No data found **
+                    </p>
+                  </div>
+
+
                   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                 </div>
               </div>

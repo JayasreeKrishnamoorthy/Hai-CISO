@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
   }
 
 
-//   pravin@mailpsl.com
-// root@12345
+  //   pravin@mailpsl.com
+  // root@12345
 
   login(): void {
     const data = {
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  movetocompany(){  
+  movetocompany() {
     this.router.navigate(['/auth/select-company']);
 
   }

@@ -38,7 +38,7 @@ export class PagesComponent {
       drop: false,
     },
     {
-      path: '/pages/stratergize',
+      path: '/pages/strategize',
       name: 'Stratergize',
       icon: 'next_plan',
       drop: false,
@@ -111,9 +111,10 @@ export class PagesComponent {
     {
       name: 'My Quicklinks',
     },
-    {
-      name: 'Support & Contact',
-    },
+    // {
+    //   icon: 'assets/img/support.png',
+    //   // name: 'Support & Contact',
+    // },
   ];
 
   profileMenu: any = [

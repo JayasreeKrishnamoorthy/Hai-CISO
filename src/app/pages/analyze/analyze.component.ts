@@ -13,21 +13,21 @@ import { SubdomaincveComponent } from '../components/subdomaincve/subdomaincve.c
   styleUrls: ['./analyze.component.scss'],
 })
 export class AnalyzeComponent implements OnInit {
-  displayedColumns: string[] = ['sNo', 'name', 'url', 'action'];
-  displayedColumnsSub: string[] = ['sNo', 'url', 'test', 'cve', 'action'];
-  displayedColumnsSubdomain: string[] = ['sNo', 'url', 'test', 'cve'];
+  displayedColumns: string[] = ['name', 'url', 'action'];
+  displayedColumnsSub: string[] = ['url', 'test', 'cve', 'action'];
+  displayedColumnsSubdomain: string[] = ['url', 'test', 'cve'];
 
-  @Input()selectedIndex: number | null
+  @Input() selectedIndex: number | null;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   domainList: any = [];
   subDomain: any = [];
   showDomain = 'domain';
   domain: any;
-  companys = true   // changed   //testssl_output //cve_list
-  domainin=true
-  companyy=false
-  companyname:any
+  companys = true;   // changed   //testssl_output //cve_list
+  domainin = true;
+  companyy = false;
+  companyname: any;
   constructor(
     public http: HttpServiceService,
     public dialog: MatDialog,
@@ -71,18 +71,18 @@ export class AnalyzeComponent implements OnInit {
 
 
   viewDomain(val): void {
-    this.companys=false
-    this.companyy=true
-    this.companyname=val.scompanyname
-    
+    this.companys = false;
+    this.companyy = true;
+    this.companyname = val.scompanyname;
+
     const obj = {
       isublistid: +val?.isublistid,
       count: 100,
       page: 1,
     };
-    console.log(obj)
+    // console.log(obj);
     this.http.postToken(`/analyze/getsubdomains`, obj).subscribe(data => {
-     
+
       if (data[`success`] === true) {
         this.domain = val;
         this.subDomain = new MatTableDataSource(data?.data?.data);
@@ -100,32 +100,32 @@ export class AnalyzeComponent implements OnInit {
     this.getUserList();
   }
 
-  viewsubdomaininfo(eve){
-    console.log(eve)
-    this.companys=false
-    this.domainin=false
-    this.companyy=true
-    const obj ={
-      isublistdtlsid: eve.isublistdtlsid
-    }
+  viewsubdomaininfo(eve) {
+    // console.log(eve);
+    this.companys = false;
+    this.domainin = false;
+    this.companyy = true;
+    const obj = {
+      isublistdtlsid: eve.isublistdtlsid,
+    };
     this.http.postToken(`/analyze/subdomain-info`, obj).subscribe(data => {
-      console.log(data)
+      // console.log(data);
       if (data[`success`] === true) {
-         this.domain = eve;
-         this.subDomain = new MatTableDataSource(data?.data?.domain_info);
-         this.subDomain.paginator = this.paginator.toArray()[1];
-         this.subDomain.sort = this.sort.toArray()[1];
+        this.domain = eve;
+        this.subDomain = new MatTableDataSource(data?.data?.domain_info);
+        this.subDomain.paginator = this.paginator.toArray()[1];
+        this.subDomain.sort = this.sort.toArray()[1];
         this.showDomain = 'domain';
       } else {
-         this.subDomain = [];
+        this.subDomain = [];
       }
     });
   }
 
 
-  
 
-  testdomain( val?: any): void {
+
+  testdomain(val?: any): void {
     const dialogRef = this.dialog.open(SubdomainComponent, {
       width: 'auto',
       height: '70%',
@@ -133,7 +133,7 @@ export class AnalyzeComponent implements OnInit {
       disableClose: true,
       panelClass: 'full-screen-popup',
       data: {
-    
+
         Details: val,
       },
     });
@@ -142,7 +142,7 @@ export class AnalyzeComponent implements OnInit {
     });
   }
 
-  cvelist( val?: any): void {
+  cvelist(val?: any): void {
     const dialogRef = this.dialog.open(SubdomaincveComponent, {
       width: 'auto',
       height: '50%',
@@ -150,7 +150,7 @@ export class AnalyzeComponent implements OnInit {
       disableClose: true,
       panelClass: 'full-screen-popup',
       data: {
-    
+
         Details: val,
       },
     });

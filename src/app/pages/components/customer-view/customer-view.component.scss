@@ -37,3 +37,13 @@
 .input-cnt-sec {
   padding: 35px 0px 10px 42px;
 }
+
+.nodataFound {
+  text-align: center;
+  padding: 15px 3px 0px;
+  color: #ff4a00;
+  .nodataError {
+    color: #ff4a00;
+    font-weight: 600;
+  }
+}
