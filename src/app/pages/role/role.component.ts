@@ -18,7 +18,7 @@ import { GeoService } from '../../Services/geo.service';
 })
 export class RoleComponent implements OnInit {
 
-  displayedColumns: string[] = ['sNo', 'role', 'read', 'add', 'edit', 'delete', 'execute', 'schedule', 'action'];
+  displayedColumns: string[] = ['role', 'read', 'add', 'edit', 'delete', 'execute', 'schedule', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   roleList: any = [];
@@ -60,7 +60,6 @@ export class RoleComponent implements OnInit {
 
 
   getRoleList(): void {
-
     this.httpService.getRoles(`/roles?count=${100}&page=${1}`).subscribe((res: Roles) => {
       if (res.success) {
         this.roleList = new MatTableDataSource(res.data.data);

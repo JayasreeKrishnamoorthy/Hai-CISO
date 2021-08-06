@@ -22,10 +22,10 @@
         <div class="table-card">
           <div class="table-sec">
             <table mat-table [dataSource]="customerList" matSort style="width: 100%;">
-              <ng-container matColumnDef="sNo">
+              <!-- <ng-container matColumnDef="sNo">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
                 <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-              </ng-container>
+              </ng-container> -->
               <ng-container matColumnDef="companyName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
                 <td mat-cell *matCellDef="let row"> {{row?.scompanyname | titlecase}} </td>

@@ -1,9 +1,13 @@
 import { MapComponent } from './../map/map.component';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
 import { GeoService } from '../../../Services/geo.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationComponent } from '../confirmation/confirmation.component';
 
 @Component({
   selector: 'ngx-customer-view',
@@ -12,9 +16,19 @@ import { GeoService } from '../../../Services/geo.service';
 })
 export class CustomerViewComponent implements OnInit {
   customerForm: FormGroup;
+  addressForm: FormGroup;
   usergroup: any;
   groupList: any = [];
-  selectOption: any = ['yes', 'no'];
+  selectOption: any = ['yes', 'no', 'partial', 'not applicable', 'don\'t know'];
+  companyType: any = ['entity', 'individual'];
+  displayedColumns: any;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
+  addressList: any = [];
+  addressId: any = 0;
+  addressListTable: any;
+  editAddBtn = false;
+  step = 1;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CustomerViewComponent>,
@@ -23,8 +37,21 @@ export class CustomerViewComponent implements OnInit {
     public http: HttpServiceService,
     public geo: GeoService,
   ) {
+    this.addressForm = this.fb.group({
+      address: ['', Validators.required],
+      addresstype: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      country: ['', Validators.required],
+      zipcode: ['', Validators.required],
+      contectnum: ['', Validators.required],
+      lat: ['', Validators.required],
+      long: ['', Validators.required],
+      landmark: ['', Validators.required],
+      id: [''],
+    });
     this.customerForm = this.fb.group({
-      iaccountid: ['', Validators.required],
+      iaccountid: [''],
       scompanyname: ['', Validators.required],
       scompanytype: ['', Validators.required],
       sbusinessunti: ['', Validators.required],
@@ -46,18 +73,21 @@ export class CustomerViewComponent implements OnInit {
       ischinapresence: ['', Validators.required],
       ipspacctexec: ['', Validators.required],
       isriskTeam: ['', Validators.required],
+      website_url: ['', Validators.required],
       accountstartdate: ['', Validators.required],
       accountenddate: ['', Validators.required],
-      address: ['', Validators.required],
-      addresstype: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      country: ['', Validators.required],
-      zipcode: ['', Validators.required],
-      contectnum: ['', Validators.required],
-      lat: ['', Validators.required],
-      long: ['', Validators.required],
-      landmark: ['', Validators.required],
+      // address: ['', Validators.required],
+      // addresstype: ['', Validators.required],
+      // city: ['', Validators.required],
+      // state: ['', Validators.required],
+      // country: ['', Validators.required],
+      // zipcode: ['', Validators.required],
+      // contectnum: ['', Validators.required],
+      // lat: ['', Validators.required],
+      // long: ['', Validators.required],
+      // landmark: ['', Validators.required],
+      customer_contect_primary_name: ['', Validators.required],
+      customer_contect_secondary_name: ['', Validators.required],
       customer_contact_primary: ['', Validators.required],
       customer_contact_secondary: ['', Validators.required],
       customer_contact_primary_email: ['', Validators.required],
@@ -72,9 +102,34 @@ export class CustomerViewComponent implements OnInit {
   ngOnInit(): void {
     if (this.data?.customerDetails?.cusid) {
       this.getCustomerDetails();
+      this.getAddress();
     }
     if (this.data?.name === 'View Customer') {
+      this.displayedColumns = [
+        // 'sNo',
+        'address',
+        'addressType',
+        'country',
+        'state',
+        'city',
+        'zipCode',
+        'landMark',
+        'contact',
+      ];
       this.customerForm.disable();
+    } else {
+      this.displayedColumns = [
+        // 'sNo',
+        'address',
+        'addressType',
+        'country',
+        'state',
+        'city',
+        'zipCode',
+        'landMark',
+        'contact',
+        'action',
+      ];
     }
   }
 
@@ -82,42 +137,119 @@ export class CustomerViewComponent implements OnInit {
     this.http.getToken(`/customer-onboard/${this.data?.customerDetails?.cusid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.customerForm.patchValue(data?.data);
-        this.customerForm.patchValue(data?.data?.address);
+        // this.customerForm.patchValue(data?.data?.address);
         this.customerForm.patchValue(data?.data?.contect);
       }
     });
   }
 
+  getAddress() {
+    const obj = {
+      id: this.data?.customerDetails?.cusid,
+      count: 100,
+      page: 1,
+    };
+    this.http.postToken(`/customer-onboard/get-customer-address`, obj).subscribe(data => {
+      if (data[`success`] === true) {
+        this.addressList = data?.data?.data;
+        // tslint:disable-next-line:no-console
+        console.log('this.addressList', this.addressList);
+        this.addressListTable = new MatTableDataSource(this.addressList);
+        this.addressListTable.paginator = this.paginator;
+        this.addressListTable.sort = this.sort;
+      }
+    });
+  }
+
+  stepControl(val) {
+    this.step = val;
+  }
+
+  pageNavigation(val, step) {
+    this.step = step;
+  }
+
+  addAddress(form): void {
+    this.editAddBtn = false;
+    if (this.addressForm.controls.id.value) {
+      const index = this.addressList.findIndex(x => x.id === this.addressForm.controls.id.value);
+      this.addressList[index] = this.addressForm.value;
+    } else {
+      this.addressId = this.addressId + 1;
+      this.addressForm.controls.id.patchValue(this.addressId);
+      this.addressList.push(this.addressForm.value);
+    }
+    this.addressListTable = new MatTableDataSource(this.addressList);
+    this.addressListTable.paginator = this.paginator;
+    this.addressListTable.sort = this.sort;
+    form.resetForm();
+  }
+
+  editAddress(val) {
+    this.editAddBtn = true;
+    this.addressForm.patchValue(val);
+  }
+
+  confirmation(val: any, index): void {
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      width: 'auto',
+      height: 'auto',
+      minWidth: '35%',
+      disableClose: true,
+      panelClass: '',
+      data: {
+        message: 'Are you sure, you want to delete this Address ?',
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'yes') {
+        this.deleteAddress(val, index);
+      }
+    });
+  }
+
+  deleteAddress(val, index) {
+    this.addressList.splice(index, 1);
+    this.addressListTable = new MatTableDataSource(this.addressList);
+    this.addressListTable.paginator = this.paginator;
+    this.addressListTable.sort = this.sort;
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.addressListTable.filter = filterValue.trim().toLowerCase();
+    if (this.addressListTable.paginator) {
+      this.addressListTable.paginator.firstPage();
+    }
+  }
+
 
   openMap(): void {
-    // let obj;
-    // if (myForm?.value?.sHospitalAddress) {
-    //   obj = {
-    //     address: myForm?.value?.sHospitalAddress,
-    //     lat: myForm?.value?.sLat,
-    //     long: myForm?.value?.sLong
-    //   };
-    // }
+    let obj;
+    if (this.editAddBtn === true) {
+      obj = {
+        address: this.addressForm.controls.address.value,
+        lat: this.addressForm.controls.lat.value,
+        long: this.addressForm.controls.long.value,
+      };
+    }
     const dialogRef = this.dialog.open(MapComponent, {
       width: 'auto',
-      height: '50%',
+      height: '70%',
       minWidth: '55%',
       disableClose: true,
       panelClass: 'full-screen-popup',
       data: {
-        // addressDetails: obj
+        addressDetails: obj,
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.customerForm.controls.address.patchValue('poonamallee');
-      this.customerForm.controls.lat.patchValue(13.0473);
-      this.customerForm.controls.long.patchValue(80.0945);
       if (result) {
-        // myForm.patchValue({
-        //   sHospitalAddress: result?.address,
-        //   sLat: result?.lat,
-        //   sLong: result?.long
-        // });
+        // tslint:disable-next-line:no-console
+        console.log('result', result);
+        this.addressForm.controls.address.patchValue(result?.address);
+        this.addressForm.controls.lat.patchValue(result?.lat);
+        this.addressForm.controls.long.patchValue(result?.long);
       }
     });
   }
@@ -134,7 +266,8 @@ export class CustomerViewComponent implements OnInit {
 
   addCustomer(): void {
     const obj = {
-      iaccountid: +this.customerForm.controls.iaccountid.value,
+      // iaccountid: +this.customerForm.controls.iaccountid.value,
+      iaccountid: 1002,
       scompanyname: this.customerForm.controls.scompanyname.value,
       scompanytype: this.customerForm.controls.scompanytype.value,
       sbusinessunti: this.customerForm.controls.sbusinessunti.value,
@@ -155,18 +288,21 @@ export class CustomerViewComponent implements OnInit {
       islatmpresence: this.customerForm.controls.islatmpresence.value,
       ischinapresence: this.customerForm.controls.ischinapresence.value,
       ipspacctexec: +this.customerForm.controls.ipspacctexec.value,
+      website_url: this.customerForm.controls.website_url.value,
       accountstartdate: this.customerForm.controls.accountstartdate.value,
       accountenddate: this.customerForm.controls.accountenddate.value,
-      address: this.customerForm.controls.address.value,
-      addresstype: this.customerForm.controls.addresstype.value,
-      city: this.customerForm.controls.city.value,
-      state: this.customerForm.controls.state.value,
-      country: this.customerForm.controls.country.value,
-      zipcode: this.customerForm.controls.zipcode.value,
-      contectnum: this.customerForm.controls.contectnum.value,
-      lat: this.customerForm.controls.lat.value,
-      long: this.customerForm.controls.long.value,
-      landmark: this.customerForm.controls.landmark.value,
+      // address: this.customerForm.controls.address.value,
+      // addresstype: this.customerForm.controls.addresstype.value,
+      // city: this.customerForm.controls.city.value,
+      // state: this.customerForm.controls.state.value,
+      // country: this.customerForm.controls.country.value,
+      // zipcode: this.customerForm.controls.zipcode.value,
+      // contectnum: this.customerForm.controls.contectnum.value,
+      // lat: this.customerForm.controls.lat.value,
+      // long: this.customerForm.controls.long.value,
+      // landmark: this.customerForm.controls.landmark.value,
+      customer_contect_primary_name: this.customerForm.controls.customer_contect_primary_name.value,
+      customer_contect_secondary_name: this.customerForm.controls.customer_contect_secondary_name.value,
       customer_contact_primary: this.customerForm.controls.customer_contact_primary.value,
       customer_contact_secondary: this.customerForm.controls.customer_contact_secondary.value,
       customer_contact_primary_email: this.customerForm.controls.customer_contact_primary_email.value,
@@ -176,6 +312,7 @@ export class CustomerViewComponent implements OnInit {
       customer_contact_primary_designation: this.customerForm.controls.customer_contact_primary_designation.value,
       customer_contact_secondary_designation: this.customerForm.controls.customer_contact_secondary_designation.value,
       isriskTeam: this.customerForm.controls.isriskTeam.value,
+      customer_address: this.addressList,
     };
     this.http.postToken(`/customer-onboard`, obj).subscribe(data => {
       if (data[`success`] === true) {
@@ -211,18 +348,21 @@ export class CustomerViewComponent implements OnInit {
       islatmpresence: this.customerForm.controls.islatmpresence.value,
       ischinapresence: this.customerForm.controls.ischinapresence.value,
       ipspacctexec: +this.customerForm.controls.ipspacctexec.value,
+      website_url: this.customerForm.controls.website_url.value,
       accountstartdate: this.customerForm.controls.accountstartdate.value,
       accountenddate: this.customerForm.controls.accountenddate.value,
-      address: this.customerForm.controls.address.value,
-      addresstype: this.customerForm.controls.addresstype.value,
-      city: this.customerForm.controls.city.value,
-      state: this.customerForm.controls.state.value,
-      country: this.customerForm.controls.country.value,
-      zipcode: this.customerForm.controls.zipcode.value,
-      contectnum: this.customerForm.controls.contectnum.value,
-      lat: this.customerForm.controls.lat.value,
-      long: this.customerForm.controls.long.value,
-      landmark: this.customerForm.controls.landmark.value,
+      // address: this.customerForm.controls.address.value,
+      // addresstype: this.customerForm.controls.addresstype.value,
+      // city: this.customerForm.controls.city.value,
+      // state: this.customerForm.controls.state.value,
+      // country: this.customerForm.controls.country.value,
+      // zipcode: this.customerForm.controls.zipcode.value,
+      // contectnum: this.customerForm.controls.contectnum.value,
+      // lat: this.customerForm.controls.lat.value,
+      // long: this.customerForm.controls.long.value,
+      // landmark: this.customerForm.controls.landmark.value,
+      customer_contect_primary_name: this.customerForm.controls.customer_contect_primary_name.value,
+      customer_contect_secondary_name: this.customerForm.controls.customer_contect_secondary_name.value,
       customer_contact_primary: this.customerForm.controls.customer_contact_primary.value,
       customer_contact_secondary: this.customerForm.controls.customer_contact_secondary.value,
       customer_contact_primary_email: this.customerForm.controls.customer_contact_primary_email.value,

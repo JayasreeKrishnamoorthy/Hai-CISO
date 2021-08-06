@@ -68,63 +68,62 @@ export class RoleViewComponent implements OnInit {
 
   convertToBoolean(input: string): boolean | undefined {
     try {
-        return JSON.parse(input);
+      return JSON.parse(input);
+    } catch (e) {
+      return undefined;
     }
-    catch (e) {
-        return undefined;
-    }
-}
-  
-updateRole(): void {
-  const obj = {
-    rolename: this.roleForm.controls.role.value,
-    schedule: this.roleForm.controls.schedule.value,
-    execute: this.roleForm.controls.execute.value,
-    readonly: this.roleForm.controls.read.value,
-    Delete: this.roleForm.controls.delete.value,
-    edit: this.roleForm.controls.edit.value,
-    add: this.roleForm.controls.add.value,
-    id: this.data?.roleDetails?.iid,
-  };
- 
-  let old0 =JSON.stringify(obj,this.replacer);
-  let old = JSON.stringify(old0).replace(/true/g, "YES");
-  let old2 = old.replace(/false/g, "NO");
-  this.http.putroles(JSON.parse(old2)).subscribe(data => {
-    if (data[`success`] === true) {
-      this.dialogRef.close();
-    }
-  });
-} 
-
-
-addRole(): void {
-  const obj = {
-    rolename: this.roleForm.controls.role.value,
-    schedule: this.roleForm.controls.schedule.value,
-    execute: this.roleForm.controls.execute.value,
-    readonly: this.roleForm.controls.read.value,
-    Delete: this.roleForm.controls.delete.value,
-    edit: this.roleForm.controls.edit.value,
-    add: this.roleForm.controls.add.value,
-    id: this.data?.roleDetails?.iid,
-  };
-  let old0 =JSON.stringify(obj,this.replacer);
-  let old = JSON.stringify(old0).replace(/true/g, "YES");
-  let old2 = old.replace(/false/g, "NO");
-  this.http.postroles(JSON.parse(old2)).subscribe(data => {
-    if (data[`success`] === true) {
-      this.dialogRef.close();
-    }
-  });
-}
-
-replacer(key, value) {
-  if (typeof value === "boolean"||typeof value === "number") {
-    return String(value);
   }
-  return value;
-}
+
+  updateRole(): void {
+    const obj = {
+      rolename: this.roleForm.controls.role.value,
+      schedule: this.roleForm.controls.schedule.value,
+      execute: this.roleForm.controls.execute.value,
+      readonly: this.roleForm.controls.read.value,
+      Delete: this.roleForm.controls.delete.value,
+      edit: this.roleForm.controls.edit.value,
+      add: this.roleForm.controls.add.value,
+      id: this.data?.roleDetails?.iid,
+    };
+
+    const old0 = JSON.stringify(obj, this.replacer);
+    const old = JSON.stringify(old0).replace(/true/g, 'YES');
+    const old2 = old.replace(/false/g, 'NO');
+    this.http.putroles(JSON.parse(old2)).subscribe(data => {
+      if (data[`success`] === true) {
+        this.dialogRef.close();
+      }
+    });
+  }
+
+
+  addRole(): void {
+    const obj = {
+      rolename: this.roleForm.controls.role.value,
+      schedule: this.roleForm.controls.schedule.value,
+      execute: this.roleForm.controls.execute.value,
+      readonly: this.roleForm.controls.read.value,
+      Delete: this.roleForm.controls.delete.value,
+      edit: this.roleForm.controls.edit.value,
+      add: this.roleForm.controls.add.value,
+      id: this.data?.roleDetails?.iid,
+    };
+    const old0 = JSON.stringify(obj, this.replacer);
+    const old = JSON.stringify(old0).replace(/true/g, 'YES');
+    const old2 = old.replace(/false/g, 'NO');
+    this.http.postroles(JSON.parse(old2)).subscribe(data => {
+      if (data[`success`] === true) {
+        this.dialogRef.close();
+      }
+    });
+  }
+
+  replacer(key, value) {
+    if (typeof value === 'boolean' || typeof value === 'number') {
+      return String(value);
+    }
+    return value;
+  }
 
 
   onboardRole(): void {

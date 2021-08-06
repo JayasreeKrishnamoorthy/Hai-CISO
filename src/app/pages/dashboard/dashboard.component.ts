@@ -19,7 +19,7 @@ export class DashboardComponent implements OnDestroy {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
- 
+
     this.loadScript('assets/globe/globe.js');
   }
 

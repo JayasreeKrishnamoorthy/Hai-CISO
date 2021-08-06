@@ -8,6 +8,11 @@ import { CustomersComponent } from './customers/customers.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
 import { UserGroupComponent } from './user-group/user-group.component';
+import { StratergizeComponent } from './stratergize/stratergize.component';
+import { OperationalizeComponent } from './operationalize/operationalize.component';
+import { IntegrationComponent } from './integration/integration.component';
+import { ResourcesComponent } from './resources/resources.component';
+import { LogsComponent } from './logs/logs.component';
 
 const routes: Routes = [{
   path: '',
@@ -26,6 +31,22 @@ const routes: Routes = [{
       component: CustomersComponent,
     },
     {
+      path: 'stratergize',
+      component: StratergizeComponent,
+    },
+    {
+      path: 'operationalize',
+      component: OperationalizeComponent,
+    },
+    {
+      path: 'integration',
+      component: IntegrationComponent,
+    },
+    {
+      path: 'resources',
+      component: ResourcesComponent,
+    },
+    {
       path: 'user',
       component: UserComponent,
     },
@@ -36,6 +57,10 @@ const routes: Routes = [{
     {
       path: 'user-group',
       component: UserGroupComponent,
+    },
+    {
+      path: 'logs',
+      component: LogsComponent,
     },
     {
       path: '',

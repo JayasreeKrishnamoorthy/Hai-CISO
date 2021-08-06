@@ -19,7 +19,7 @@
                   <img src="assets/img/sideLogo.png" class="w50">
                 </li>
                 <ng-container *ngFor="let link of navLinks; let i=index">
-                  <li routerLinkActive="active-menu" class="nav__item ripple" (click)="subFunc(i)">
+                  <li routerLinkActive="active-menu" class="nav__item ripple">
                     <a [routerLink]="link.path" class="a-menu" *ngIf="!link?.subitems">
                       <mat-icon class="menu-icon">{{link.icon}}</mat-icon>
                       <span class="underline-closing link-name" *ngIf="menuToggle">{{link.name}}</span>
@@ -60,13 +60,25 @@
               </div>
             </div>
             <div class="w20 df-ab c-p" [matMenuTriggerFor]="menu">
-              <div class="w20"><img src="" onError="this.src='assets/img/user.png'" class="w80"></div>
+              <div class="w20">
+                <img src="" onError="this.src='assets/img/user2.png'" class="w80">
+              </div>
               <div class="user-name df">{{userDetails?.name | uppercase}}
                 <span>
                   <mat-icon>expand_more</mat-icon>
                 </span>
               </div>
             </div>
+
+
+            <mat-menu #menu="matMenu" class="profile-menu-sec">
+              <button mat-menu-item *ngFor="let p of profileMenu" (click)="profileAction(p)">
+                <mat-icon>{{p?.icon}}</mat-icon>
+                <span>{{p?.name}}</span>
+              </button>
+            </mat-menu>
+
+
           </div>
           <div class="data-cnt">
             <router-outlet></router-outlet>
@@ -76,12 +88,7 @@
       </mat-drawer-container>
     </div>
 
-    <mat-menu #menu="matMenu" class="profile-menu-sec">
-      <button mat-menu-item *ngFor="let p of profileMenu" (click)="profileAction(p)">
-        <mat-icon>{{p?.icon}}</mat-icon>
-        <span>{{p?.name}}</span>
-      </button>
-    </mat-menu>
+
 
 
   </nb-layout-column>
