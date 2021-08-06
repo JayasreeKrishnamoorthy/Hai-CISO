@@ -27,6 +27,7 @@ export class AnalyzeComponent implements OnInit {
   companys = true   // changed   //testssl_output //cve_list
   domainin=true
   companyy=false
+  companyname:any
   constructor(
     public http: HttpServiceService,
     public dialog: MatDialog,
@@ -72,6 +73,8 @@ export class AnalyzeComponent implements OnInit {
   viewDomain(val): void {
     this.companys=false
     this.companyy=true
+    this.companyname=val.scompanyname
+    
     const obj = {
       isublistid: +val?.isublistid,
       count: 100,
