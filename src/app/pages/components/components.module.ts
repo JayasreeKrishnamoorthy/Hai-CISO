@@ -22,6 +22,7 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { CustomerViewComponent } from './customer-view/customer-view.component';
 import { MapComponent } from './map/map.component';
 import { SubdomainComponent } from './subdomain/subdomain.component';
+import { SubdomaincveComponent } from './subdomaincve/subdomaincve.component';
 
 
 
@@ -34,6 +35,7 @@ import { SubdomainComponent } from './subdomain/subdomain.component';
     CustomerViewComponent,
     MapComponent,
     SubdomainComponent,
+    SubdomaincveComponent,
   ],
   entryComponents: [
     UserViewComponent,

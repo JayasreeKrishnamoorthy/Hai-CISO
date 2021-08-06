@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpServiceService } from '../../Services/http_service/http-service.service';
 import { SubdomainComponent } from '../components/subdomain/subdomain.component';
+import { SubdomaincveComponent } from '../components/subdomaincve/subdomaincve.component';
 
 @Component({
   selector: 'ngx-analyze',
@@ -119,13 +120,13 @@ export class AnalyzeComponent implements OnInit {
   }
 
 
-
+  
 
   testdomain( val?: any): void {
     const dialogRef = this.dialog.open(SubdomainComponent, {
       width: 'auto',
-      height: '60%',
-      minWidth: '60%',
+      height: '70%',
+      minWidth: '80%',
       disableClose: true,
       panelClass: 'full-screen-popup',
       data: {
@@ -137,6 +138,24 @@ export class AnalyzeComponent implements OnInit {
       this.viewsubdomaininfo(this.domain);
     });
   }
+
+  cvelist( val?: any): void {
+    const dialogRef = this.dialog.open(SubdomaincveComponent, {
+      width: 'auto',
+      height: '50%',
+      minWidth: '80%',
+      disableClose: true,
+      panelClass: 'full-screen-popup',
+      data: {
+    
+        Details: val,
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.viewsubdomaininfo(this.domain);
+    });
+  }
+
 
 
 }

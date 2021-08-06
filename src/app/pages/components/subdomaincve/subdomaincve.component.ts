@@ -1,24 +1,22 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { GeoService } from '../../../Services/geo.service';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 @Component({
-  selector: 'ngx-subdomain',
-  templateUrl: './subdomain.component.html',
-  styleUrls: ['./subdomain.component.scss']
+  selector: 'ngx-subdomaincve',
+  templateUrl: './subdomaincve.component.html',
+  styleUrls: ['./subdomaincve.component.scss']
 })
-export class SubdomainComponent implements OnInit {
-
-  displayedColumns: string[] = ['sNo', 'id', 'ip', 'port', 'finding', 'severity']
+export class SubdomaincveComponent implements OnInit {
+  displayedColumns: string[] = ['sNo', 'id', 'ip','cve','cwe', 'port', 'finding', 'severity']
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined
-  constructor(   
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  public dialogRef: MatDialogRef<SubdomainComponent>,
+  constructor(    @Inject(MAT_DIALOG_DATA) public data: any,
+  public dialogRef: MatDialogRef<SubdomaincveComponent>,
   public fb: FormBuilder,
   public dialog: MatDialog,
   public http: HttpServiceService,
