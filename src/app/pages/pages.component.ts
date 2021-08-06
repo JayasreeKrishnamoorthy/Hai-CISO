@@ -33,13 +33,13 @@ export class PagesComponent {
     },
     {
       path: '/pages/analyze',
-      name: 'Analyse',
+      name: 'Analyze',
       icon: 'cast',
       drop: false,
     },
     {
       path: '/pages/Statergize',
-      name: 'Statergize',
+      name: 'Stratergize',
       icon: 'next_plan',
       drop: false,
     },

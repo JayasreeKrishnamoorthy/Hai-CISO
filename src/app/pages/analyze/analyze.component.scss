@@ -146,3 +146,72 @@
 .back-arrow {
   padding: 10px 14px 0;
 }
+
+// .tab-head{
+//   .tab-tit{
+//     span{
+
+//     }
+//   }
+//   .tab-line{
+//     display: flex;
+//     column-gap: 2%;
+//     flex-direction: row;
+//   }
+ 
+
+.card-one{
+  box-shadow: 0 10px 35px 0 #b5b5c3;
+  background-color: #ffffff;
+  padding: 2%;
+  .comp-nam{
+    span{
+      color: #3f4254!important;
+      font-size: 1.5rem!important;
+      font-weight: 600!important;
+    }
+  }
+  .sub-head{
+    column-gap: 2%;
+    padding: 2% 5% 2% 0;
+    .sub-tit{
+      img{
+        width: 20px;
+        height: 20px;
+      }
+      span{
+        color: #b5b5c3;
+        font-weight: 500;
+        font-size: 1.075rem;
+      }
+    }
+  }
+  .counts{
+    column-gap: 2%;
+    .sing-cou{
+      border: 1px dashed #e4e6ef;
+      border-radius: 0.475rem;
+      padding: 1%;
+      .arr-num{
+        img{
+          width: 20px;
+          height: 20px;
+          column-gap: 2%;
+        }
+        span{
+          font-size: 1.5rem!important;
+          font-weight: 600!important;
+          color: #000;
+        }
+      }
+      .cri-name{
+        padding: 8% 0 0 0;
+        span{
+          color: #b5b5c3!important;
+          font-size: 1.075rem!important;
+          font-weight: 500!important;
+        }
+      }
+    }
+  }
+}

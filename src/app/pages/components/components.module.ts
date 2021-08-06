@@ -21,6 +21,7 @@ import { UserGroupViewComponent } from './user-group-view/user-group-view.compon
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { CustomerViewComponent } from './customer-view/customer-view.component';
 import { MapComponent } from './map/map.component';
+import { SubdomainComponent } from './subdomain/subdomain.component';
 
 
 
@@ -32,6 +33,7 @@ import { MapComponent } from './map/map.component';
     ConfirmationComponent,
     CustomerViewComponent,
     MapComponent,
+    SubdomainComponent,
   ],
   entryComponents: [
     UserViewComponent,
@@ -39,7 +41,7 @@ import { MapComponent } from './map/map.component';
     UserGroupViewComponent,
     ConfirmationComponent,
     CustomerViewComponent,
-    MapComponent,
+    MapComponent,SubdomainComponent
   ],
   imports: [
     CommonModule,

@@ -4,7 +4,7 @@
       <div class="data-txt">Which company you want to access data?</div>
       <div class="card-sec df-c-jc w100">
         <div class="com-item" *ngFor="let c of company">
-          <mat-card>
+          <mat-card (click)="movetodashboard(c)">
             PS
           </mat-card>
           <div class="com-name">{{c?.name}}</div>

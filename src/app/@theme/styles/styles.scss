@@ -85,7 +85,9 @@ nb-icon {
   font-size: 1.4rem;
 }
 
-ngx-one-column-layout {
+
+
+ngx-analyze {
   // nb-icon{
   // font-size: 167%;
   // background: #3366ffe0;
@@ -93,6 +95,18 @@ ngx-one-column-layout {
   // border-radius: 3px;
   // padding: 2%;
   // }
+  mat-tab-header {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    margin-bottom: 3%;
+  }
+  .mat-tab-labels {
+    display: flex;
+    background: white;
+  }
+
 }
 
 // Loader

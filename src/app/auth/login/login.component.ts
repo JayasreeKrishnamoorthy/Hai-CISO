@@ -46,6 +46,11 @@ export class LoginComponent implements OnInit {
     };
   }
 
+  movetocompany(){  
+    this.router.navigate(['/auth/select-company']);
+
+  }
+
   movetohome() {
     this.router.navigate(['/pages']);
   }

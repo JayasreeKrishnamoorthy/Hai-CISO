@@ -1,9 +1,10 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpServiceService } from '../../Services/http_service/http-service.service';
+import { SubdomainComponent } from '../components/subdomain/subdomain.component';
 
 @Component({
   selector: 'ngx-analyze',
@@ -13,12 +14,18 @@ import { HttpServiceService } from '../../Services/http_service/http-service.ser
 export class AnalyzeComponent implements OnInit {
   displayedColumns: string[] = ['sNo', 'name', 'url', 'action'];
   displayedColumnsSub: string[] = ['sNo', 'url', 'test', 'cve', 'action'];
+  displayedColumnsSubdomain: string[] = ['sNo', 'url', 'test', 'cve'];
+
+  @Input()selectedIndex: number | null
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   domainList: any = [];
   subDomain: any = [];
   showDomain = 'domain';
   domain: any;
+  companys = true   // changed   //testssl_output //cve_list
+  domainin=true
+  companyy=false
   constructor(
     public http: HttpServiceService,
     public dialog: MatDialog,
@@ -62,12 +69,16 @@ export class AnalyzeComponent implements OnInit {
 
 
   viewDomain(val): void {
+    this.companys=false
+    this.companyy=true
     const obj = {
       isublistid: +val?.isublistid,
       count: 100,
       page: 1,
     };
+    console.log(obj)
     this.http.postToken(`/analyze/getsubdomains`, obj).subscribe(data => {
+     
       if (data[`success`] === true) {
         this.domain = val;
         this.subDomain = new MatTableDataSource(data?.data?.data);
@@ -84,5 +95,48 @@ export class AnalyzeComponent implements OnInit {
     this.showDomain = 'domain';
     this.getUserList();
   }
+
+  viewsubdomaininfo(eve){
+    console.log(eve)
+    this.companys=false
+    this.domainin=false
+    this.companyy=true
+    const obj ={
+      isublistdtlsid: eve.isublistdtlsid
+    }
+    this.http.postToken(`/analyze/subdomain-info`, obj).subscribe(data => {
+      console.log(data)
+      if (data[`success`] === true) {
+         this.domain = eve;
+         this.subDomain = new MatTableDataSource(data?.data?.domain_info);
+         this.subDomain.paginator = this.paginator.toArray()[1];
+         this.subDomain.sort = this.sort.toArray()[1];
+        this.showDomain = 'domain';
+      } else {
+         this.subDomain = [];
+      }
+    });
+  }
+
+
+
+
+  testdomain( val?: any): void {
+    const dialogRef = this.dialog.open(SubdomainComponent, {
+      width: 'auto',
+      height: '60%',
+      minWidth: '60%',
+      disableClose: true,
+      panelClass: 'full-screen-popup',
+      data: {
+    
+        Details: val,
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.viewsubdomaininfo(this.domain);
+    });
+  }
+
 
 }
