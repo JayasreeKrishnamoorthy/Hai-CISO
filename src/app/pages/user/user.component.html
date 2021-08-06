@@ -51,7 +51,7 @@
                   <span (click)="addRequest('View User', row)" class="c-p">
                     <mat-icon matTooltip="View">visibility</mat-icon>
                   </span>
-                  <span (click)="confirmation(row)" class="c-p">
+                  <span *ngIf="userDetails.idendifier != 'CUSTOMER'" (click)="confirmation(row)" class="c-p">
                     <mat-icon matTooltip="Delete">delete</mat-icon>
                   </span>
                 </td>

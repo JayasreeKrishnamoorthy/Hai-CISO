@@ -19,7 +19,13 @@ export interface UserGroupID {
     dcreatedat:     Date;
     dmodifiedat:    Date;
     iroleid:        Iroleid;
-    customerid:     null;
+    customerid:     Customerid;
+}
+
+export interface Customerid {
+    cusid:        number;
+    iaccountid:   number;
+    scompanyname: string;
 }
 
 export interface Iroleid {

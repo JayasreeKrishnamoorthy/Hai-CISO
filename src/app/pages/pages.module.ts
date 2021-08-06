@@ -5,6 +5,7 @@ import {
   NbCardModule,
   NbDialogModule,
   NbIconModule,
+  NbLayoutModule,
   NbMenuModule,
   NbTabsetModule,
   NbTreeGridModule,
