@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
 
 
   //   pravin@mailpsl.com
+  //   accenture@mailpsl.com
+  //   vengadesh.b@mailpsl.com
   // root@12345
 
   login(): void {

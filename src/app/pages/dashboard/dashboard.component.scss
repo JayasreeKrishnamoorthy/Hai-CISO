@@ -16,7 +16,22 @@
 }
 
 
-
+.dashboards{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+.dash-left{
+    width: 35%;
+    h2{
+    font-size: 2.25rem;
+    line-height: 1.3;
+    color: #344767;
+    }
+}
+.dash-right{
+    width: 65%;
+}
+}
 
     // /* width: 20px; */
     // /* height: 20px; */
