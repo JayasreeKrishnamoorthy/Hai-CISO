@@ -85,8 +85,6 @@ nb-icon {
   font-size: 1.4rem;
 }
 
-
-
 ngx-analyze {
   // nb-icon{
   // font-size: 167%;
@@ -106,7 +104,6 @@ ngx-analyze {
     display: flex;
     background: white;
   }
-
 }
 
 // Loader
@@ -237,19 +234,9 @@ ngx-analyze {
   background-image: linear-gradient(310deg, #2152ff, #21d4fd);
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  // font-family: Roboto, "Helvetica Neue", sans-serif;
-  // font-family: Open Sans, sans-serif !important;
-  font-family: "Roboto", sans-serif !important;
-}
-
 .nb-theme-default nb-card {
-  font-family: "Roboto", sans-serif !important;
+  // font-family: "Roboto", sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .t-c {
@@ -341,6 +328,9 @@ body {
   cursor: pointer;
 }
 
+.w5 {
+  width: 5%;
+}
 .w10 {
   width: 10%;
 }
@@ -674,6 +664,21 @@ mat-drawer-content {
   z-index: unset !important;
 }
 
+.progress-sec .mat-progress-bar-fill::after {
+  background-color: #ff4a00 !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #ff4a00;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: #ff4a00;
+}
+
 // .mat-drawer-opened {
 //   overflow: hidden !important;
 //   margin-left: 205px !important;
@@ -682,8 +687,10 @@ mat-drawer-content {
 html,
 body {
   height: 100%;
+  font-family: "Montserrat", sans-serif !important;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  // font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Montserrat", sans-serif !important;
 }

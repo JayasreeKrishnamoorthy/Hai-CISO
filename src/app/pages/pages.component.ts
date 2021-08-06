@@ -38,8 +38,8 @@ export class PagesComponent {
       drop: false,
     },
     {
-      path: '/pages/strategize',
-      name: 'Stratergize',
+      path: '/pages/stratergize',
+      name: 'Strategize',
       icon: 'next_plan',
       drop: false,
     },

@@ -42,7 +42,8 @@ import { LogsComponent } from './logs/logs.component';
     NbIconModule,
     NbDialogModule.forRoot(),
     MaterialModule,
-    ComponentsModule,NbUserModule
+    ComponentsModule,
+    NbUserModule,
   ],
   declarations: [
     PagesComponent,
