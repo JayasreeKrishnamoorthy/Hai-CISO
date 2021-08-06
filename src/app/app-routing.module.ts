@@ -21,7 +21,7 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule),
-  //  canActivate: [LoggedInAuthGuard],
+   // canActivate: [LoggedInAuthGuard],
   },
   {
     path: 'pages',

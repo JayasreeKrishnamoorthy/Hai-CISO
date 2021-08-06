@@ -15,8 +15,10 @@ import { MENU_ITEMS } from './pages-menu';
   //   </ngx-one-column-layout>
   // `,
 })
+
 export class PagesComponent {
   menu = MENU_ITEMS;
+
 
   navLinks: any = [
     {
@@ -151,6 +153,171 @@ export class PagesComponent {
   ngOnInit(): void {
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
+    if (this.userDetails.idendifier === "CUSTOMER") {
+      // For Customer
+      this.navLinks = [
+        {
+          path: '/pages/dashboard',
+          name: 'Dashboard',
+          icon: 'home',
+          drop: false,
+        },
+        // {
+        //   path: '/pages/customers',
+        //   name: 'Customers',
+        //   icon: 'people',
+        //   drop: false,
+        // },
+        {
+          path: '/pages/analyze',
+          name: 'Analyze',
+          icon: 'cast',
+          drop: false,
+        },
+        {
+          path: '/pages/stratergize',
+          name: 'Stratergize',
+          icon: 'next_plan',
+          drop: false,
+        },
+        {
+          path: '/pages/operationalize',
+          name: 'Operationalize',
+          icon: 'cached',
+          drop: false,
+        },
+        {
+          path: '/pages/integration',
+          name: 'Integration',
+          icon: 'integration_instructions',
+          drop: false,
+        },
+        {
+          path: '/pages/resources',
+          name: 'Resources',
+          icon: 'person',
+          drop: false,
+        },
+        {
+          name: 'Users',
+          icon: 'group_add',
+          path: '/pages/user',
+          subitems: [
+            {
+              path: '/pages/user',
+              name: 'User List',
+              icon: 'format_list_bulleted',
+            },
+            // {
+            //   path: '/pages/role',
+            //   name: 'Roles',
+            //   icon: 'admin_panel_settings',
+            // },
+            {
+              path: '/pages/user-group',
+              name: 'User Groups',
+              icon: 'groups',
+            },
+          ],
+          drop: false,
+        },
+        {
+          path: '/pages/logs',
+          name: 'Logs',
+          icon: 'view_in_ar',
+          drop: false,
+        },
+        // {
+        //   path: '/layout/domin',
+        //   name: 'Domain Analyser',
+        //   icon: 'language',
+        //   drop: false,
+        // },
+      ];
+
+    }
+    else {
+      // For PSP 
+      this.navLinks = [
+        {
+          path: '/pages/dashboard',
+          name: 'Dashboard',
+          icon: 'home',
+          drop: false,
+        },
+        {
+          path: '/pages/customers',
+          name: 'Customers',
+          icon: 'people',
+          drop: false,
+        },
+        {
+          path: '/pages/analyze',
+          name: 'Analyze',
+          icon: 'cast',
+          drop: false,
+        },
+        {
+          path: '/pages/stratergize',
+          name: 'Stratergize',
+          icon: 'next_plan',
+          drop: false,
+        },
+        {
+          path: '/pages/operationalize',
+          name: 'Operationalize',
+          icon: 'cached',
+          drop: false,
+        },
+        {
+          path: '/pages/integration',
+          name: 'Integration',
+          icon: 'integration_instructions',
+          drop: false,
+        },
+        {
+          path: '/pages/resources',
+          name: 'Resources',
+          icon: 'person',
+          drop: false,
+        },
+        {
+          name: 'Users',
+          icon: 'group_add',
+          path: '/pages/user',
+          subitems: [
+            {
+              path: '/pages/user',
+              name: 'User List',
+              icon: 'format_list_bulleted',
+            },
+            {
+              path: '/pages/role',
+              name: 'Roles',
+              icon: 'admin_panel_settings',
+            },
+            {
+              path: '/pages/user-group',
+              name: 'User Groups',
+              icon: 'groups',
+            },
+          ],
+          drop: false,
+        },
+        {
+          path: '/pages/logs',
+          name: 'Logs',
+          icon: 'view_in_ar',
+          drop: false,
+        },
+        // {
+        //   path: '/layout/domin',
+        //   name: 'Domain Analyser',
+        //   icon: 'language',
+        //   drop: false,
+        // },
+      ];
+    }
   }
 
   subMenuSelect(val): void {
@@ -166,8 +333,12 @@ export class PagesComponent {
     if (val?.name === 'Logout') {
       localStorage.removeItem('pspkey');
       localStorage.removeItem('PSPUser');
+      localStorage.removeItem('PSPCUSTOMER');
       this.http.updateUserDetails();
       this.router.navigate(['/auth/login']);
+    }
+    else if (val?.name === 'PSP') {
+      this.router.navigate(['/auth/select-company']);
     }
   }
 

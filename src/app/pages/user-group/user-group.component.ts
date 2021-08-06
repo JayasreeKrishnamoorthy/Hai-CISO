@@ -21,7 +21,9 @@ export class UserGroupComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   userGroupList: any = [];
-
+  pspuser: any;
+  userDetails: any;
+  grouplist: any = [];
   constructor(
     public http: HttpServiceService,
     public geo: GeoService,
@@ -29,7 +31,18 @@ export class UserGroupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getUserGroupList();
+    this.pspuser = localStorage.getItem("PSPCUSTOMER");
+    this.pspuser = JSON.parse(this.pspuser);
+    this.userDetails = localStorage.getItem('PSPUser');
+    this.userDetails = JSON.parse(this.userDetails);
+
+    if (this.userDetails.idendifier === "CUSTOMER") {
+
+      this.getUserGroupList_cus();  // For Customer
+    }
+    else {
+      this.getUserGroupList();   // For PSP 
+    }
   }
 
   refresh(): void {
@@ -39,6 +52,7 @@ export class UserGroupComponent implements OnInit {
   getUserGroupList() {
     this.http.getToken(`/user-group?count=${100}&page=${1}`).subscribe(data => {
       if (data[`success`] === true) {
+        //  console.log(data)
         this.userGroupList = new MatTableDataSource(data?.data?.data);
         this.userGroupList.paginator = this.paginator;
         this.userGroupList.sort = this.sort;
@@ -47,6 +61,26 @@ export class UserGroupComponent implements OnInit {
       }
     });
   }
+
+  getUserGroupList_cus() {
+    const obj = {
+      customerid: this.pspuser.customerid.cusid
+    };
+
+    this.http.postToken(`/user-group/customer-usergroups`, obj).subscribe(data => {
+
+      //  console.log(data?.data)
+      if (data[`success`] === true) {
+        this.userGroupList = new MatTableDataSource(data?.data[0]);
+        this.userGroupList.paginator = this.paginator;
+        this.userGroupList.sort = this.sort;
+      } else {
+        this.userGroupList = [];
+      }
+    });
+  }
+
+
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -69,7 +103,13 @@ export class UserGroupComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getUserGroupList();
+      //  this.getUserGroupList();
+      if (this.userDetails.idendifier === "CUSTOMER") {
+        this.getUserGroupList_cus(); // For Customer
+      }
+      else {
+        this.getUserGroupList();  // For PSP 
+      }
     });
   }
 

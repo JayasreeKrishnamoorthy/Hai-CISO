@@ -13,9 +13,9 @@ import { SubdomaincveComponent } from '../components/subdomaincve/subdomaincve.c
   styleUrls: ['./analyze.component.scss'],
 })
 export class AnalyzeComponent implements OnInit {
-  displayedColumns: string[] = ['sNo', 'name', 'url', 'action'];
-  displayedColumnsSub: string[] = ['sNo', 'url', 'test', 'cve', 'action'];
-  displayedColumnsSubdomain: string[] = ['sNo', 'url', 'test', 'cve'];
+  displayedColumns: string[] = [ 'name', 'url', 'action'];
+  displayedColumnsSub: string[] = [ 'url', 'test', 'cve', 'action'];
+  displayedColumnsSubdomain: string[] = [ 'url', 'test', 'cve'];
 
   @Input()selectedIndex: number | null
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
@@ -44,6 +44,7 @@ export class AnalyzeComponent implements OnInit {
   getUserList() {
     this.http.getToken(`/analyze?count=${100}&page=${1}`).subscribe(data => {
       if (data[`success`] === true) {
+        console.log("comlist",data)
         this.domainList = new MatTableDataSource(data?.data?.data);
         this.domainList.paginator = this.paginator.toArray()[0];
         this.domainList.sort = this.sort.toArray()[0];

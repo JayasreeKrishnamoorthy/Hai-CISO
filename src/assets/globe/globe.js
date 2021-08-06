@@ -57,12 +57,12 @@ var animations = {
     finishedIntro: false, // Boolean of when the intro animations have finished
     dots: {
         current: 0, // Animation frames of the globe dots introduction animation
-        total: 170, // Total frames (duration) of the globe dots introduction animation,
+        total: 140, // 170 Total frames (duration) of the globe dots introduction animation,
         points: [], // Array to clone the globe dots coordinates to
     },
     globe: {
         current: 0, // Animation frames of the globe introduction animation
-        total: 80, // Total frames (duration) of the globe introduction animation,
+        total: 60, //80 Total frames (duration) of the globe introduction animation,
     }
 };
 

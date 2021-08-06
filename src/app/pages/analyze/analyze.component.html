@@ -176,7 +176,7 @@
 <div class="data-table" [hidden]="companyy">
   <nb-card>
     <div class="df-b-b table-name-header">
-      <div class="table-title">Domain</div>
+      <div class="table-title">Company List</div>
       <div class="df-b-fe w50 search-add-sec">
         <div class="search-input">
           <mat-form-field floatLabel="never">
@@ -199,10 +199,10 @@
           </ng-container>
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
-            <td mat-cell *matCellDef="let row"> {{row?.scompanyname | titlecase}} </td>
+            <td mat-cell *matCellDef="let row" (click)="viewDomain(row)"> {{row?.scompanyname | titlecase}} </td>
           </ng-container>
           <ng-container matColumnDef="url">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Domain </th>
             <td mat-cell *matCellDef="let row"> {{row?.url}} </td>
           </ng-container>
           <ng-container matColumnDef="action">

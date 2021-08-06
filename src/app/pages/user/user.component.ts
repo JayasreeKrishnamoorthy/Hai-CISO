@@ -25,7 +25,8 @@ export class UserComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   userList: any = [];
   userDetails: any;
-
+  customerlist: any = [];
+  pspuser: any;
   constructor(
     private service: SmartTableData,
     public http: HttpServiceService,
@@ -40,7 +41,15 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
-    this.getUserList();
+    this.pspuser = localStorage.getItem("PSPCUSTOMER");
+    this.pspuser = JSON.parse(this.pspuser);
+    if (this.userDetails.idendifier === "CUSTOMER") {
+      this.getuserlist_customer(); // For Customer
+    }
+    else {
+      this.getUserList();  // For PSP 
+    }
+
   }
 
   refresh(): void {
@@ -50,6 +59,7 @@ export class UserComponent implements OnInit {
   getUserList() {
     this.http.getToken(`/user-management?count=${100}&page=${1}`).subscribe(data => {
       if (data[`success`] === true) {
+        console.log("admin", data?.data?.data)
         this.userList = new MatTableDataSource(data?.data?.data);
         this.userList.paginator = this.paginator;
         this.userList.sort = this.sort;
@@ -80,7 +90,15 @@ export class UserComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getUserList();
+      //  this.getUserList();
+
+      if (this.userDetails.idendifier === "CUSTOMER") {
+        this.getuserlist_customer(); // For Customer
+      }
+      else {
+        this.getUserList();  // For PSP 
+      }
+
     });
   }
 
@@ -120,7 +138,25 @@ export class UserComponent implements OnInit {
     });
   }
 
+  getuserlist_customer() {
+    const obj = {
+      user_group_id: this.pspuser.id
+    };
+    this.http.postToken(`/user-management/getcustomer-users`, obj).subscribe(data => {
 
+      this.customerlist = data?.data?.data.map((d: any) => {
+        return d.userid
+      })
+      console.log("customer", this.customerlist)
+      if (data[`success`] === true) {
+        this.userList = new MatTableDataSource(this.customerlist);
+        this.userList.paginator = this.paginator;
+        this.userList.sort = this.sort;
+      } else {
+        this.userList = [];
+      }
+    });
+  }
 
 
 }

@@ -5,6 +5,7 @@ import {
   NbCardModule,
   NbDialogModule,
   NbIconModule,
+  NbLayoutModule,
   NbMenuModule,
   NbTabsetModule,
   NbTreeGridModule,
@@ -42,7 +43,7 @@ import { LogsComponent } from './logs/logs.component';
     NbIconModule,
     NbDialogModule.forRoot(),
     MaterialModule,
-    ComponentsModule,NbUserModule
+    ComponentsModule,NbUserModule,
   ],
   declarations: [
     PagesComponent,

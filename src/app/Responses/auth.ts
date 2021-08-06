@@ -5,12 +5,13 @@ export interface Login {
 }
 
 export interface Data {
-    id:        number;
-    name:      string;
-    groups:    UserGroup[];
-    userGroup: UserGroup;
-    token:     string;
-    temppass:  boolean;
+    id:         number;
+    name:       string;
+    groups:     UserGroup[];
+    userGroup:  UserGroup;
+    token:      string;
+    temppass:   boolean;
+    idendifier: string;
 }
 
 export interface UserGroup {

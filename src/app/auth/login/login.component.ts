@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
   }
 
 
-//   pravin@mailpsl.com
-// root@12345
+  //   pravin@mailpsl.com
+  // root@12345
 
   login(): void {
     const data = {
@@ -36,9 +36,16 @@ export class LoginComponent implements OnInit {
     };
     this.httpService.doLogin(data).subscribe((res: Login) => {
       if (res.success) {
-        localStorage.setItem('pspkey', res.data.token);
-        localStorage.setItem('PSPUser', JSON.stringify(res.data));
-        this.movetohome();
+        if (res.data.idendifier === "CUSTOMER") {
+          localStorage.setItem('pspkey', res.data.token);
+          localStorage.setItem('PSPUser', JSON.stringify(res.data));
+          this.movetocompany();
+        }
+        else {
+          localStorage.setItem('pspkey', res.data.token);
+          localStorage.setItem('PSPUser', JSON.stringify(res.data));
+          this.movetohome();
+        }
       }
     },
     ); (err) => {
@@ -46,7 +53,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  movetocompany(){  
+  movetocompany() {
     this.router.navigate(['/auth/select-company']);
 
   }
