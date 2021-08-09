@@ -74,7 +74,7 @@ var getData = async () => {
         data = await results.json();
         return setupScene();
     } catch (error) {
-        return alert('Unable to get data');
+        // return alert('Unable to get data');
     }
 };
 

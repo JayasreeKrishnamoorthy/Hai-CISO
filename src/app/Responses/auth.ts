@@ -12,7 +12,6 @@ export interface Data {
     userGroup:  UserGroup;
     token:      string;
     temppass:   boolean;
-    idendifier: string;
 }
 
 export interface UserGroup {

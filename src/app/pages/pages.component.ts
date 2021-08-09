@@ -154,7 +154,7 @@ export class PagesComponent {
   ngOnInit(): void {
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
-    if (this.userDetails.idendifier === "CUSTOMER") {
+    if (this.userDetails.idendifier === 'CUSTOMER') {
       // For Customer
       this.navLinks = [
         {
@@ -177,7 +177,7 @@ export class PagesComponent {
         },
         {
           path: '/pages/stratergize',
-          name: 'Stratergize',
+          name: 'Strategize',
           icon: 'next_plan',
           drop: false,
         },
@@ -236,9 +236,8 @@ export class PagesComponent {
         // },
       ];
 
-    }
-    else {
-      // For PSP 
+    } else {
+      // For PSP
       this.navLinks = [
         {
           path: '/pages/dashboard',
@@ -260,7 +259,7 @@ export class PagesComponent {
         },
         {
           path: '/pages/stratergize',
-          name: 'Stratergize',
+          name: 'Strategize',
           icon: 'next_plan',
           drop: false,
         },
@@ -337,8 +336,7 @@ export class PagesComponent {
       localStorage.removeItem('PSPCUSTOMER');
       this.http.updateUserDetails();
       this.router.navigate(['/auth/login']);
-    }
-    else if (val?.name === 'PSP') {
+    } else if (val?.name === 'PSP') {
       this.router.navigate(['/auth/select-company']);
     }
   }
