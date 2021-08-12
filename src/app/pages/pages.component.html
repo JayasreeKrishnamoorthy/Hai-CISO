@@ -56,7 +56,8 @@
                 <p class="right header-item c-p"><a>{{h?.name}}</a></p>
               </div>
             </div>
-            <div class="w15 df-ab c-p" [matMenuTriggerFor]="menu">
+            <div class="w15 df-ab c-p" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"
+              (click)="menuTrigger.openMenu()">
               <div class="w20">
                 <img src="" onError="this.src='assets/img/user2.png'" class="w80">
               </div>
@@ -74,12 +75,7 @@
             </div>
 
 
-            <mat-menu #menu="matMenu" class="profile-menu-sec">
-              <button mat-menu-item *ngFor="let p of profileMenu" (click)="profileAction(p)">
-                <mat-icon>{{p?.icon}}</mat-icon>
-                <span>{{p?.name}}</span>
-              </button>
-            </mat-menu>
+
 
 
           </div>
@@ -92,7 +88,16 @@
     </div>
 
 
-
-
   </nb-layout-column>
 </nb-layout>
+
+
+
+<div>
+  <mat-menu #menu="matMenu" class="profile-menu-sec">
+    <button mat-menu-item *ngFor="let p of profileMenu" (click)="profileAction(p)">
+      <mat-icon>{{p?.icon}}</mat-icon>
+      <span>{{p?.name}}</span>
+    </button>
+  </mat-menu>
+</div>

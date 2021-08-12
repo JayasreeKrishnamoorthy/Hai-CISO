@@ -7,6 +7,8 @@ import { environment } from '../../../environments/environment';
 import { Login } from '../../Responses/auth';
 import { Roles } from '../../Responses/usr-management';
 import { Datum, SelectCompany, UserGroupID } from '../../Responses/select-companies';
+import { GeoService } from '../geo.service';
+import { UtilityService } from '../utility.service';
 
 // import { environment } from 'src/environments/environment.prod';  // prod
 
@@ -17,10 +19,10 @@ export class HttpServiceService {
   apiUrl = environment.apiUrl; // '/http://3.108.210.142:5000/api/getdetails';
   token = localStorage.getItem('pspkey');
 
-  private getUserDetail = new Subject<any>();
-  userdetails = this.getUserDetail.asObservable();
-
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    public utility: UtilityService,
+  ) { }
 
 
   post(url: any, data: any): Observable<any> {
@@ -37,7 +39,18 @@ export class HttpServiceService {
       'Accept': 'application/json',
     });
     Header.append('Authorization', 'Bearer' + localStorage.getItem('pspkey'));
-    return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: Header });
+    const responseData = this.http.get<any>(`${environment.apiUrl}${url}`, { headers: Header });
+    // tslint:disable-next-line:no-console
+    console.log('responseData', responseData);
+    responseData.subscribe(data => {
+      // tslint:disable-next-line:no-console
+      console.log('data', data);
+      if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
+      }
+    });
+    return responseData;
   }
 
   delToken(url: string) {
@@ -49,12 +62,18 @@ export class HttpServiceService {
     return this.http.delete<any>(`${environment.apiUrl}${url}`, { headers: Header });
   }
 
-  postToken(url: string, data: any) {
+  postToken(url: string, data?: any) {
     const Header = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.token}`,
     });
-    return this.http.post<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
+    if (data) {
+      // tslint:disable-next-line:max-line-length
+      const responseData = this.http.post<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
+      return responseData;
+    } else {
+      return this.http.post<any>(`${environment.apiUrl}${url}`, { headers: Header });
+    }
   }
 
   putToken(url: string, data: any) {
@@ -63,10 +82,6 @@ export class HttpServiceService {
       Authorization: `Bearer ${this.token}`,
     });
     return this.http.put<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
-  }
-
-  updateUserDetails(): void {
-    this.getUserDetail.next();
   }
 
 
@@ -143,21 +158,23 @@ export class HttpServiceService {
       );
   }
 
-putroles(obj){
-  return this.http.put(this.apiUrl+"/roles",obj)
-    .pipe(
-      tap(_ => console.log('response received')),
-      catchError(this.handleError('PUTroles', []))
-    );
-}
+  putroles(obj) {
+    return this.http.put(this.apiUrl + '/roles', obj)
+      .pipe(
+        // tslint:disable-next-line:no-console
+        tap(_ => console.log('response received')),
+        catchError(this.handleError('PUTroles', [])),
+      );
+  }
 
-postroles(obj){
-  return this.http.post(this.apiUrl+"/roles",obj)
-    .pipe(
-      tap(_ => console.log('response received')),
-      catchError(this.handleError('POSTroles', []))
-    );
-}
+  postroles(obj) {
+    return this.http.post(this.apiUrl + '/roles', obj)
+      .pipe(
+        // tslint:disable-next-line:no-console
+        tap(_ => console.log('response received')),
+        catchError(this.handleError('POSTroles', [])),
+      );
+  }
 
 
 }

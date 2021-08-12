@@ -10,6 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
 import { GeoService } from '../../Services/geo.service';
+import { UtilityService } from '../../Services/utility.service';
 
 
 @Component({
@@ -18,12 +19,10 @@ import { GeoService } from '../../Services/geo.service';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-
-
   displayedColumns: string[] = ['name', 'contact', 'mail', 'userGroup', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
-  userList: any = [];
+  userList: any;
   userDetails: any;
   customerlist: any = [];
   pspuser: any;
@@ -32,7 +31,7 @@ export class UserComponent implements OnInit {
     public http: HttpServiceService,
     private dialogService: NbDialogService,
     public dialog: MatDialog,
-    public geo: GeoService,
+    public utility: UtilityService,
   ) {
     // const data = this.service.getData();
     // this.source.load(data);
@@ -41,13 +40,12 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
-    this.pspuser = localStorage.getItem("PSPCUSTOMER");
+    this.pspuser = localStorage.getItem('PSPCUSTOMER');
     this.pspuser = JSON.parse(this.pspuser);
-    if (this.userDetails.idendifier === "CUSTOMER") {
+    if (this.userDetails.idendifier === 'CUSTOMER') {
       this.getuserlist_customer(); // For Customer
-    }
-    else {
-      this.getUserList();  // For PSP 
+    } else {
+      this.getUserList();  // For PSP
     }
 
   }
@@ -57,10 +55,9 @@ export class UserComponent implements OnInit {
   }
 
   getUserList() {
-    this.http.getToken(`/user-management?count=${100}&page=${1}`).subscribe(data => {
+    this.http.getToken(`/user-management`).subscribe(data => {
       if (data[`success`] === true) {
-        console.log("admin", data?.data?.data)
-        this.userList = new MatTableDataSource(data?.data?.data);
+        this.userList = new MatTableDataSource(data?.data);
         this.userList.paginator = this.paginator;
         this.userList.sort = this.sort;
       } else {
@@ -92,11 +89,10 @@ export class UserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       //  this.getUserList();
 
-      if (this.userDetails.idendifier === "CUSTOMER") {
+      if (this.userDetails.idendifier === 'CUSTOMER') {
         this.getuserlist_customer(); // For Customer
-      }
-      else {
-        this.getUserList();  // For PSP 
+      } else {
+        this.getUserList();  // For PSP
       }
 
     });
@@ -134,20 +130,19 @@ export class UserComponent implements OnInit {
       if (data[`success`] === true) {
         this.getUserList();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 
   getuserlist_customer() {
     const obj = {
-      user_group_id: this.pspuser.id
+      user_group_id: this.pspuser.id,
     };
     this.http.postToken(`/user-management/getcustomer-users`, obj).subscribe(data => {
 
       this.customerlist = data?.data?.data.map((d: any) => {
-        return d.userid
-      })
-      console.log("customer", this.customerlist)
+        return d.userid;
+      });
       if (data[`success`] === true) {
         this.userList = new MatTableDataSource(this.customerlist);
         this.userList.paginator = this.paginator;

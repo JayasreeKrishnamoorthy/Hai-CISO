@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { Login } from '../../Responses/auth';
+import { GeoService } from '../../Services/geo.service';
 import { HttpServiceService } from '../../Services/http_service/http-service.service';
+import { UtilityService } from '../../Services/utility.service';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'app-login',
@@ -11,10 +13,12 @@ import { HttpServiceService } from '../../Services/http_service/http-service.ser
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  cView = false;
   constructor(
     public fb: FormBuilder,
     public router: Router,
     private httpService: HttpServiceService,
+    public utility: UtilityService,
   ) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -36,22 +40,29 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
       email: this.loginForm.value.email,
     };
-    this.httpService.doLogin(data).subscribe((res: Login) => {
-      if (res.success) {
-        if (res.data.idendifier === 'CUSTOMER') {
+    this.httpService.doLogin(data).subscribe(res => {
+      if (res.success === true) {
+        if (res?.data?.temppass === true) {
           localStorage.setItem('pspkey', res.data.token);
-          localStorage.setItem('PSPUser', JSON.stringify(res.data));
-          this.movetocompany();
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              loginDetails: JSON.stringify(res?.data),
+            },
+          };
+          this.router.navigate(['/auth/reset-password'], navigationExtras);
         } else {
           localStorage.setItem('pspkey', res.data.token);
           localStorage.setItem('PSPUser', JSON.stringify(res.data));
-          this.movetohome();
+          if (res.data.idendifier === 'CUSTOMER') {
+            this.movetocompany();
+          } else {
+            this.movetohome();
+          }
         }
+      } else {
+        this.utility.openToast(res[`message`]);
       }
-    },
-    ); (err) => {
-      alert(err.error.message);
-    };
+    });
   }
 
   movetocompany() {

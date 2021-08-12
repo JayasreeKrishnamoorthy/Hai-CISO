@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { GeoService } from '../../../Services/geo.service';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
+import { UtilityService } from '../../../Services/utility.service';
 
 @Component({
   selector: 'ngx-user-view',
@@ -14,13 +15,16 @@ export class UserViewComponent implements OnInit {
   usergroup: any;
   groupList: any = [];
   groupId: any;
+  userDetails: any;
+  pspCustomerDetails: any;
+  accountUnlock: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<UserViewComponent>,
     public fb: FormBuilder,
     public dialog: MatDialog,
     public http: HttpServiceService,
-    public geo: GeoService,
+    public utility: UtilityService,
   ) {
     this.userForm = this.fb.group({
       sname: ['', Validators.required],
@@ -33,7 +37,19 @@ export class UserViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getGroup();
+
+    this.userDetails = localStorage.getItem('PSPUser');
+    this.userDetails = JSON.parse(this.userDetails);
+    this.pspCustomerDetails = localStorage.getItem('PSPCUSTOMER');
+    this.pspCustomerDetails = JSON.parse(this.pspCustomerDetails);
+
+    if (this.userDetails.idendifier === 'CUSTOMER') {
+      this.getCusUserGroupList();  // For Customer
+    } else {
+      this.getAdminUserGroupList();   // For PSP
+    }
+
+    // this.getGroup();
     if (this.data?.userDetails?.iuserid) {
       this.userForm.controls?.accountLock.patchValue(false);
       this.userForm.controls?.resetpass.patchValue(false);
@@ -47,7 +63,30 @@ export class UserViewComponent implements OnInit {
   getGroup(): void {
     this.http.getToken(`/user-group`).subscribe(data => {
       if (data[`success`] === true) {
-        this.groupList = data?.data?.data;
+        this.groupList = data?.data;
+      } else {
+        this.groupList = [];
+      }
+    });
+  }
+
+  getAdminUserGroupList() {
+    this.http.postToken(`/user-group/admin`).subscribe(data => {
+      if (data[`success`] === true) {
+        this.groupList = data?.data;
+      } else {
+        this.groupList = [];
+      }
+    });
+  }
+
+  getCusUserGroupList() {
+    const obj = {
+      customerid: +this.pspCustomerDetails?.customerid?.cusid,
+    };
+    this.http.postToken(`/user-group/customer`, obj).subscribe(data => {
+      if (data[`success`] === true) {
+        this.groupList = data?.data;
       } else {
         this.groupList = [];
       }
@@ -61,8 +100,7 @@ export class UserViewComponent implements OnInit {
     this.http.postToken(`/user-management/geteachuserinfo`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.userForm.patchValue(data?.data);
-        // tslint:disable-next-line:no-console
-        console.log('data?.data?.groups[0]?.iid', data?.data?.groups[0]?.userGroupId?.iid);
+        this.accountUnlock = data?.data?.userdtls?.baccountlocked;
         this.userForm.controls.group.patchValue(data?.data?.groups[0]?.userGroupId?.iid);
         this.groupId = data?.data?.groups[0]?.userGroupId?.iid;
       }
@@ -90,7 +128,7 @@ export class UserViewComponent implements OnInit {
       } else {
 
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 
@@ -113,7 +151,7 @@ export class UserViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.dialogRef.close();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 

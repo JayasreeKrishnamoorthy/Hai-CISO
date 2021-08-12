@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { GeoService } from '../../Services/geo.service';
 import { HttpServiceService } from '../../Services/http_service/http-service.service';
+import { UtilityService } from '../../Services/utility.service';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
 import { CustomerViewComponent } from '../components/customer-view/customer-view.component';
 
@@ -18,12 +19,15 @@ export class CustomersComponent implements OnInit {
   displayedColumns: string[] = ['companyName', 'email', 'contact', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
-  customerList: any = [];
+  customerList: any;
   userDetails: any;
+  customerCount: any;
+  listCount = 100;
+  nextPage = 0;
 
   constructor(
     public http: HttpServiceService,
-    public geo: GeoService,
+    public utility: UtilityService,
     public dialog: MatDialog,
   ) {
   }
@@ -39,9 +43,9 @@ export class CustomersComponent implements OnInit {
   }
 
   getCustomerList() {
-    this.http.getToken(`/customer-onboard?count=${100}&page=${1}`).subscribe(data => {
+    this.http.getToken(`/customer-onboard`).subscribe(data => {
       if (data[`success`] === true) {
-        this.customerList = new MatTableDataSource(data?.data?.data);
+        this.customerList = new MatTableDataSource(data?.data);
         this.customerList.paginator = this.paginator;
         this.customerList.sort = this.sort;
       } else {
@@ -55,6 +59,24 @@ export class CustomersComponent implements OnInit {
     this.customerList.filter = filterValue.trim().toLowerCase();
     if (this.customerList.paginator) {
       this.customerList.paginator.firstPage();
+    }
+  }
+
+  paginationEvent(eve) {
+    // tslint:disable-next-line:no-console
+    console.log('eve', eve);
+    if (eve.pageIndex > this.nextPage) {
+      // tslint:disable-next-line:no-console
+      console.log('this.customerCount', this.customerCount);
+      if (this.customerCount > this.listCount) {
+        // this.listCount = this.listCount + 100;
+        // this.getCustomerList();
+      }
+    } else {
+      if (this.listCount > 100) {
+        // this.listCount = this.listCount - 100;
+        // this.getCustomerList();
+      }
     }
   }
 
@@ -99,7 +121,7 @@ export class CustomersComponent implements OnInit {
       if (data[`success`] === true) {
         this.getCustomerList();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 

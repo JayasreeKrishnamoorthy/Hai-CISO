@@ -38,7 +38,7 @@
           </div>
         </div>
 
-        <div class="df-ac f-w pb-1">
+        <div class="df-a-f-e f-w pb-1">
           <div class="w33">
             <div class="form-lable-name">User Group</div>
             <mat-form-field appearance="outline">
@@ -49,10 +49,10 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="w33" *ngIf="data?.name !== 'Add User'">
+          <div class="w33" *ngIf="data?.name == 'Edit User' && accountUnlock == true">
             <mat-checkbox formControlName="accountLock">Unlock Account</mat-checkbox>
           </div>
-          <div class="w33" *ngIf="data?.name !== 'Add User'">
+          <div class="w33" *ngIf="data?.name == 'Edit User'">
             <mat-checkbox formControlName="resetpass">Reset Password</mat-checkbox>
           </div>
         </div>

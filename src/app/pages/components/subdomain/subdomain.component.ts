@@ -9,30 +9,34 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'ngx-subdomain',
   templateUrl: './subdomain.component.html',
-  styleUrls: ['./subdomain.component.scss']
+  styleUrls: ['./subdomain.component.scss'],
 })
 export class SubdomainComponent implements OnInit {
 
-  displayedColumns: string[] = ['sNo', 'id', 'ip', 'port', 'finding', 'severity']
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined
-  @ViewChild(MatSort, { static: true }) sort: MatSort | undefined
-  constructor(   
+  displayedColumns: string[] = ['id', 'ip', 'port', 'finding', 'severity'];
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
+  List: any;
+  constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-  public dialogRef: MatDialogRef<SubdomainComponent>,
-  public fb: FormBuilder,
-  public dialog: MatDialog,
-  public http: HttpServiceService,
-  public geo: GeoService,) { }
-  List: any = [];
+    public dialogRef: MatDialogRef<SubdomainComponent>,
+    public fb: FormBuilder,
+    public dialog: MatDialog,
+    public http: HttpServiceService,
+    public geo: GeoService) { }
+
   ngOnInit(): void {
-    console.log(this.data.Details)
-    this.List = new MatTableDataSource(this.data.Details);
-    this.List.paginator = this.paginator;
-    this.List.sort = this.sort;
+    if (this.data.Details?.length !== 0) {
+      this.List = new MatTableDataSource(this.data.Details);
+      this.List.paginator = this.paginator;
+      this.List.sort = this.sort;
+    } else {
+      this.List = [];
+    }
   }
 
-  refresh(){
-    this.ngOnInit()
+  refresh() {
+    this.ngOnInit();
   }
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;

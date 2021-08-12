@@ -20,39 +20,31 @@ export class SelectCompanyComponent implements OnInit {
   ];
 
 
-  constructor(private httpService: HttpServiceService, public router: Router,) { }
+  constructor(
+    private httpService: HttpServiceService,
+    public router: Router,
+  ) { }
 
   ngOnInit(): void {
-    this.companieslist()
+    this.companieslist();
   }
 
-
-
-
   companieslist(): void {
-
     this.httpService.getcompanies().subscribe((res) => {
       if (res['success'] === true) {
-        //console.log(res)
         this.company = res?.data.map((d: any) => {
-          return { name: d.userGroupId.susergroupname, id: d.userGroupId.iid, customerid: d.userGroupId.customerid }
-        })
-        console.log(this.company);
-
-
+          return { name: d.userGroupId.susergroupname, id: d.userGroupId.iid, customerid: d.userGroupId.customerid };
+        });
       }
     },
     ); (err) => {
-      alert(err.error.message);
     };
   }
 
 
   movetodashboard(company) {
-    console.log(company.id)
-    localStorage.setItem("PSPCUSTOMER", JSON.stringify(company))
+    localStorage.setItem('PSPCUSTOMER', JSON.stringify(company));
     this.router.navigate(['/pages']);
-
   }
 
 }

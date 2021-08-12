@@ -1,450 +1,9 @@
-<div class="data-table" [hidden]="companyy">
-  <nb-card>
-    <div class="df-b-b table-name-header">
-      <div class="table-title">Company List</div>
-      <div class="df-b-fe w50 search-add-sec">
-        <div class="search-input">
-          <mat-form-field floatLabel="never">
-            <input matInput (keyup)="applyFilter($event)" placeholder="Search.....">
-          </mat-form-field>
-        </div>
-        <div>
-        </div>
-        <div class="a-s-e ref-btn">
-          <mat-icon class="df-c-jc c-p" (click)="refreshDomain()">refresh</mat-icon>
-        </div>
-      </div>
-    </div>
-    <div class="table-card">
-      <div class="table-sec">
-        <table mat-table [dataSource]="domainList" matSort style="width: 100%;">
-          <!-- <ng-container matColumnDef="sNo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
-            <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-          </ng-container> -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
-            <td mat-cell *matCellDef="let row" (click)="viewDomain(row)"> {{row?.scompanyname | titlecase}} </td>
-          </ng-container>
-          <ng-container matColumnDef="url">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Domain </th>
-            <td mat-cell *matCellDef="let row"> {{row?.url}} </td>
-          </ng-container>
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-            <td mat-cell *matCellDef="let row">
-              <span (click)="viewDomain(row)" class="c-p">
-                <mat-icon matTooltip="View">visibility</mat-icon>
-              </span>
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-          </tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-      </div>
-    </div>
-  </nb-card>
-</div>
-
-
-
-<div [hidden]='companys'>
-  <div class="analyse-profile">
-    <mat-card class="profile-details">
-      <div class="company-name">{{companyname}}</div>
-      <div class="df-ac contact-detail">
-        <div class="df-ac c-info">
-          <div>
-            <mat-icon class="df-c-jc">person</mat-icon>
-          </div>
-          <div>Developer</div>
-        </div>
-        <div class="df-ac c-info">
-          <div>
-            <mat-icon class="df-c-jc">place</mat-icon>
-          </div>
-          <div>Chennai</div>
-        </div>
-        <div class="df-ac c-info">
-          <div>
-            <mat-icon class="df-c-jc">alternate_email</mat-icon>
-          </div>
-          <div>jai@gmail.com</div>
-        </div>
-      </div>
-
-
-      <div class="df-ac">
-        <div class="df-ac w70 count-sec">
-          <div class="count-cnt" *ngFor="let c of contList">
-            <div class="count-item">
-              <div class="count">{{c?.count}}</div>
-              <div class="count-txt">{{c?.name}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="w30 progress-sec">
-          <div class="df-fe-b progress-name">
-            <div class="pro-title">Profile Compleation</div>
-            <div class="pro-count">50%</div>
-          </div>
-          <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
-        </div>
-      </div>
-
-
-      <div class="tab-sec df-ac">
-        <div *ngFor="let t of tabName" class="tab-item c-p" (click)="selectAnalyseTab(t)"
-          [ngStyle]="{'color': t?.status == true ? '#ff4a00' : '#a1a8be', 'border-bottom' : t?.status == true? '2px solid #ff4a00' : 'unset'}">
-          <div>{{t?.name | uppercase}}</div>
-        </div>
-      </div>
-
-    </mat-card>
-  </div>
-
-
-
-  <div class="company-profile-sec" *ngIf="currentTab == 'SUMMARY'">
-    <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
-  </div>
-
-  <div class="company-profile-sec" *ngIf="currentTab == 'TECH VENDORS'">
-    <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
-  </div>
-
-  <div class="company-profile-sec" *ngIf="currentTab == 'COMPLIANCE STATUS'">
-    <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
-  </div>
-
-  <div class="company-profile-sec" *ngIf="currentTab == 'AI&ML'">
-    <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
-  </div>
-
-  <div class="company-profile-sec" *ngIf="currentTab == 'COMPANY PROFILE'">
-
-    <div class="w25 profile-details">
-      <mat-card>
-        <div class="line-bg"></div>
-        <div class="t-c">
-          <div class="role"><span>PSP ADMIN</span></div>
-          <div><img src="" onError="this.src='assets/img/user2.png'" class="w40"></div>
-          <div class="p-name">Jayasree</div>
-          <div class="p-email df-c-jc">
-            <span>
-              <mat-icon class="df-c-jc">mail_outline</mat-icon>
-            </span>
-            jai@gmail.com
-          </div>
-        </div>
-      </mat-card>
-    </div>
-    <div class="w70 profile-basic-info">
-      <mat-card>
-
-        <div class="c-info"><span>Company Info:</span></div>
-
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">Customer Name</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">Jayasree</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">Corporate Website</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">mailpsl.com</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">HQ Location</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">Redwood Shores, California, USA</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">CISO</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">YES</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">Industry</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">Phantom</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">Information Security Officer</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">YES</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">Number of Emp</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">25</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">Privacy Officer</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">YES</div>
-        </div>
-        <div class="profile-item df-ac">
-          <div class="w35 p-lable">HIPAA Risk Officer</div>
-          <div class="w5">:</div>
-          <div class="w60 p-value">YES</div>
-        </div>
-      </mat-card>
-    </div>
-  </div>
-
-
-
-
-  <div class="privacy-status-sec" *ngIf="currentTab == 'PRIVACY STATUS'">
-    <mat-card>
-      <div class="df-ac f-w">
-        <div *ngFor="let p of privacyStatus" class="w33 privacy-item">
-          <div *ngIf="p?.status == true">
-            <div class="radio-lable">{{p?.lable}}</div>
-            <div>
-              <mat-radio-group (change)="radioChange($event, p)">
-                <mat-radio-button value="1">YES</mat-radio-button>
-                <mat-radio-button value="2">No</mat-radio-button>
-              </mat-radio-group>
-            </div>
-          </div>
-        </div>
-      </div>
-    </mat-card>
-  </div>
-
-
-
-  <!-- *ngIf="currentTab == 'SUB DOMAIN'" -->
-  <div class="sub-domain-sec" [hidden]="currentTab !== 'SUB DOMAIN'">
-    <div class="data-table" [hidden]="showDomain == 'domain'">
-      <nb-card>
-        <!-- <div (click)="back()" class="back-arrow">
-          <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
-        </div> -->
-        <div class="df-b-b table-name-header">
-          <div class="table-title">{{domain?.scompanyname | titlecase}}</div>
-          <div class="df-b-fe w50 search-add-sec">
-            <div class="search-input">
-              <mat-form-field floatLabel="never">
-                <input matInput (keyup)="applyFilterSub($event)" placeholder="Search.....">
-              </mat-form-field>
-            </div>
-            <div>
-            </div>
-            <div class="a-s-e ref-btn">
-              <mat-icon class="df-c-jc c-p" (click)="viewDomain(domain)">refresh</mat-icon>
-            </div>
-          </div>
-        </div>
-        <div class="table-card">
-          <div class="table-sec">
-            <table mat-table [dataSource]="subDomain" matSort style="width: 100%;">
-              <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
-                <td mat-cell *matCellDef="let row"> {{row?.url}} </td>
-              </ng-container>
-              <ng-container matColumnDef="test">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Testssl </th>
-                <td mat-cell *matCellDef="let row">
-                  <div class="dot-sec" [ngStyle]="{'background': row?.testssl == 1 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.testssl == 1 ? 'Testssl output found' : 'Testssl not found'"></div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="cve">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> CVE List </th>
-                <td mat-cell *matCellDef="let row">
-                  <div class="dot-sec" [ngStyle]="{'background': row?.cve_lists == 0 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.cve_lists == 1 ? 'Vulnerability found' : 'Vulnerability not found'"></div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="viewsubdomaininfo(row)" class="c-p">
-                    <mat-icon matTooltip="View">visibility</mat-icon>
-                  </span>
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsSub; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumnsSub;">
-              </tr>
-            </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-          </div>
-        </div>
-      </nb-card>
-    </div>
-
-    <div class="data-table" [hidden]='domainin'>
-      <nb-card>
-        <!-- <div (click)="back()" class="back-arrow">
-          <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
-        </div> -->
-        <div class="df-b-b table-name-header">
-          <div class="table-title">{{domain?.scompanyname | titlecase}}</div>
-          <div class="df-b-fe w50 search-add-sec">
-            <div class="search-input">
-              <mat-form-field floatLabel="never">
-                <input matInput (keyup)="applyFilterSub($event)" placeholder="Search.....">
-              </mat-form-field>
-            </div>
-            <div>
-            </div>
-            <div class="a-s-e ref-btn">
-              <mat-icon class="df-c-jc c-p" (click)="viewsubdomaininfo(domain)">refresh</mat-icon>
-            </div>
-          </div>
-        </div>
-        <div class="table-card">
-          <div class="table-sec">
-            <table mat-table [dataSource]="subDomain" matSort style="width: 100%;">
-              <!-- <ng-container matColumnDef="sNo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
-                <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-              </ng-container> -->
-              <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
-                <td mat-cell *matCellDef="let row"> {{domain?.url}} </td>
-              </ng-container>
-              <ng-container matColumnDef="test">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Test SSL </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="testdomain(row?.testssl_output)" class="c-p">
-                    <mat-icon matTooltip="Test SSL">info</mat-icon>
-                  </span>
-
-                  <!-- <div class="dot-sec" [ngStyle]="{'background': row?.testssl == 1 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.testssl == 1 ? 'Testssl output found' : 'Testssl not found'"></div> -->
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="cve">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> CVE List </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="cvelist(row?.cve_list)" class="c-p">
-                    <mat-icon matTooltip="CVE">info</mat-icon>
-                  </span>
-                  <!-- <div class="dot-sec" [ngStyle]="{'background': row?.cve_lists == 1 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.cve_lists == 1 ? 'Vulnerability found' : 'Vulnerability not found'"></div> -->
-                </td>
-              </ng-container>
-              <!-- <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="viewsubdomaininfo(row)" class="c-p">
-                    <mat-icon matTooltip="View">visibility</mat-icon>
-                  </span>
-                </td>
-              </ng-container> -->
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsSubdomain; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumnsSubdomain;">
-              </tr>
-            </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-          </div>
-        </div>
-      </nb-card>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- CHANGED -->
-
-<!-- <div class="card-one" [hidden]='companys'>
-  <div class="comp-nam">
-    <span>{{companyname}}</span>
-  </div>
-  <div class="sub-head df-ac">
-    <div class="sub-tit df-ac">
-      <img src="https://img.flaticon.com/icons/png/512/271/271218.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF">
-      <span>Lorem ipsum</span>
-    </div>
-    <div class="sub-tit df-ac">
-      <img src="https://img.flaticon.com/icons/png/512/271/271218.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF">
-      <span>Lorem ipsum</span>
-    </div>
-    <div class="sub-tit df-ac">
-      <img src="https://img.flaticon.com/icons/png/512/271/271218.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF">
-      <span>Lorem ipsum</span>
-    </div>
-  </div>
-  <div class="counts df-ac">
-    <div class="sing-cou">
-      <div class="arr-num df-ac">
-        <img src="https://img.flaticon.com/icons/png/512/271/271218.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF">
-        <span>45,000</span>
-      </div>
-      <div class="cri-name">
-        <span>Domain</span>
-      </div>
-    </div>
-    <div class="sing-cou">
-      <div class="arr-num df-ac">
-        <img src="https://img.flaticon.com/icons/png/512/271/271218.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF">
-        <span>45,000</span>
-      </div>
-      <div class="cri-name">
-        <span>Domain</span>
-      </div>
-    </div>
-    <div class="sing-cou">
-      <div class="arr-num df-ac">
-        <img src="https://img.flaticon.com/icons/png/512/271/271218.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF">
-        <span>45,000</span>
-      </div>
-      <div class="cri-name">
-        <span>Subdomain</span>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-
-
-
-<mat-tab-group mat-align-tabs="start" [selectedIndex]="0" hidden>
-
-  <mat-tab label="SUMMARY">
-    <div class="t-c">
-      <img src="assets/PSP/under_cons.gif" class="w20">
-    </div>
-  </mat-tab>
-  <mat-tab label="COMPANY PROFILE">
-    <div class="t-c">
-      <img src="assets/PSP/under_cons.gif" class="w20">
-    </div>
-  </mat-tab>
-  <mat-tab label="TECH VENDORS">
-    <div class="t-c">
-      <img src="assets/PSP/under_cons.gif" class="w20">
-    </div>
-  </mat-tab>
-  <mat-tab label="SUB DOMAINS">
-    <!-- <div class="data-table" [hidden]="showDomain == 'subdomain'">
+<nb-layout>
+  <nb-layout-column class="app-layout-column">
+    <div class="data-table" [hidden]="showCompany == false">
       <nb-card>
         <div class="df-b-b table-name-header">
-          <div class="table-title">Domain</div>
+          <div class="table-title">Company List</div>
           <div class="df-b-fe w50 search-add-sec">
             <div class="search-input">
               <mat-form-field floatLabel="never">
@@ -454,23 +13,20 @@
             <div>
             </div>
             <div class="a-s-e ref-btn">
-              <mat-icon class="df-c-jc c-p" (click)="refreshDomain()">refresh</mat-icon>
+              <mat-icon class="df-c-jc c-p" (click)="refreshCompany()">refresh</mat-icon>
             </div>
           </div>
         </div>
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
         <div class="table-card">
           <div class="table-sec">
-            <table mat-table [dataSource]="domainList" matSort style="width: 100%;">
-              <ng-container matColumnDef="sNo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
-                <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-              </ng-container>
+            <table mat-table [dataSource]="companyList" matSort style="width: 100%;">
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
-                <td mat-cell *matCellDef="let row"> {{row?.scompanyname | titlecase}} </td>
+                <td mat-cell *matCellDef="let row" (click)="viewDomain(row)"> {{row?.scompanyname | titlecase}} </td>
               </ng-container>
               <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Domain </th>
                 <td mat-cell *matCellDef="let row"> {{row?.url}} </td>
               </ng-container>
               <ng-container matColumnDef="action">
@@ -485,168 +41,373 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns;">
               </tr>
             </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-          </div>
-        </div>
-      </nb-card>
-    </div> -->
+
+            <div *ngIf="companyList?.length === 0" class="nodataFound">
+              <p class="nodataError">
+                ** No data found **
+              </p>
+            </div>
 
 
-
-    <div class="data-table" [hidden]="showDomain == 'domain'">
-      <nb-card>
-        <!-- <div (click)="back()" class="back-arrow">
-          <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
-        </div> -->
-        <div class="df-b-b table-name-header">
-          <div class="table-title">{{domain?.scompanyname | titlecase}}</div>
-          <div class="df-b-fe w50 search-add-sec">
-            <div class="search-input">
-              <mat-form-field floatLabel="never">
-                <input matInput (keyup)="applyFilterSub($event)" placeholder="Search.....">
-              </mat-form-field>
-            </div>
-            <div>
-            </div>
-            <div class="a-s-e ref-btn">
-              <mat-icon class="df-c-jc c-p" (click)="viewDomain(domain)">refresh</mat-icon>
-            </div>
-          </div>
-        </div>
-        <div class="table-card">
-          <div class="table-sec">
-            <table mat-table [dataSource]="subDomain" matSort style="width: 100%;">
-              <!-- <ng-container matColumnDef="sNo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
-                <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-              </ng-container> -->
-              <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
-                <td mat-cell *matCellDef="let row"> {{row?.url}} </td>
-              </ng-container>
-              <ng-container matColumnDef="test">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Test </th>
-                <td mat-cell *matCellDef="let row">
-                  <div class="dot-sec" [ngStyle]="{'background': row?.testssl == 1 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.testssl == 1 ? 'Testssl output found' : 'Testssl not found'"></div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="cve">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> CVE List </th>
-                <td mat-cell *matCellDef="let row">
-                  <div class="dot-sec" [ngStyle]="{'background': row?.cve_lists == 1 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.cve_lists == 1 ? 'Vulnerability found' : 'Vulnerability not found'"></div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="viewsubdomaininfo(row)" class="c-p">
-                    <mat-icon matTooltip="View">visibility</mat-icon>
-                  </span>
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsSub; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumnsSub;">
-              </tr>
-            </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-          </div>
-        </div>
-      </nb-card>
-    </div>
-
-    <div class="data-table" [hidden]='domainin'>
-      <nb-card>
-        <!-- <div (click)="back()" class="back-arrow">
-          <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
-        </div> -->
-        <div class="df-b-b table-name-header">
-          <div class="table-title">{{domain?.scompanyname | titlecase}}</div>
-          <div class="df-b-fe w50 search-add-sec">
-            <div class="search-input">
-              <mat-form-field floatLabel="never">
-                <input matInput (keyup)="applyFilterSub($event)" placeholder="Search.....">
-              </mat-form-field>
-            </div>
-            <div>
-            </div>
-            <div class="a-s-e ref-btn">
-              <mat-icon class="df-c-jc c-p" (click)="viewsubdomaininfo(domain)">refresh</mat-icon>
-            </div>
-          </div>
-        </div>
-        <div class="table-card">
-          <div class="table-sec">
-            <table mat-table [dataSource]="subDomain" matSort style="width: 100%;">
-              <!-- <ng-container matColumnDef="sNo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
-                <td mat-cell *matCellDef="let row;let i = index"> {{i+1}} </td>
-              </ng-container> -->
-              <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
-                <td mat-cell *matCellDef="let row"> {{domain?.url}} </td>
-              </ng-container>
-              <ng-container matColumnDef="test">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Test SSL </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="testdomain(row?.testssl_output)" class="c-p">
-                    <mat-icon matTooltip="Test SSL">info</mat-icon>
-                  </span>
-
-                  <!-- <div class="dot-sec" [ngStyle]="{'background': row?.testssl == 1 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.testssl == 1 ? 'Testssl output found' : 'Testssl not found'"></div> -->
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="cve">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> CVE List </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="cvelist(row?.cve_list)" class="c-p">
-                    <mat-icon matTooltip="CVE">info</mat-icon>
-                  </span>
-                  <!-- <div class="dot-sec" [ngStyle]="{'background': row?.cve_lists == 1 ? '#3DBE29' : '#E21717'}"
-                    [matTooltip]="row?.cve_lists == 1 ? 'Vulnerability found' : 'Vulnerability not found'"></div> -->
-                </td>
-              </ng-container>
-              <!-- <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-                <td mat-cell *matCellDef="let row">
-                  <span (click)="viewsubdomaininfo(row)" class="c-p">
-                    <mat-icon matTooltip="View">visibility</mat-icon>
-                  </span>
-                </td>
-              </ng-container> -->
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsSubdomain; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumnsSubdomain;">
-              </tr>
-            </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
           </div>
         </div>
       </nb-card>
     </div>
 
 
-  </mat-tab>
-  <mat-tab label="COMPLIANCE STATUS">
-    <div class="t-c">
-      <img src="assets/PSP/under_cons.gif" class="w20">
-    </div>
-  </mat-tab>
-  <mat-tab label="PRIVACY STATUS">
-    <div class="t-c">
-      <img src="assets/PSP/under_cons.gif" class="w20">
-    </div>
-  </mat-tab>
 
-  <mat-tab label="CURRENT SEQURITY STATUS">
-    <div class="t-c">
-      <img src="assets/PSP/under_cons.gif" class="w20">
+    <div [hidden]='showCompany == true'>
+
+
+      <div (click)="back('company')" class="back-arrow" *ngIf="userDetails.idendifier !== 'CUSTOMER'">
+        <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
+      </div>
+
+
+      <div class="analyse-profile">
+        <mat-card class="profile-details">
+          <div class="company-name" *ngIf="userDetails.idendifier !== 'CUSTOMER'">{{domain?.scompanyname | titlecase}}
+          </div>
+          <div class="company-name" *ngIf="userDetails.idendifier == 'CUSTOMER'">
+            {{pspCustomerDetails?.customerid?.scompanyname | titlecase}}
+          </div>
+          <div class="df-ac contact-detail">
+            <div class="df-ac c-info">
+              <div>
+                <mat-icon class="df-c-jc">person</mat-icon>
+              </div>
+              <div>Developer</div>
+            </div>
+            <div class="df-ac c-info">
+              <div>
+                <mat-icon class="df-c-jc">place</mat-icon>
+              </div>
+              <div>Chennai</div>
+            </div>
+            <div class="df-ac c-info">
+              <div>
+                <mat-icon class="df-c-jc">alternate_email</mat-icon>
+              </div>
+              <div>jai@gmail.com</div>
+            </div>
+          </div>
+
+
+          <div class="df-ac">
+            <div class="df-ac w70 count-sec">
+              <div class="count-cnt" *ngFor="let c of contList">
+                <div class="count-item">
+                  <div class="count">{{c?.count}}</div>
+                  <div class="count-txt">{{c?.name}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="w30 progress-sec">
+              <div class="df-fe-b progress-name">
+                <div class="pro-title">Profile Completion</div>
+                <div class="pro-count">50%</div>
+              </div>
+              <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+            </div>
+          </div>
+
+
+          <div class="tab-sec df-ac">
+            <div *ngFor="let t of tabName" class="tab-item c-p" (click)="selectAnalyseTab(t)"
+              [ngStyle]="{'color': t?.status == true ? '#ff4a00' : '#a1a8be', 'border-bottom' : t?.status == true? '2px solid #ff4a00' : 'unset'}">
+              <div>{{t?.name | uppercase}}</div>
+            </div>
+          </div>
+
+        </mat-card>
+      </div>
+
+
+
+      <div class="company-profile-sec" *ngIf="currentTab == 'SUMMARY'">
+        <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
+      </div>
+
+      <div class="company-profile-sec" *ngIf="currentTab == 'TECH VENDORS'">
+        <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
+      </div>
+
+      <div class="compliance-sec" *ngIf="currentTab == 'COMPLIANCE STATUS'">
+        <mat-card>
+          <div class="user-view-page">
+            <form [formGroup]="complianceForm" #f="ngForm" class="form-sec"
+              (ngSubmit)="complianceForm.valid && onboardCustomer()" autocomplete="off">
+              <div class="data-input">
+                <div class="df-ac f-w pb-1">
+                  <div class="w33">
+                    <div class="form-lable-name">3rd Party Certifications & Attestations</div>
+                    <mat-form-field appearance="outline">
+                      <mat-select formControlName="certificate" multiple
+                        placeholder="3rd Party Certifications & Attestations">
+                        <mat-option *ngFor="let p of partyCertification" [value]="p">
+                          {{p}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="w33">
+                    <div class="form-lable-name">Standards followed</div>
+                    <mat-form-field appearance="outline">
+                      <mat-select formControlName="standards" placeholder="Standards followed" multiple>
+                        <mat-option *ngFor="let s of standards" [value]="s">
+                          {{s}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="w33">
+                    <div class="form-lable-name">Designated Information Security Officer?</div>
+                    <mat-radio-group formControlName="securityOfficer">
+                      <mat-radio-button value="1">YES</mat-radio-button>
+                      <mat-radio-button value="2">No</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </mat-card>
+
+
+
+      </div>
+
+      <div class="company-profile-sec" *ngIf="currentTab == 'AI&ML'">
+        <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
+      </div>
+
+      <div class="company-profile-sec" *ngIf="currentTab == 'COMPANY PROFILE'">
+
+        <div class="w25 profile-details">
+          <mat-card>
+            <div class="line-bg"></div>
+            <div class="t-c">
+              <div class="role"><span>PSP ADMIN</span></div>
+              <div><img src="" onError="this.src='assets/img/user2.png'" class="w40"></div>
+              <div class="p-name">Jayasree</div>
+              <div class="p-email df-c-jc">
+                <span>
+                  <mat-icon class="df-c-jc">mail_outline</mat-icon>
+                </span>
+                jai@gmail.com
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div class="w70 profile-basic-info">
+          <mat-card>
+
+            <div class="c-info"><span>Company Info:</span></div>
+
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">Customer Name</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">Jayasree</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">Corporate Website</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">mailpsl.com</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">HQ Location</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">Redwood Shores, California, USA</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">CISO</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">YES</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">Industry</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">Phantom</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">Information Security Officer</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">YES</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">Number of Emp</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">25</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">Privacy Officer</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">YES</div>
+            </div>
+            <div class="profile-item df-ac">
+              <div class="w35 p-lable">HIPAA Risk Officer</div>
+              <div class="w5">:</div>
+              <div class="w60 p-value">YES</div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="privacy-status-sec" *ngIf="currentTab == 'PRIVACY STATUS'">
+        <mat-card>
+          <div class="df-ac f-w">
+            <div *ngFor="let p of privacyStatus" class="privacy-item"
+              [ngClass]="p?.lable == 'Select the scope' ? 'w50' : 'w33'">
+              <div *ngIf="p?.status == true">
+                <div class="radio-lable">{{p?.lable}}</div>
+                <div>
+                  <mat-radio-group (change)="radioChange($event, p)" *ngIf="p?.lable !== 'Select the scope'">
+                    <mat-radio-button value="1">YES</mat-radio-button>
+                    <mat-radio-button value="2">No</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-radio-group (change)="radioChange($event, p)" *ngIf="p?.lable == 'Select the scope'">
+                    <mat-radio-button value="1">Covered Entity(CE)</mat-radio-button>
+                    <mat-radio-button value="2">Business Associate(BA)</mat-radio-button>
+                    <mat-radio-button value="3">Both</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+
+
+      <!-- *ngIf="currentTab == 'SUB DOMAIN'" -->
+      <div class="sub-domain-sec" [hidden]="currentTab !== 'SUB DOMAIN'">
+        <div class="data-table" [hidden]="showDomain == false">
+          <nb-card>
+            <div class="df-b-b table-name-header">
+              <div class="table-title" *ngIf="userDetails.idendifier !== 'CUSTOMER'">
+                {{domain?.scompanyname | titlecase}}</div>
+              <div class="table-title" *ngIf="userDetails.idendifier == 'CUSTOMER'">
+                {{pspCustomerDetails?.customerid?.scompanyname | titlecase}}
+              </div>
+              <div class="df-b-fe w50 search-add-sec">
+                <div class="search-input">
+                  <mat-form-field floatLabel="never">
+                    <input matInput (keyup)="applyFilterSub($event)" placeholder="Search.....">
+                  </mat-form-field>
+                </div>
+                <div>
+                </div>
+                <div class="a-s-e ref-btn">
+                  <mat-icon class="df-c-jc c-p" (click)="refreshDomain()">refresh</mat-icon>
+                </div>
+              </div>
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+            <div class="table-card">
+              <div class="table-sec">
+                <table mat-table [dataSource]="domainList" matSort style="width: 100%;">
+                  <ng-container matColumnDef="url">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
+                    <td mat-cell *matCellDef="let row"> {{row?.url}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="test">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Test SSL </th>
+                    <td mat-cell *matCellDef="let row">
+                      <div class="dot-sec" [ngStyle]="{'background': row?.testssl == 1 ? '#3DBE29' : '#E21717'}"
+                        [matTooltip]="row?.testssl == 1 ? 'Testssl output found' : 'Testssl not found'"></div>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="cve">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CVE List </th>
+                    <td mat-cell *matCellDef="let row">
+                      <div class="dot-sec" [ngStyle]="{'background': row?.cve_lists == 0 ? '#3DBE29' : '#E21717'}"
+                        [matTooltip]="row?.cve_lists == 1 ? 'Vulnerability found' : 'Vulnerability not found'"></div>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <td mat-cell *matCellDef="let row">
+                      <span (click)="viewsubdomaininfo(row)" class="c-p">
+                        <mat-icon matTooltip="View">visibility</mat-icon>
+                      </span>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsSub; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsSub;">
+                  </tr>
+                </table>
+
+                <div *ngIf="domainList?.length === 0" class="nodataFound">
+                  <p class="nodataError">
+                    ** No data found **
+                  </p>
+                </div>
+              </div>
+            </div>
+          </nb-card>
+        </div>
+
+        <div class="data-table" [hidden]='showDomain == true'>
+          <nb-card>
+            <div (click)="back('domain')" class="back-arrow">
+              <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
+            </div>
+            <div class="df-b-b table-name-header">
+              <div class="table-title">{{subDomain?.url | titlecase}}</div>
+              <div class="df-b-fe w50 search-add-sec">
+                <div class="search-input">
+                  <mat-form-field floatLabel="never">
+                    <input matInput (keyup)="applyFilterSub($event)" placeholder="Search.....">
+                  </mat-form-field>
+                </div>
+                <div>
+                </div>
+                <div class="a-s-e ref-btn">
+                  <mat-icon class="df-c-jc c-p" (click)="viewsubdomaininfo(subDomain)">refresh</mat-icon>
+                </div>
+              </div>
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+            <div class="table-card">
+              <div class="table-sec">
+                <table mat-table [dataSource]="subDomainList" matSort style="width: 100%;">
+                  <ng-container matColumnDef="url">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
+                    <td mat-cell *matCellDef="let row"> {{domain?.url}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="test">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Test SSL </th>
+                    <td mat-cell *matCellDef="let row">
+                      <span (click)="testdomain(row?.testssl_output)" class="c-p">
+                        <mat-icon matTooltip="Test SSL">info</mat-icon>
+                      </span>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="cve">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CVE List </th>
+                    <td mat-cell *matCellDef="let row">
+                      <span (click)="cvelist(row?.cve_list)" class="c-p">
+                        <mat-icon matTooltip="CVE">info</mat-icon>
+                      </span>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsSubdomain; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsSubdomain;">
+                  </tr>
+                </table>
+
+                <div *ngIf="subDomainList?.length === 0" class="nodataFound">
+                  <p class="nodataError">
+                    ** No data found **
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </nb-card>
+        </div>
+
+      </div>
     </div>
-  </mat-tab>
-  <mat-tab label="AI&ML">
-    <div class="t-c">
-      <img src="assets/PSP/under_cons.gif" class="w20">
-    </div>
-  </mat-tab>
-</mat-tab-group>
+  </nb-layout-column>
+</nb-layout>

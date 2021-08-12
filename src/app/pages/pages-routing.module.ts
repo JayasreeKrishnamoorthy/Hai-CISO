@@ -13,11 +13,17 @@ import { OperationalizeComponent } from './operationalize/operationalize.compone
 import { IntegrationComponent } from './integration/integration.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { LogsComponent } from './logs/logs.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
+    {
+      path: '',
+      redirectTo: 'dashboard',
+      pathMatch: 'full',
+    },
     {
       path: 'dashboard',
       component: DashboardComponent,
@@ -63,14 +69,9 @@ const routes: Routes = [{
       component: LogsComponent,
     },
     {
-      path: '',
-      redirectTo: 'dashboard',
-      pathMatch: 'full',
+      path: 'change-password',
+      component: ChangePasswordComponent,
     },
-    // {
-    //   path: '**',
-    //   component: DashboardComponent,
-    // },
   ],
 
 

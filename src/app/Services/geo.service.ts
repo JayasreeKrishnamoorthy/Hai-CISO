@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../pages/components/confirmation/confirmation.component';
+import { HttpServiceService } from './http_service/http-service.service';
 declare var google: { maps: { places: { AutocompleteService: new () => any; }; Geocoder: new () => any; }; };
 
 @Injectable({
@@ -11,6 +12,7 @@ export class GeoService {
   constructor(
     public ngZone: NgZone,
     public dialog: MatDialog,
+    public http: HttpServiceService,
   ) { }
 
 
@@ -56,23 +58,6 @@ export class GeoService {
           });
         }
       });
-    });
-  }
-
-
-  openToast(message) {
-    const dialogRef = this.dialog.open(ConfirmationComponent, {
-      width: 'auto',
-      height: 'auto',
-      minWidth: '35%',
-      disableClose: true,
-      panelClass: '',
-      data: {
-        message,
-        type: 'single',
-      },
-    });
-    dialogRef.afterClosed().subscribe(result => {
     });
   }
 

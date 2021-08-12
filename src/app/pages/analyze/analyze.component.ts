@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -17,17 +18,21 @@ export class AnalyzeComponent implements OnInit {
   displayedColumnsSub: string[] = ['url', 'test', 'cve', 'action'];
   displayedColumnsSubdomain: string[] = ['url', 'test', 'cve'];
 
-  @Input() selectedIndex: number | null;
+  // @Input() selectedIndex: number | null;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
-  domainList: any = [];
-  subDomain: any = [];
-  showDomain = 'domain';
+  companyList: any;
+  domainList: any;
+  subDomainList: any;
+  showCompany = true;
+  showDomain = true;
   domain: any;
+  subDomain: any;
+
+
+
   companys = true;   // changed   //testssl_output //cve_list
   domainin = true;
-  companyy = false;
-  companyname: any;
 
 
 
@@ -113,45 +118,86 @@ export class AnalyzeComponent implements OnInit {
       lable: 'Is HIPAA training in place?',
       status: false,
     },
-    // {
-    //   lable: 'Cookie Settings Notice',
-    // },
+    {
+      lable: 'Select the scope',
+      status: false,
+    },
   ];
 
   currentTab: any = 'SUMMARY';
 
+  complianceForm: FormGroup;
+  partyCertification: any = [
+    'ISO 27001',
+    'ISO 27017',
+    'ISO 27018',
+    'SOC 2',
+    'SOC 1',
+    'PCI DSS',
+    'HIPAA',
+    'HITRUST',
+    'FISMA',
+    'FedRAMP',
+    'FFIEC',
+    'Other',
+  ];
 
+  standards: any = [
+    'NIST 800 - 53',
+    'NIST 800 - 30',
+    'NIST 800 - 66',
+  ];
+
+  userDetails: any;
+  pspCustomerDetails: any;
 
   constructor(
     public http: HttpServiceService,
     public dialog: MatDialog,
-  ) { }
-
-  ngOnInit(): void {
-    this.getUserList();
+    public fb: FormBuilder,
+  ) {
+    this.complianceForm = this.fb.group({
+      certificate: ['', Validators.required],
+      standards: ['', Validators.required],
+      securityOfficer: ['', Validators.required],
+    });
   }
 
-  refreshDomain(): void {
+  ngOnInit(): void {
+    this.userDetails = localStorage.getItem('PSPUser');
+    this.userDetails = JSON.parse(this.userDetails);
+    this.pspCustomerDetails = localStorage.getItem('PSPCUSTOMER');
+    this.pspCustomerDetails = JSON.parse(this.pspCustomerDetails);
+    // this.getUserList();
+    if (this.userDetails.idendifier === 'CUSTOMER') {
+      this.showCompany = false;
+      this.viewCustomerDomain(); // For Customer
+    } else {
+      this.getUserList(); // For PSP
+    }
+  }
+
+  refreshCompany(): void {
     this.getUserList();
   }
 
   getUserList() {
-    this.http.getToken(`/analyze?count=${100}&page=${1}`).subscribe(data => {
+    this.http.getToken(`/analyze`).subscribe(data => {
       if (data[`success`] === true) {
-        this.domainList = new MatTableDataSource(data?.data?.data);
-        this.domainList.paginator = this.paginator.toArray()[0];
-        this.domainList.sort = this.sort.toArray()[0];
+        this.companyList = new MatTableDataSource(data?.data);
+        this.companyList.paginator = this.paginator.toArray()[0];
+        this.companyList.sort = this.sort.toArray()[0];
       } else {
-        this.domainList = [];
+        this.companyList = [];
       }
     });
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.domainList.filter = filterValue.trim().toLowerCase();
-    if (this.domainList.paginator) {
-      this.domainList.paginator.firstPage();
+    this.companyList.filter = filterValue.trim().toLowerCase();
+    if (this.companyList.paginator) {
+      this.companyList.paginator.firstPage();
     }
   }
 
@@ -165,59 +211,81 @@ export class AnalyzeComponent implements OnInit {
 
 
   viewDomain(val): void {
-    this.companys = false;
-    this.companyy = true;
-    this.companyname = val.scompanyname;
-
     const obj = {
       isublistid: +val?.isublistid,
-      count: 100,
+      count: 29415,
       page: 1,
     };
-    // console.log(obj);
     this.http.postToken(`/analyze/getsubdomains`, obj).subscribe(data => {
-
       if (data[`success`] === true) {
         this.domain = val;
-        this.subDomain = new MatTableDataSource(data?.data?.data);
-        this.subDomain.paginator = this.paginator.toArray()[1];
-        this.subDomain.sort = this.sort.toArray()[1];
-        this.showDomain = 'subdomain';
+        this.domainList = new MatTableDataSource(data?.data?.data);
+        this.domainList.paginator = this.paginator.toArray()[1];
+        this.domainList.sort = this.sort.toArray()[1];
+        this.showCompany = false;
       } else {
-        this.subDomain = [];
+        this.domainList = [];
       }
     });
   }
 
-  back(): void {
-    this.showDomain = 'domain';
-    this.getUserList();
+  viewCustomerDomain(): void {
+    const obj = {
+      customer_id: +this.pspCustomerDetails?.customerid?.cusid,
+      count: 29415,
+      page: 1,
+    };
+    this.http.postToken(`/analyze/get-customer-subdomain`, obj).subscribe(data => {
+      if (data[`success`] === true) {
+        // this.domain = val;
+        this.domainList = new MatTableDataSource(data?.data?.data);
+        this.domainList.paginator = this.paginator.toArray()[1];
+        this.domainList.sort = this.sort.toArray()[1];
+        this.showCompany = false;
+      } else {
+        this.domainList = [];
+      }
+    });
   }
 
+  refreshDomain(): void {
+    if (this.userDetails.idendifier === 'CUSTOMER') {
+      this.viewCustomerDomain();
+    } else {
+      this.viewDomain(this.domain);
+    }
+  }
+
+
   viewsubdomaininfo(eve) {
-    // console.log(eve);
-    this.companys = false;
-    this.domainin = false;
-    this.companyy = true;
     const obj = {
       isublistdtlsid: eve.isublistdtlsid,
     };
     this.http.postToken(`/analyze/subdomain-info`, obj).subscribe(data => {
-      // console.log(data);
       if (data[`success`] === true) {
-        this.domain = eve;
-        this.subDomain = new MatTableDataSource(data?.data?.domain_info);
-        this.subDomain.paginator = this.paginator.toArray()[1];
-        this.subDomain.sort = this.sort.toArray()[1];
-        this.showDomain = 'domain';
+        this.subDomain = eve;
+        if (data?.data?.domain_info?.length !== 0) {
+          this.subDomainList = new MatTableDataSource(data?.data?.domain_info);
+          this.subDomainList.paginator = this.paginator.toArray()[2];
+          this.subDomainList.sort = this.sort.toArray()[2];
+        } else {
+          this.subDomainList = [];
+        }
+        this.showDomain = false;
       } else {
-        this.subDomain = [];
+        this.subDomainList = [];
       }
     });
   }
 
-
-
+  back(val): void {
+    if (val === 'company') {
+      this.showCompany = true;
+      this.getUserList();
+    } else {
+      this.showDomain = true;
+    }
+  }
 
   testdomain(val?: any): void {
     const dialogRef = this.dialog.open(SubdomainComponent, {
@@ -227,12 +295,11 @@ export class AnalyzeComponent implements OnInit {
       disableClose: true,
       panelClass: 'full-screen-popup',
       data: {
-
         Details: val,
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.viewsubdomaininfo(this.domain);
+      this.viewsubdomaininfo(this.subDomain);
     });
   }
 
@@ -244,12 +311,11 @@ export class AnalyzeComponent implements OnInit {
       disableClose: true,
       panelClass: 'full-screen-popup',
       data: {
-
         Details: val,
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.viewsubdomaininfo(this.domain);
+      this.viewsubdomaininfo(this.subDomain);
     });
   }
 
@@ -277,6 +343,9 @@ export class AnalyzeComponent implements OnInit {
           if (element?.lable === 'Is there a designated HIPAA Officer?') {
             element.status = false;
           }
+          if (element?.lable === 'Select the scope') {
+            element.status = false;
+          }
           if (element?.lable === 'Is HIPAA training in place?') {
             element.status = false;
           }
@@ -286,5 +355,5 @@ export class AnalyzeComponent implements OnInit {
   }
 
 
-
 }
+

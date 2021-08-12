@@ -242,11 +242,14 @@ ngx-analyze {
 .t-c {
   text-align: center;
 }
+.t-wc {
+  text-align: -webkit-center;
+}
 .t-r {
   text-align: right;
 }
 
-.pt-40{
+.pt-40 {
   padding-top: 40px;
 }
 
@@ -630,11 +633,13 @@ nb-layout-column {
 }
 
 .form-sec .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #ff9b74;
+  // border-color: #ff9b74;
+  border-color: #979797;
 }
 
 .form-sec .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #ff9b74;
+  // background-color: #ff9b74;
+  background-color: #979797;
 }
 
 .form-sec .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
@@ -657,9 +662,10 @@ button {
 .profile-menu-sec {
   margin-top: 15px !important;
   button {
+    font-family: "Montserrat", sans-serif !important;
     color: #000;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 
@@ -673,14 +679,26 @@ mat-drawer-content {
 }
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #ff4a00;
+  // border-color: #ff4a00;
+  border-color: #979797;
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle,
 .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
 .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: #ff4a00;
+  // background-color: #ff4a00;
+  background-color: #979797;
+}
+
+.nodataFound {
+  text-align: center;
+  padding: 15px 3px 0px;
+  color: #ff4a00;
+  .nodataError {
+    color: #ff4a00;
+    font-weight: 600;
+  }
 }
 
 // .mat-drawer-opened {
@@ -696,5 +714,10 @@ body {
 body {
   margin: 0;
   // font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.nb-theme-default,
+mat-card {
   font-family: "Montserrat", sans-serif !important;
 }

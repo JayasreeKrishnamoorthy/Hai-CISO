@@ -1,43 +1,3 @@
-<nb-layout >
-  <nb-layout-column>
-
-
-
-
-
-<!-- <div class="df-c-a loginPage">
-  <div class="w50">
-    <div class="login-sec">
-      <div class="sign-txt">SIGN IN</div>
-      <div class="des-txt">Enter your email and password to sign in</div>
-      <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="loginForm.valid && login()">
-        <div class="input-fld">
-          <input type="text" placeholder="Email" nbInput formControlName="email"
-            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="w100">
-        </div>
-        <div class="input-fld">
-          <input type="password" placeholder="Password" nbInput formControlName="password" class="w100">
-        </div>
-        <div>
-          <button nbButton class="sign-btn w100">SIGN IN</button>
-        </div>
-        <div class="forgot-txt"> Forgot Password ? </div>
-      </form>
-    </div>
-  </div>
-  <div class="w50 logo-sec">
-    <nb-card class="df-c-a">
-      <div><img src="assets/img/logo.png" class="w60"></div>
-      <div>
-        <div class="we-txt">WE ARE HAI CISO</div>
-        <div class="welcome-txt">Welcome back, please login to your account.</div>
-      </div>
-    </nb-card>
-  </div>
-</div> -->
-
-
-
 <nb-layout>
 
   <nb-layout-column class="app-layout-column">
@@ -51,8 +11,14 @@
               <input type="text" placeholder="Email" nbInput formControlName="email"
                 pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="w100">
             </div>
-            <div class="input-fld">
-              <input type="password" placeholder="Password" nbInput formControlName="password" class="w100">
+            <div class="input-fld df-c-jc">
+              <nb-form-field class="w100">
+                <input [type]="cView === true ? 'text' : 'password'" placeholder="Password" nbInput
+                  formControlName="password" class="w100">
+                <mat-icon nbSuffix *ngIf="cView == true" (click)="cView = !cView" class="c-p">visibility</mat-icon>
+                <mat-icon nbSuffix *ngIf="cView == false" (click)="cView = !cView" class="c-p">visibility_off
+                </mat-icon>
+              </nb-form-field>
             </div>
             <div>
               <button nbButton class="sign-btn">SIGN IN</button>

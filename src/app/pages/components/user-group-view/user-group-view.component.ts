@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { GeoService } from '../../../Services/geo.service';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
+import { UtilityService } from '../../../Services/utility.service';
 
 @Component({
   selector: 'ngx-user-group-view',
@@ -18,7 +19,7 @@ export class UserGroupViewComponent implements OnInit {
     public fb: FormBuilder,
     public dialog: MatDialog,
     public http: HttpServiceService,
-    public geo: GeoService,
+    public utility: UtilityService,
   ) {
     this.userForm = this.fb.group({
       usergroupname: ['', Validators.required],
@@ -39,7 +40,7 @@ export class UserGroupViewComponent implements OnInit {
   getRole(): void {
     this.http.getToken(`/roles`).subscribe(data => {
       if (data[`success`] === true) {
-        this.roleList = data?.data?.data;
+        this.roleList = data?.data;
       } else {
         this.roleList = [];
       }
@@ -50,6 +51,11 @@ export class UserGroupViewComponent implements OnInit {
     this.http.getToken(`/user-group/${this.data?.userGroupDetails?.iid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.userForm.controls.usergroupname.patchValue(data?.data?.susergroupname);
+        const obj = {
+          iid: data?.data?.iroleid?.iid,
+          srolename: data?.data?.iroleid?.srolename,
+        };
+        this.roleList.push(obj);
         this.userForm.controls.roleid.patchValue(data?.data?.iroleid?.iid);
       }
     });
@@ -72,7 +78,7 @@ export class UserGroupViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.dialogRef.close();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 
@@ -86,7 +92,7 @@ export class UserGroupViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.dialogRef.close();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 

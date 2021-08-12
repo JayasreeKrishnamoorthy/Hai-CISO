@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubdomainComponent } from './subdomain.component';
+import { ResetPasswordComponent } from './reset-password.component';
 
-describe('SubdomainComponent', () => {
-  let component: SubdomainComponent;
-  let fixture: ComponentFixture<SubdomainComponent>;
+describe('ResetPasswordComponent', () => {
+  let component: ResetPasswordComponent;
+  let fixture: ComponentFixture<ResetPasswordComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubdomainComponent ],
+      declarations: [ ResetPasswordComponent ],
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubdomainComponent);
+    fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

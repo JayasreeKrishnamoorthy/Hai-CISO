@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
+import { UtilityService } from '../../../Services/utility.service';
 
 @Component({
   selector: 'ngx-customer-view',
@@ -35,7 +36,7 @@ export class CustomerViewComponent implements OnInit {
     public fb: FormBuilder,
     public dialog: MatDialog,
     public http: HttpServiceService,
-    public geo: GeoService,
+    public utility: UtilityService,
   ) {
     this.addressForm = this.fb.group({
       address: ['', Validators.required],
@@ -48,7 +49,7 @@ export class CustomerViewComponent implements OnInit {
       lat: ['', Validators.required],
       long: ['', Validators.required],
       landmark: ['', Validators.required],
-      id: [''],
+      cusaddid: [''],
     });
     this.customerForm = this.fb.group({
       iaccountid: [''],
@@ -171,18 +172,28 @@ export class CustomerViewComponent implements OnInit {
 
   addAddress(form): void {
     this.editAddBtn = false;
-    if (this.addressForm.controls.id.value) {
-      const index = this.addressList.findIndex(x => x.id === this.addressForm.controls.id.value);
-      this.addressList[index] = this.addressForm.value;
+    if (this.addressForm.controls.cusaddid.value) {
+      if (this.data?.customerDetails?.cusid) {
+        this.updateAddress();
+      } else {
+        const index = this.addressList.findIndex(x => x.cusaddid === this.addressForm.controls.cusaddid.value);
+        this.addressList[index] = this.addressForm.value;
+      }
     } else {
       this.addressId = this.addressId + 1;
-      this.addressForm.controls.id.patchValue(this.addressId);
+      this.addressForm.controls.cusaddid.patchValue(this.addressId);
       this.addressList.push(this.addressForm.value);
     }
     this.addressListTable = new MatTableDataSource(this.addressList);
     this.addressListTable.paginator = this.paginator;
     this.addressListTable.sort = this.sort;
     form.resetForm();
+  }
+
+  updateAddress() {
+    this.http.postToken(`/customer-onboard/edit-address`, this.addressForm.value).subscribe(data => {
+      this.getAddress();
+    });
   }
 
   editAddress(val) {
@@ -203,7 +214,11 @@ export class CustomerViewComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'yes') {
-        this.deleteAddress(val, index);
+        if (this.data?.customerDetails?.cusid) {
+          this.deleteCustomerAddress(val);
+        } else {
+          this.deleteAddress(val, index);
+        }
       }
     });
   }
@@ -213,6 +228,18 @@ export class CustomerViewComponent implements OnInit {
     this.addressListTable = new MatTableDataSource(this.addressList);
     this.addressListTable.paginator = this.paginator;
     this.addressListTable.sort = this.sort;
+  }
+
+  deleteCustomerAddress(val) {
+    this.http.delToken(`/customer-onboard/delete-address/${val?.cusaddid}`).subscribe(data => {
+      if (data[`success`] === true) {
+
+      } else {
+
+      }
+      this.getAddress();
+      this.utility.openToast(data[`message`]);
+    });
   }
 
   applyFilter(event: Event): void {
@@ -320,7 +347,7 @@ export class CustomerViewComponent implements OnInit {
       } else {
 
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 
@@ -377,7 +404,7 @@ export class CustomerViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.dialogRef.close();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 

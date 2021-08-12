@@ -1,22 +1,22 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { HttpServiceService } from '../Services/http_service/http-service.service';
+import { UtilityService } from '../Services/utility.service';
 
 import { MENU_ITEMS } from './pages-menu';
 
 @Component({
   selector: 'ngx-pages',
-  templateUrl: './pages.html',
+  templateUrl: './pages.component.html',
   styleUrls: ['pages.component.scss'],
-  // template: `
-  //   <ngx-one-column-layout>
-  //     <nb-menu [items]="menu"></nb-menu>
-  //     <router-outlet></router-outlet>
-  //   </ngx-one-column-layout>
-  // `,
 })
 
 export class PagesComponent {
+
+  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
+
+
   menu = MENU_ITEMS;
 
 
@@ -148,12 +148,14 @@ export class PagesComponent {
   constructor(
     public http: HttpServiceService,
     public router: Router,
+    public utility: UtilityService,
   ) { }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
+    this.verifyUser();
     if (this.userDetails.idendifier === 'CUSTOMER') {
       // For Customer
       this.navLinks = [
@@ -320,6 +322,17 @@ export class PagesComponent {
     }
   }
 
+  verifyUser() {
+    this.http.postToken(`/auth/verify`).subscribe(data => {
+      if (data[`success`] === true) {
+
+      } else {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
+      }
+    });
+  }
+
   subMenuSelect(val): void {
     val.drop = !val?.drop;
     this.navLinks.forEach(element => {
@@ -329,15 +342,27 @@ export class PagesComponent {
     });
   }
 
+  openProfileMenu() {
+  }
+
   profileAction(val) {
     if (val?.name === 'Logout') {
-      localStorage.removeItem('pspkey');
-      localStorage.removeItem('PSPUser');
-      localStorage.removeItem('PSPCUSTOMER');
-      this.http.updateUserDetails();
-      this.router.navigate(['/auth/login']);
+      this.http.postToken(`/auth/logout`).subscribe(data => {
+        if (data[`success`] === true) {
+          localStorage.removeItem('pspkey');
+          localStorage.removeItem('PSPUser');
+          localStorage.removeItem('PSPCUSTOMER');
+          this.router.navigate(['/auth/login']);
+          this.utility.updateUserDetails();
+        } else {
+
+        }
+        this.utility.openToast(data[`message`]);
+      });
     } else if (val?.name === 'PSP') {
-      this.router.navigate(['/auth/select-company']);
+      // this.router.navigate(['/auth/select-company']);
+    } else if (val?.name === 'Password Reset') {
+      this.router.navigate(['/pages/change-password']);
     }
   }
 

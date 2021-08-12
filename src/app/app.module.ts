@@ -13,8 +13,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
   NbChatModule,
+  NbContextMenuModule,
   NbDatepickerModule,
   NbDialogModule,
+  NbFormFieldModule,
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
@@ -28,12 +30,12 @@ import { HttpConfigInterceptor } from './Services/http_service/httpConfig.interc
 import { Http, RequestOptions } from '@angular/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModule } from './material/material.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-  providers: [AUTH_PROVIDERS, LoggedinauthgaurdService,
-
+  providers: [
+    AUTH_PROVIDERS, LoggedinauthgaurdService,
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
-
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpConfigInterceptor,
@@ -60,6 +62,9 @@ import { MaterialModule } from './material/material.module';
     ThemeModule.forRoot(),
     MatDialogModule,
     MaterialModule,
+    MatMenuModule,
+    NbFormFieldModule,
+    NbContextMenuModule,
   ],
   bootstrap: [AppComponent],
 })

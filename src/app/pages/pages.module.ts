@@ -10,6 +10,7 @@ import {
   NbTabsetModule,
   NbTreeGridModule,
   NbUserModule,
+  NbContextMenuModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -30,6 +31,7 @@ import { OperationalizeComponent } from './operationalize/operationalize.compone
 import { IntegrationComponent } from './integration/integration.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { LogsComponent } from './logs/logs.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -45,6 +47,7 @@ import { LogsComponent } from './logs/logs.component';
     MaterialModule,
     ComponentsModule,
     NbUserModule,
+    NbContextMenuModule,
   ],
   declarations: [
     PagesComponent,
@@ -58,6 +61,7 @@ import { LogsComponent } from './logs/logs.component';
     IntegrationComponent,
     ResourcesComponent,
     LogsComponent,
+    ChangePasswordComponent,
   ],
 })
 export class PagesModule {

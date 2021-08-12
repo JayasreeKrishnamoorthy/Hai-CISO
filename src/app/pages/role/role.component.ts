@@ -11,6 +11,7 @@ import { RoleViewComponent } from '../components/role-view/role-view.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
 import { GeoService } from '../../Services/geo.service';
+import { UtilityService } from '../../Services/utility.service';
 @Component({
   selector: 'ngx-role',
   templateUrl: './role.component.html',
@@ -21,7 +22,7 @@ export class RoleComponent implements OnInit {
   displayedColumns: string[] = ['role', 'read', 'add', 'edit', 'delete', 'execute', 'schedule', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
-  roleList: any = [];
+  roleList: any;
   constructor(
     private service: SmartTableData,
     public http: HttpServiceService,
@@ -29,7 +30,7 @@ export class RoleComponent implements OnInit {
     public dialog: MatDialog,
     public router: Router,
     private httpService: HttpServiceService,
-    public geo: GeoService,
+    public utility: UtilityService,
   ) { }
 
   ngOnInit(): void {
@@ -60,16 +61,15 @@ export class RoleComponent implements OnInit {
 
 
   getRoleList(): void {
-    this.httpService.getRoles(`/roles?count=${100}&page=${1}`).subscribe((res: Roles) => {
-      if (res.success) {
-        this.roleList = new MatTableDataSource(res.data.data);
+    this.httpService.getRoles(`/roles`).subscribe(res => {
+      if (res[`success`] === true) {
+        this.roleList = new MatTableDataSource(res?.data);
         this.roleList.paginator = this.paginator;
         this.roleList.sort = this.sort;
+      } else {
+        this.roleList = [];
       }
-    },
-    ); (err) => {
-      alert(err.error.message);
-    };
+    });
   }
 
   applyFilter(event: Event): void {
@@ -105,7 +105,7 @@ export class RoleComponent implements OnInit {
       if (data[`success`] === true) {
         this.getRoleList();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 

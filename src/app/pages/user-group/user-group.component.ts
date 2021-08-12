@@ -10,6 +10,7 @@ import { HttpServiceService } from '../../Services/http_service/http-service.ser
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
 import { UserViewComponent } from '../components/user-view/user-view.component';
 import { GeoService } from '../../Services/geo.service';
+import { UtilityService } from '../../Services/utility.service';
 
 @Component({
   selector: 'ngx-user-group',
@@ -20,28 +21,25 @@ export class UserGroupComponent implements OnInit {
   displayedColumns: string[] = ['name', 'role', 'created', 'createdBy', 'modified', 'modifiedBy', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
-  userGroupList: any = [];
+  userGroupList: any;
   pspuser: any;
   userDetails: any;
   grouplist: any = [];
   constructor(
     public http: HttpServiceService,
-    public geo: GeoService,
+    public utility: UtilityService,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.pspuser = localStorage.getItem("PSPCUSTOMER");
+    this.pspuser = localStorage.getItem('PSPCUSTOMER');
     this.pspuser = JSON.parse(this.pspuser);
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
-
-    if (this.userDetails.idendifier === "CUSTOMER") {
-
+    if (this.userDetails.idendifier === 'CUSTOMER') {
       this.getUserGroupList_cus();  // For Customer
-    }
-    else {
-      this.getUserGroupList();   // For PSP 
+    } else {
+      this.getUserGroupList();   // For PSP
     }
   }
 
@@ -50,10 +48,9 @@ export class UserGroupComponent implements OnInit {
   }
 
   getUserGroupList() {
-    this.http.getToken(`/user-group?count=${100}&page=${1}`).subscribe(data => {
+    this.http.getToken(`/user-group`).subscribe(data => {
       if (data[`success`] === true) {
-        //  console.log(data)
-        this.userGroupList = new MatTableDataSource(data?.data?.data);
+        this.userGroupList = new MatTableDataSource(data?.data);
         this.userGroupList.paginator = this.paginator;
         this.userGroupList.sort = this.sort;
       } else {
@@ -64,7 +61,7 @@ export class UserGroupComponent implements OnInit {
 
   getUserGroupList_cus() {
     const obj = {
-      customerid: this.pspuser.customerid.cusid
+      customerid: this.pspuser.customerid.cusid,
     };
 
     this.http.postToken(`/user-group/customer-usergroups`, obj).subscribe(data => {
@@ -104,11 +101,10 @@ export class UserGroupComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       //  this.getUserGroupList();
-      if (this.userDetails.idendifier === "CUSTOMER") {
+      if (this.userDetails.idendifier === 'CUSTOMER') {
         this.getUserGroupList_cus(); // For Customer
-      }
-      else {
-        this.getUserGroupList();  // For PSP 
+      } else {
+        this.getUserGroupList();  // For PSP
       }
     });
   }
@@ -137,7 +133,7 @@ export class UserGroupComponent implements OnInit {
       if (data[`success`] === true) {
         this.getUserGroupList();
       }
-      this.geo.openToast(data[`message`]);
+      this.utility.openToast(data[`message`]);
     });
   }
 
