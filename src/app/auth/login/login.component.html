@@ -6,12 +6,20 @@
         <nb-card class="t-c">
           <div class="logo-sec"><img src="assets/img/logo2.png" class="w40"></div>
           <div class="des-txt">SIGN IN</div>
-          <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="loginForm.valid && login()">
+          <form [formGroup]="loginForm" autocomplete="off" #f="ngForm" (ngSubmit)="loginForm.valid && login()">
             <div class="input-fld">
               <input type="text" placeholder="Email" nbInput formControlName="email"
                 pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="w100">
+              <div class="error-text"
+                *ngIf="(loginForm.controls.email.touched || f.submitted) && loginForm.controls.email.errors?.required">
+                Email is Required!
+              </div>
+              <div class="error-text"
+                *ngIf="f.submitted && loginForm.controls.email.invalid && loginForm.controls.email.value !== ''">
+                Invalid Email!
+              </div>
             </div>
-            <div class="input-fld df-c-jc">
+            <div class=" input-fld df-c-jc f-d">
               <nb-form-field class="w100">
                 <input [type]="cView === true ? 'text' : 'password'" placeholder="Password" nbInput
                   formControlName="password" class="w100">
@@ -19,11 +27,16 @@
                 <mat-icon nbSuffix *ngIf="cView == false" (click)="cView = !cView" class="c-p">visibility_off
                 </mat-icon>
               </nb-form-field>
+              <div class="error-text"
+                *ngIf="(loginForm.controls.password.touched || f.submitted) && loginForm.controls.password.errors?.required">
+                Password is Required!
+              </div>
             </div>
+
             <div>
-              <button nbButton class="sign-btn">SIGN IN</button>
+              <button nbButton class="sign-btn" type="submit">SIGN IN</button>
             </div>
-            <!-- <div class="forgot-txt"> Forgot Password ? </div> -->
+            <div class="forgot-txt c-p"><span routerLink="/auth/forgot-password">Forgot Password ?</span></div>
           </form>
         </nb-card>
       </div>

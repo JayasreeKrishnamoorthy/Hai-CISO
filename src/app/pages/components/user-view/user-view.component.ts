@@ -18,6 +18,7 @@ export class UserViewComponent implements OnInit {
   userDetails: any;
   pspCustomerDetails: any;
   accountUnlock: any;
+  userGroupSearch: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<UserViewComponent>,
@@ -60,25 +61,50 @@ export class UserViewComponent implements OnInit {
     }
   }
 
-  getGroup(): void {
-    this.http.getToken(`/user-group`).subscribe(data => {
+  // getGroup(): void {
+  //   this.http.getToken(`/user-group`).subscribe(data => {
+  //     if (data[`success`] === true) {
+  //       this.groupList = data?.data;
+  //     } else {
+  //       this.groupList = [];
+  //     }
+  //   });
+  // }
+
+  getAdminUserGroupList(val?: any) {
+    const obj = {
+      name: val,
+    };
+    this.http.postToken(`/user-group/suggest`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.groupList = data?.data;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.groupList = [];
       }
     });
   }
 
-  getAdminUserGroupList() {
-    this.http.postToken(`/user-group/admin`).subscribe(data => {
-      if (data[`success`] === true) {
-        this.groupList = data?.data;
-      } else {
-        this.groupList = [];
-      }
-    });
+  searchFilter(eve: any): void {
+    // this.userGroupSearch = eve.target.value;
+    this.getAdminUserGroupList(eve.target.value);
   }
+
+  selectPanelOpen(): void {
+    this.userGroupSearch = '';
+  }
+
+  // getAdminUserGroupList() {
+  //   this.http.postToken(`/user-group/admin`).subscribe(data => {
+  //     if (data[`success`] === true) {
+  //       this.groupList = data?.data;
+  //     } else {
+  //       this.groupList = [];
+  //     }
+  //   });
+  // }
 
   getCusUserGroupList() {
     const obj = {
@@ -87,6 +113,9 @@ export class UserViewComponent implements OnInit {
     this.http.postToken(`/user-group/customer`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.groupList = data?.data;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.groupList = [];
       }
@@ -94,6 +123,7 @@ export class UserViewComponent implements OnInit {
   }
 
   getUserDetails() {
+    this.utility.showloader();
     const obj = {
       id: this.data?.userDetails?.iuserid,
     };
@@ -103,9 +133,15 @@ export class UserViewComponent implements OnInit {
         this.accountUnlock = data?.data?.userdtls?.baccountlocked;
         this.userForm.controls.group.patchValue(data?.data?.groups[0]?.userGroupId?.iid);
         this.groupId = data?.data?.groups[0]?.userGroupId?.iid;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
+      this.utility.dismissloader();
     });
   }
+
+
 
   onboardUser(): void {
     if (this.data?.userDetails?.iuserid) {
@@ -116,6 +152,7 @@ export class UserViewComponent implements OnInit {
   }
 
   addUser(): void {
+    this.utility.showloader();
     const obj = {
       sname: this.userForm.controls.sname.value,
       semailid: this.userForm.controls.semailid.value,
@@ -125,14 +162,19 @@ export class UserViewComponent implements OnInit {
     this.http.postToken(`/user-management`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
 
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 
   updateUser(): void {
+    this.utility.showloader();
     const obj = {
       sname: this.userForm.controls.sname.value,
       semailid: this.userForm.controls.semailid.value,
@@ -150,8 +192,12 @@ export class UserViewComponent implements OnInit {
     this.http.putToken(`/user-management`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 

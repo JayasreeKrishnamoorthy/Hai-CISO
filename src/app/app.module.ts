@@ -31,6 +31,9 @@ import { Http, RequestOptions } from '@angular/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModule } from './material/material.module';
 import { MatMenuModule } from '@angular/material/menu';
+import { MdePopoverModule } from '@material-extended/mde';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { SearchPipe } from './share/pipe/search.pipe';
 
 @NgModule({
   providers: [
@@ -65,6 +68,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatMenuModule,
     NbFormFieldModule,
     NbContextMenuModule,
+    MdePopoverModule,
+    NgxMatSelectSearchModule,
   ],
   bootstrap: [AppComponent],
 })

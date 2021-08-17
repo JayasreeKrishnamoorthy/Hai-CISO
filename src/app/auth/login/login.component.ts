@@ -4,6 +4,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { Login } from '../../Responses/auth';
 import { GeoService } from '../../Services/geo.service';
 import { HttpServiceService } from '../../Services/http_service/http-service.service';
+import { HttpConfigInterceptor } from '../../Services/http_service/httpConfig.interceptor';
 import { UtilityService } from '../../Services/utility.service';
 @Component({
   // tslint:disable-next-line:component-selector
@@ -30,43 +31,47 @@ export class LoginComponent implements OnInit {
   }
 
 
-  //   pravin@mailpsl.com
-  //   accenture@mailpsl.com
-  //   vengadesh.b@mailpsl.com
-  // root@12345
-
   login(): void {
+    this.utility.showloader();
     const data = {
       password: this.loginForm.value.password,
       email: this.loginForm.value.email,
     };
     this.httpService.doLogin(data).subscribe(res => {
       if (res.success === true) {
-        if (res?.data?.temppass === true) {
-          localStorage.setItem('pspkey', res.data.token);
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              loginDetails: JSON.stringify(res?.data),
-            },
-          };
-          this.router.navigate(['/auth/reset-password'], navigationExtras);
+        // if (res?.data?.temppass === true) {
+        //   localStorage.setItem('pspkey', res.data.token);
+        //   const navigationExtras: NavigationExtras = {
+        //     queryParams: {
+        //       loginDetails: JSON.stringify(res?.data),
+        //     },
+        //   };
+        //   this.router.navigate(['/auth/reset-password'], navigationExtras);
+        // } else {
+        //   localStorage.setItem('pspkey', res.data.token);
+        //   localStorage.setItem('PSPUser', JSON.stringify(res.data));
+        //   if (res.data.idendifier === 'CUSTOMER') {
+        //     this.movetocompany();
+        //   } else {
+        //     this.movetohome();
+        //   }
+        // }
+        localStorage.setItem('pspkey', res.data.token);
+        localStorage.setItem('PSPUser', JSON.stringify(res.data));
+        if (res.data.idendifier === 'CUSTOMER') {
+          this.movetocompany();
         } else {
-          localStorage.setItem('pspkey', res.data.token);
-          localStorage.setItem('PSPUser', JSON.stringify(res.data));
-          if (res.data.idendifier === 'CUSTOMER') {
-            this.movetocompany();
-          } else {
-            this.movetohome();
-          }
+          this.movetohome();
         }
       } else {
         this.utility.openToast(res[`message`]);
       }
+      this.utility.dismissloader();
     });
   }
 
   movetocompany() {
-    this.router.navigate(['/auth/select-company']);
+    this.router.navigate(['/select-company']);
 
   }
 

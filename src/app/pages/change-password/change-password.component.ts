@@ -31,6 +31,7 @@ export class ChangePasswordComponent implements OnInit {
 
   resetPassword(form) {
     if (this.resetPasswordForm.controls.newPwd.value === this.resetPasswordForm.controls.confirmPwd.value) {
+      this.utility.showloader();
       const obj = {
         oldpassword: this.resetPasswordForm.controls.currentPwd.value,
         password: this.resetPasswordForm.controls.newPwd.value,
@@ -38,9 +39,13 @@ export class ChangePasswordComponent implements OnInit {
       this.http.postToken(`/auth/changepassword`, obj).subscribe(data => {
         if (data.success === true) {
           form.resetForm();
+        } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+          this.utility.openToast(data[`message`]);
+          this.utility.logOut();
         } else {
         }
         this.utility.openToast(data[`message`]);
+        this.utility.dismissloader();
       });
     } else {
       this.utility.openToast(`new password and confirm password does not match`);

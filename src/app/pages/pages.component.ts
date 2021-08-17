@@ -347,20 +347,21 @@ export class PagesComponent {
 
   profileAction(val) {
     if (val?.name === 'Logout') {
+      localStorage.removeItem('pspkey');
+      localStorage.removeItem('PSPUser');
+      localStorage.removeItem('PSPCUSTOMER');
+      this.router.navigate(['/auth/login']);
+      this.utility.updateUserDetails();
       this.http.postToken(`/auth/logout`).subscribe(data => {
         if (data[`success`] === true) {
-          localStorage.removeItem('pspkey');
-          localStorage.removeItem('PSPUser');
-          localStorage.removeItem('PSPCUSTOMER');
-          this.router.navigate(['/auth/login']);
-          this.utility.updateUserDetails();
         } else {
-
+          // this.utility.openToast(data[`message`]);
         }
-        this.utility.openToast(data[`message`]);
       });
     } else if (val?.name === 'PSP') {
-      // this.router.navigate(['/auth/select-company']);
+      if (this.userDetails.idendifier === 'CUSTOMER') {
+        this.router.navigate(['/select-company']);
+      }
     } else if (val?.name === 'Password Reset') {
       this.router.navigate(['/pages/change-password']);
     }

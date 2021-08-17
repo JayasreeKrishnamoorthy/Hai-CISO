@@ -40,17 +40,14 @@ export class HttpServiceService {
     });
     Header.append('Authorization', 'Bearer' + localStorage.getItem('pspkey'));
     const responseData = this.http.get<any>(`${environment.apiUrl}${url}`, { headers: Header });
-    // tslint:disable-next-line:no-console
-    console.log('responseData', responseData);
-    responseData.subscribe(data => {
-      // tslint:disable-next-line:no-console
-      console.log('data', data);
-      if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
-        this.utility.openToast(data[`message`]);
-        this.utility.logOut();
-      }
-    });
+    // responseData.subscribe(data => {
+    //   if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+    //     this.utility.openToast(data[`message`]);
+    //     this.utility.logOut();
+    //   }
+    // });
     return responseData;
+    // return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: Header });
   }
 
   delToken(url: string) {
@@ -59,7 +56,14 @@ export class HttpServiceService {
       'Accept': 'application/json',
     });
     Header.append('Authorization', 'Bearer' + localStorage.getItem('pspkey'));
-    return this.http.delete<any>(`${environment.apiUrl}${url}`, { headers: Header });
+    const responseData = this.http.delete<any>(`${environment.apiUrl}${url}`, { headers: Header });
+    // responseData.subscribe(data => {
+    //   if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+    //     this.utility.openToast(data[`message`]);
+    //     this.utility.logOut();
+    //   }
+    // });
+    return responseData;
   }
 
   postToken(url: string, data?: any) {
@@ -70,9 +74,22 @@ export class HttpServiceService {
     if (data) {
       // tslint:disable-next-line:max-line-length
       const responseData = this.http.post<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
+      // responseData.subscribe(res => {
+      //   if (res[`success`] === false && res[`message`] === 'Invalid Authentication Credentials') {
+      //     this.utility.openToast(res[`message`]);
+      //     this.utility.logOut();
+      //   }
+      // });
       return responseData;
     } else {
-      return this.http.post<any>(`${environment.apiUrl}${url}`, { headers: Header });
+      const responseData = this.http.post<any>(`${environment.apiUrl}${url}`, { headers: Header });
+      // responseData.subscribe(res => {
+      //   if (res[`success`] === false && res[`message`] === 'Invalid Authentication Credentials') {
+      //     this.utility.openToast(res[`message`]);
+      //     this.utility.logOut();
+      //   }
+      // });
+      return responseData;
     }
   }
 
@@ -81,7 +98,14 @@ export class HttpServiceService {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.token}`,
     });
-    return this.http.put<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
+    const responseData = this.http.put<any>(`${environment.apiUrl}${url}`, JSON.stringify(data), { headers: Header });
+    // responseData.subscribe(res => {
+    //   if (res[`success`] === false && res[`message`] === 'Invalid Authentication Credentials') {
+    //     this.utility.openToast(res[`message`]);
+    //     this.utility.logOut();
+    //   }
+    // });
+    return responseData;
   }
 
 

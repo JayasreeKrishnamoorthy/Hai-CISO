@@ -30,6 +30,15 @@ export class CustomerViewComponent implements OnInit {
   addressListTable: any;
   editAddBtn = false;
   step = 1;
+  countryList: any = [];
+  stateList: any = [];
+  cityList: any = [];
+  countryName: any;
+  stateName: any;
+  countrySearch: any;
+  stateSearch: any;
+  citySearch: any;
+  editAddressInfo: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CustomerViewComponent>,
@@ -101,6 +110,7 @@ export class CustomerViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCountryList();
     if (this.data?.customerDetails?.cusid) {
       this.getCustomerDetails();
       this.getAddress();
@@ -134,13 +144,64 @@ export class CustomerViewComponent implements OnInit {
     }
   }
 
+  getCountryList() {
+    this.http.getToken(`/essential/getCountries`).subscribe(data => {
+      if (data[`success`] === true) {
+        this.countryList = data?.data;
+      } else {
+        this.countryList = [];
+      }
+    });
+  }
+
+  getStateList(val: any): void {
+    const oldCountryName = this.countryName;
+    this.countryName = this.countryList.find((x: any) => x.name === val)?.isoCode;
+    if (oldCountryName && this.countryName !== oldCountryName) {
+      this.addressForm.controls.state.patchValue('');
+    }
+    // tslint:disable-next-line:no-console
+    console.log('state', this.addressForm.controls.state.value);
+    this.http.getToken(`/essential/getCountryStates/${this.countryName}`).subscribe(data => {
+      if (data[`success`] === true) {
+        this.stateList = data?.data;
+        if (this.countryName) {
+          this.addressForm.controls.state.patchValue(this.addressForm.controls.state.value);
+        }
+      } else {
+        this.stateList = [];
+      }
+    });
+  }
+
+  getCityList(val: any): void {
+    const oldStateName = this.stateName;
+    this.stateName = this.stateList.find((x: any) => x.name === val)?.isoCode;
+    if (oldStateName && this.stateName !== oldStateName) {
+      this.addressForm.controls.city.patchValue('');
+    }
+    this.http.getToken(`/essential/getCityDetails/${this.countryName}/${this.stateName}`).subscribe(data => {
+      if (data[`success`] === true) {
+        this.cityList = data?.data;
+        this.addressForm.controls.city.patchValue(this.addressForm.controls.city.value);
+      } else {
+        this.cityList = [];
+      }
+    });
+  }
+
   getCustomerDetails() {
+    this.utility.showloader();
     this.http.getToken(`/customer-onboard/${this.data?.customerDetails?.cusid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.customerForm.patchValue(data?.data);
-        // this.customerForm.patchValue(data?.data?.address);
+        this.customerForm.controls.scompanytype.patchValue(data?.data?.scompanytype.toLowerCase());
         this.customerForm.patchValue(data?.data?.contect);
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
+      this.utility.dismissloader();
     });
   }
 
@@ -158,6 +219,9 @@ export class CustomerViewComponent implements OnInit {
         this.addressListTable = new MatTableDataSource(this.addressList);
         this.addressListTable.paginator = this.paginator;
         this.addressListTable.sort = this.sort;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
     });
   }
@@ -180,9 +244,13 @@ export class CustomerViewComponent implements OnInit {
         this.addressList[index] = this.addressForm.value;
       }
     } else {
-      this.addressId = this.addressId + 1;
-      this.addressForm.controls.cusaddid.patchValue(this.addressId);
-      this.addressList.push(this.addressForm.value);
+      if (this.data?.customerDetails?.cusid) {
+        this.addCustomerAddress();
+      } else {
+        this.addressId = this.addressId + 1;
+        this.addressForm.controls.cusaddid.patchValue(this.addressId);
+        this.addressList.push(this.addressForm.value);
+      }
     }
     this.addressListTable = new MatTableDataSource(this.addressList);
     this.addressListTable.paginator = this.paginator;
@@ -192,6 +260,33 @@ export class CustomerViewComponent implements OnInit {
 
   updateAddress() {
     this.http.postToken(`/customer-onboard/edit-address`, this.addressForm.value).subscribe(data => {
+      this.getAddress();
+      if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
+      }
+    });
+  }
+
+  addCustomerAddress() {
+    const arr = [];
+    delete this.addressForm.value.cusaddid;
+    arr.push(this.addressForm.value);
+    this.utility.showloader();
+    const obj = {
+      customer_address: arr,
+      cus_id: this.data?.customerDetails?.cusid,
+    };
+    this.http.postToken(`/customer-onboard/add-customer-address`, obj).subscribe(data => {
+      if (data[`success`] === true) {
+
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
+      } else {
+
+      }
+      this.utility.showloader();
       this.getAddress();
     });
   }
@@ -231,14 +326,19 @@ export class CustomerViewComponent implements OnInit {
   }
 
   deleteCustomerAddress(val) {
+    this.utility.showloader();
     this.http.delToken(`/customer-onboard/delete-address/${val?.cusaddid}`).subscribe(data => {
       if (data[`success`] === true) {
 
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
 
       }
       this.getAddress();
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 
@@ -282,6 +382,21 @@ export class CustomerViewComponent implements OnInit {
   }
 
 
+  searchFilter(eve: any, val: any): void {
+    if (val === 'country') {
+      this.countrySearch = eve.target.value;
+    } else if (val === 'state') {
+      this.stateSearch = eve.target.value;
+    } else if (val === 'city') {
+      this.citySearch = eve.target.value;
+    }
+  }
+
+  selectPanelOpen(): void {
+    this.countrySearch = '';
+    this.stateSearch = '';
+    this.citySearch = '';
+  }
 
   onboardCustomer(): void {
     if (this.data?.customerDetails?.cusid) {
@@ -292,6 +407,7 @@ export class CustomerViewComponent implements OnInit {
   }
 
   addCustomer(): void {
+    this.utility.showloader();
     const obj = {
       // iaccountid: +this.customerForm.controls.iaccountid.value,
       iaccountid: 1002,
@@ -344,14 +460,19 @@ export class CustomerViewComponent implements OnInit {
     this.http.postToken(`/customer-onboard`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
 
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 
   updateCustomer(): void {
+    this.utility.showloader();
     const obj = {
       id: this.data?.customerDetails?.cusid,
       iaccountid: +this.customerForm.controls.iaccountid.value,
@@ -399,12 +520,17 @@ export class CustomerViewComponent implements OnInit {
       customer_contact_primary_designation: this.customerForm.controls.customer_contact_primary_designation.value,
       customer_contact_secondary_designation: this.customerForm.controls.customer_contact_secondary_designation.value,
       isriskTeam: this.customerForm.controls.isriskTeam.value,
+      customer_address: this.addressList,
     };
     this.http.putToken(`/customer-onboard`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 

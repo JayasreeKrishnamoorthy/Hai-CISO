@@ -82,13 +82,13 @@
               <div>
                 <mat-icon class="df-c-jc">place</mat-icon>
               </div>
-              <div>Chennai</div>
+              <div>{{profileData?.address?.city | titlecase}}</div>
             </div>
             <div class="df-ac c-info">
               <div>
                 <mat-icon class="df-c-jc">alternate_email</mat-icon>
               </div>
-              <div>jai@gmail.com</div>
+              <div>{{profileData?.contect?.customer_contact_primary_email}}</div>
             </div>
           </div>
 
@@ -181,74 +181,303 @@
         <div class="t-c"><img src="assets/img/underConstruction.png" class="w35"></div>
       </div>
 
-      <div class="company-profile-sec" *ngIf="currentTab == 'COMPANY PROFILE'">
+      <div class="company-profile-sec" [hidden]="currentTab !== 'COMPANY PROFILE'">
 
-        <div class="w25 profile-details">
+        <!-- <div class="w25 profile-details">
           <mat-card>
             <div class="line-bg"></div>
             <div class="t-c">
-              <div class="role"><span>PSP ADMIN</span></div>
+              <div class="role">
+                <span>PSP ADMIN</span>
+              </div>
               <div><img src="" onError="this.src='assets/img/user2.png'" class="w40"></div>
-              <div class="p-name">Jayasree</div>
+              <div class="p-name">{{profileData?.scompanyname | titlecase}}</div>
               <div class="p-email df-c-jc">
                 <span>
                   <mat-icon class="df-c-jc">mail_outline</mat-icon>
                 </span>
-                jai@gmail.com
+                {{profileData?.contect?.customer_contact_primary_email}}
               </div>
             </div>
           </mat-card>
-        </div>
-        <div class="w70 profile-basic-info">
+        </div> -->
+        <div class="profile-basic-info">
           <mat-card>
 
-            <div class="c-info"><span>Company Info:</span></div>
+            <div class="df-c-b profile-title">
+              <div class="c-info"><span>Company Info:</span></div>
+              <div><button mat-raised-button (click)="addRequest('Edit Customer')">EDIT</button></div>
+            </div>
 
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">Customer Name</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">Jayasree</div>
+
+            <div class="stepper df-c-a">
+              <div class="w10 df-c-jc c-p" (click)="stepControl(1)">
+                <div class="step-title" [ngStyle]="{'background': step == 1 ? '#ff4a00' : '#242939'}">
+                  <span>1</span>
+                </div>
+              </div>
+              <div class="w35 line-sec"></div>
+              <div class="w10 df-c-jc c-p" (click)="stepControl(2)">
+                <div class="step-title" [ngStyle]="{'background': step == 2 ? '#ff4a00' : '#242939'}">
+                  <span>2</span>
+                </div>
+              </div>
+              <div class="w35 line-sec"></div>
+              <div class="w10 df-c-jc c-p" (click)="stepControl(3)">
+                <div class="step-title" [ngStyle]="{'background': step == 3 ? '#ff4a00' : '#242939'}">
+                  <span>3</span>
+                </div>
+              </div>
             </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">Corporate Website</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">mailpsl.com</div>
+
+
+            <div *ngIf="step == 1" class="stepper-Item">
+
+              <div class="df">
+
+                <div class="w50">
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Company Name</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.scompanyname | titlecase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Company Type</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.scompanytype | titlecase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Business Unit</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.sbusinessunti}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">No. of Employee</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.snumofemployee}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Public Traded Comp</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.ispublictradedcomp}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Government Owned</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.isgovowned}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Annual Revenue</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.dannualrevenue}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">SaaS Platform</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.issaasappplatform | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">CISO Present</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.iscisopresent | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Security Team Member</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.noofsectemmember | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Chief Privacy Officer</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.ischeifprivacyofficer | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">HIPAA Officer</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.ishipaaofficer | uppercase}}</div>
+                  </div>
+                </div>
+
+                <div class="w50">
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Risk Officer</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.isriskofficer | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Security Operating Team</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.issecopsteam | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">US Presence</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.isuspresence | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">EMEA Presence</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.isemeapresence | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">APAC Presence</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.isapacpresence | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">LATM Presence</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.islatmpresence | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">CHINA Presence</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.ischinapresence | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">PSP Account Executive</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.ipspacctexec}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Risk Team</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.isriskTeam | uppercase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Website Link</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.website_url}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Account Start Date</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.accountstartdate | date:'dd-MM-YY'}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Account End Date</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.accountenddate | date:'dd-MM-YY'}}</div>
+                  </div>
+                </div>
+
+              </div>
+
+
+              <div class="submit-btn setper-btn">
+                <button mat-raised-button type="button" (click)="pageNavigation('next', 2)">Next</button>
+              </div>
+
             </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">HQ Location</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">Redwood Shores, California, USA</div>
+
+
+            <div [hidden]="step !== 2" class="stepper-Item">
+              <ngx-customer-address [addressList]="customerAddressList"></ngx-customer-address>
+              <div class="submit-btn setper-btn">
+                <button mat-raised-button type="button" (click)="pageNavigation('back', 1)">Back</button>
+                <button mat-raised-button type="button" (click)="pageNavigation('next', 3)">Next</button>
+              </div>
             </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">CISO</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">YES</div>
+
+
+            <div *ngIf="step == 3" class="stepper-Item">
+
+              <div class="df">
+
+                <div class="w50">
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Contact Name(primary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contect_primary_name | titlecase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Contact Name(secondary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contect_secondary_name | titlecase}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">contact no.(primary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_primary}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">contact no.(secondary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_secondary}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Email(primary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_primary_email}}</div>
+                  </div>
+                </div>
+
+                <div class="w50">
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Email(secondary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_secondary_email}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Telephone(primary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_primary_phone}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Telephone(secondary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_secondary_phone}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Designation(primary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_primary_designation}}</div>
+                  </div>
+
+                  <div class="profile-item df-ac">
+                    <div class="w50 p-lable">Designation(secondary)</div>
+                    <div class="w2">:</div>
+                    <div class="w45 p-value">{{profileData?.contect?.customer_contact_secondary_designation}}</div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="submit-btn setper-btn">
+                <button mat-raised-button type="button" (click)="pageNavigation('back', 2)">Back</button>
+              </div>
+
             </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">Industry</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">Phantom</div>
-            </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">Information Security Officer</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">YES</div>
-            </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">Number of Emp</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">25</div>
-            </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">Privacy Officer</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">YES</div>
-            </div>
-            <div class="profile-item df-ac">
-              <div class="w35 p-lable">HIPAA Risk Officer</div>
-              <div class="w5">:</div>
-              <div class="w60 p-value">YES</div>
-            </div>
+
           </mat-card>
         </div>
       </div>
@@ -408,6 +637,7 @@
         </div>
 
       </div>
+
     </div>
   </nb-layout-column>
 </nb-layout>

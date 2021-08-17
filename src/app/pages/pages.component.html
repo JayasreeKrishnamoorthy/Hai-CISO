@@ -30,12 +30,12 @@
                         keyboard_arrow_down</mat-icon>
                     </a>
                   </li>
-                  <div *ngIf="link?.subitems && link?.drop == true && menuToggle">
+                  <div *ngIf="link?.subitems && link?.drop == true">
                     <ng-container *ngFor="let sub of link.subitems">
                       <li routerLinkActive="active-menu1" class="nav__item ripple" *ngIf="sub?.path">
                         <a [routerLink]="sub?.path" class="a-menu1">
                           <mat-icon class="menu-icon1">{{sub?.icon}}</mat-icon>
-                          <span class="underline-closing link-name">{{sub?.name}}</span>
+                          <span class="underline-closing link-name" *ngIf="menuToggle">{{sub?.name}}</span>
                         </a>
                       </li>
                     </ng-container>
@@ -56,8 +56,7 @@
                 <p class="right header-item c-p"><a>{{h?.name}}</a></p>
               </div>
             </div>
-            <div class="w15 df-ab c-p" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"
-              (click)="menuTrigger.openMenu()">
+            <div class="w15 df-ab c-p" [mdePopoverTriggerFor]="themePopover" mdePopoverTriggerOn="click">
               <div class="w20">
                 <img src="" onError="this.src='assets/img/user2.png'" class="w80">
               </div>
@@ -94,10 +93,13 @@
 
 
 <div>
-  <mat-menu #menu="matMenu" class="profile-menu-sec">
-    <button mat-menu-item *ngFor="let p of profileMenu" (click)="profileAction(p)">
-      <mat-icon>{{p?.icon}}</mat-icon>
-      <span>{{p?.name}}</span>
-    </button>
-  </mat-menu>
+  <mde-popover #themePopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverCloseOnClick]="false"
+    mdePopoverArrowColor="#FFFFFF" class="profile-menu-sec">
+    <mat-card>
+      <div class="profile-menu-item w100 df-ac c-p" *ngFor="let p of profileMenu" (click)="profileAction(p)">
+        <mat-icon class="w25">{{p?.icon}}</mat-icon>
+        <span class="w75">{{p?.name}}</span>
+      </div>
+    </mat-card>
+  </mde-popover>
 </div>

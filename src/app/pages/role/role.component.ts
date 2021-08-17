@@ -61,14 +61,19 @@ export class RoleComponent implements OnInit {
 
 
   getRoleList(): void {
+    this.utility.showloader();
     this.httpService.getRoles(`/roles`).subscribe(res => {
       if (res[`success`] === true) {
         this.roleList = new MatTableDataSource(res?.data);
         this.roleList.paginator = this.paginator;
         this.roleList.sort = this.sort;
+      } else if (res[`success`] === false && res[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(res[`message`]);
+        this.utility.logOut();
       } else {
         this.roleList = [];
       }
+      this.utility.dismissloader();
     });
   }
 
@@ -101,11 +106,16 @@ export class RoleComponent implements OnInit {
 
 
   deleteRole(val: any): void {
+    this.utility.showloader();
     this.http.delToken(`/roles/${val?.iid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.getRoleList();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnalyzeComponent } from './analyze.component';
+import { ForgotPageComponent } from './forgot-page.component';
 
-describe('AnalyzeComponent', () => {
-  let component: AnalyzeComponent;
-  let fixture: ComponentFixture<AnalyzeComponent>;
+describe('ForgotPageComponent', () => {
+  let component: ForgotPageComponent;
+  let fixture: ComponentFixture<ForgotPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AnalyzeComponent ],
+      declarations: [ ForgotPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AnalyzeComponent);
+    fixture = TestBed.createComponent(ForgotPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

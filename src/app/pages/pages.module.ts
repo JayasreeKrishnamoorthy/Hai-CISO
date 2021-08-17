@@ -32,6 +32,8 @@ import { IntegrationComponent } from './integration/integration.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { LogsComponent } from './logs/logs.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MdePopoverModule } from '@material-extended/mde';
+import { CustomerAddressComponent } from '../share/component/customer-address/customer-address.component';
 
 @NgModule({
   imports: [
@@ -48,6 +50,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ComponentsModule,
     NbUserModule,
     NbContextMenuModule,
+    MdePopoverModule,
   ],
   declarations: [
     PagesComponent,
@@ -62,6 +65,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ResourcesComponent,
     LogsComponent,
     ChangePasswordComponent,
+    CustomerAddressComponent,
   ],
 })
 export class PagesModule {

@@ -47,7 +47,6 @@ export class UserComponent implements OnInit {
     } else {
       this.getUserList();  // For PSP
     }
-
   }
 
   refresh(): void {
@@ -55,14 +54,19 @@ export class UserComponent implements OnInit {
   }
 
   getUserList() {
+    this.utility.showloader();
     this.http.getToken(`/user-management`).subscribe(data => {
       if (data[`success`] === true) {
         this.userList = new MatTableDataSource(data?.data);
         this.userList.paginator = this.paginator;
         this.userList.sort = this.sort;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.userList = [];
       }
+      this.utility.dismissloader();
     });
   }
 
@@ -126,20 +130,25 @@ export class UserComponent implements OnInit {
   }
 
   deleteUser(val: any): void {
+    this.utility.showloader();
     this.http.delToken(`/user-management/${val?.iuserid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.getUserList();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 
   getuserlist_customer() {
+    this.utility.showloader();
     const obj = {
       user_group_id: this.pspuser.id,
     };
     this.http.postToken(`/user-management/getcustomer-users`, obj).subscribe(data => {
-
       this.customerlist = data?.data?.data.map((d: any) => {
         return d.userid;
       });
@@ -147,9 +156,13 @@ export class UserComponent implements OnInit {
         this.userList = new MatTableDataSource(this.customerlist);
         this.userList.paginator = this.paginator;
         this.userList.sort = this.sort;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.userList = [];
       }
+      this.utility.dismissloader();
     });
   }
 

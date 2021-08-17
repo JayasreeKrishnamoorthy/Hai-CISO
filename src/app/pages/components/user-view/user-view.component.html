@@ -43,6 +43,11 @@
             <div class="form-lable-name">User Group</div>
             <mat-form-field appearance="outline">
               <mat-select formControlName="group" placeholder="User Group">
+                <mat-option>
+                  <ngx-mat-select-search placeholderLabel="Search...." noEntriesFoundLabel="'no match found'"
+                    (keyup)="searchFilter($event)">
+                  </ngx-mat-select-search>
+                </mat-option>
                 <mat-option *ngFor="let g of groupList" [value]="g?.iid">
                   {{g?.susergroupname}}
                 </mat-option>

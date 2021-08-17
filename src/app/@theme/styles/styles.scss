@@ -260,6 +260,9 @@ ngx-analyze {
 .f-w {
   flex-wrap: wrap;
 }
+.f-d {
+  flex-direction: column;
+}
 
 .df {
   display: flex;
@@ -335,6 +338,9 @@ ngx-analyze {
   cursor: pointer;
 }
 
+.w2 {
+  width: 2%;
+}
 .w5 {
   width: 5%;
 }
@@ -632,6 +638,10 @@ nb-layout-column {
   font-size: 12px;
 }
 
+.form-sec .mat-select {
+  font-size: 12px;
+}
+
 .form-sec .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   // border-color: #ff9b74;
   border-color: #979797;
@@ -660,12 +670,24 @@ button {
 }
 
 .profile-menu-sec {
-  margin-top: 15px !important;
-  button {
-    font-family: "Montserrat", sans-serif !important;
-    color: #000;
-    font-size: 13px;
-    font-weight: 600;
+  margin-top: 5px !important;
+  z-index: 1000 !important;
+  mat-card {
+    padding: 0;
+    width: 120%;
+    .profile-menu-item {
+      font-family: "Montserrat", sans-serif !important;
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 10px;
+      mat-icon {
+        width: 25% !important;
+      }
+      &:hover {
+        background: #f7f7f7;
+      }
+    }
   }
 }
 
@@ -701,6 +723,71 @@ mat-drawer-content {
   }
 }
 
+.loginPage {
+  .login-bg {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 59%, rgba(0, 0, 0, 0.8) 100%),
+      url(../../../assets/img/login5.jpg) no-repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+    nb-card {
+      width: 35%;
+      padding: 15px 10px 45px;
+      border-radius: 15px;
+      background: rgba(225, 225, 225, 0.2);
+      border: unset !important;
+      .logo-sec {
+        padding-bottom: 1px;
+      }
+      .des-txt {
+        color: #fff;
+        font-size: 16px;
+        padding: 0px 0 25px;
+        font-weight: 700;
+        font-family: Open Sans, sans-serif;
+      }
+      .input-fld {
+        padding-bottom: 15px;
+        .error-text {
+          color: #e21717;
+          text-align: left !important;
+          padding: 1px 0 0px 75px;
+          align-self: baseline;
+        }
+        input {
+          background: rgba(0, 0, 0, 0.5) !important;
+          border: unset !important;
+          color: #fff !important;
+          border-radius: 11px;
+        }
+        input-basic-placeholder-text-color {
+          color: #000 !important;
+        }
+      }
+      .sign-btn {
+        background: linear-gradient(165deg, #ff4a00, #f3895f);
+        color: #fff !important;
+        border-radius: 10px;
+        height: 45px;
+        width: 50%;
+        margin-top: 10px;
+        border-color: unset !important;
+        border-style: unset !important;
+      }
+      .forgot-txt {
+        color: #fff;
+        text-align: center;
+        padding-top: 25px;
+        padding-bottom: 5px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
 // .mat-drawer-opened {
 //   overflow: hidden !important;
 //   margin-left: 205px !important;
@@ -720,4 +807,17 @@ body {
 .nb-theme-default,
 mat-card {
   font-family: "Montserrat", sans-serif !important;
+}
+
+.nb-theme-default [nbButton]:focus,
+.nb-theme-default :focus[nbButtonToggle] {
+  box-shadow: unset !important;
+}
+
+.nb-theme-default [nbInput].status-basic:focus {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.nb-theme-default [nbInput].status-basic:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }

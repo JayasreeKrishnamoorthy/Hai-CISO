@@ -11,6 +11,7 @@ import {
 import { AuthGuardService as AuthGuard } from './Services/auth_guard/auth-guard.service';
 import { LoginComponent } from './auth/login/login.component';
 import { LoggedinauthgaurdService as LoggedInAuthGuard } from './Services/auth_guard/loggedinauthgaurd.service';
+import { SelectCompanyComponent } from './share/component/select-company/select-company.component';
 export const routes: Routes = [
 
   {
@@ -27,6 +28,10 @@ export const routes: Routes = [
     path: 'pages',
     loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'select-company',
+    component: SelectCompanyComponent,
   },
 ];
 

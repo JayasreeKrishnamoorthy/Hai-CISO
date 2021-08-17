@@ -312,9 +312,9 @@
 
 .company-profile-sec {
   padding: 25px 0;
-  display: flex;
-  align-items: start;
-  justify-content: space-around;
+  // display: flex;
+  // align-items: start;
+  // justify-content: space-around;
   .profile-details {
     mat-card {
       padding: 0;
@@ -353,6 +353,13 @@
 
   .profile-basic-info {
     mat-card {
+      .profile-title {
+        padding: 0 2px 25px;
+        button {
+          background: #ff4a00;
+          color: #fff;
+        }
+      }
       .c-info {
         color: #ff4a00;
         font-weight: 600;
@@ -362,7 +369,7 @@
         }
       }
       .profile-item {
-        padding-bottom: 10px;
+        padding-bottom: 20px;
         .p-lable {
           width: 35%;
           color: #363636;
@@ -398,4 +405,38 @@
 
 .sub-domain-sec {
   padding: 25px 0;
+}
+
+.stepper {
+  .step-title {
+    // background: #ff4a00;
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+  .line-sec {
+    border-bottom: 1px solid #d6d5d5;
+  }
+}
+
+.setper-btn {
+  padding-top: 20px;
+  button {
+    background: #ff4a00;
+    color: #fff;
+    width: 10% !important;
+    margin-right: 10px;
+  }
+}
+
+.stepper-Item {
+  padding: 25px 15px;
 }

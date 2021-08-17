@@ -41,6 +41,9 @@ export class UserGroupViewComponent implements OnInit {
     this.http.getToken(`/roles`).subscribe(data => {
       if (data[`success`] === true) {
         this.roleList = data?.data;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.roleList = [];
       }
@@ -48,6 +51,7 @@ export class UserGroupViewComponent implements OnInit {
   }
 
   getUserDetails() {
+    this.utility.showloader();
     this.http.getToken(`/user-group/${this.data?.userGroupDetails?.iid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.userForm.controls.usergroupname.patchValue(data?.data?.susergroupname);
@@ -57,7 +61,11 @@ export class UserGroupViewComponent implements OnInit {
         };
         this.roleList.push(obj);
         this.userForm.controls.roleid.patchValue(data?.data?.iroleid?.iid);
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
+      this.utility.dismissloader();
     });
   }
 
@@ -70,6 +78,7 @@ export class UserGroupViewComponent implements OnInit {
   }
 
   addUserGroup(): void {
+    this.utility.showloader();
     const obj = {
       usergroupname: this.userForm.controls.usergroupname.value,
       roleid: this.userForm.controls.roleid.value,
@@ -77,12 +86,17 @@ export class UserGroupViewComponent implements OnInit {
     this.http.postToken(`/user-group`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 
   updateUserGroup(): void {
+    this.utility.showloader();
     const obj = {
       id: this.data?.userGroupDetails?.iid,
       usergroupname: this.userForm.controls.usergroupname.value,
@@ -91,8 +105,12 @@ export class UserGroupViewComponent implements OnInit {
     this.http.putToken(`/user-group`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 

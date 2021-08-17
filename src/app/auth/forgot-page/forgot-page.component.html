@@ -1,0 +1,35 @@
+<nb-layout>
+  <nb-layout-column class="app-layout-column">
+    <div class="loginPage">
+      <div class="login-bg df-c-jc">
+        <nb-card class="t-c">
+          <div class="logo-sec"><img src="assets/img/logo2.png" class="w40"></div>
+          <div class="des-txt">FORGOT PASSWORD</div>
+          <form [formGroup]="forgetPasswordForm" autocomplete="off" #f="ngForm"
+            (ngSubmit)="forgetPasswordForm.valid && resetPassword(f)">
+
+            <div class="input-fld">
+              <input type="text" placeholder="Email" nbInput formControlName="email"
+                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="w100">
+              <div class="error-text"
+                *ngIf="(forgetPasswordForm.controls.email.touched || f.submitted) && forgetPasswordForm.controls.email.errors?.required">
+                Email is Required!
+              </div>
+              <div class="error-text"
+                *ngIf="f.submitted && forgetPasswordForm.controls.email.invalid && forgetPasswordForm.controls.email.value !== ''">
+                Invalid Email!
+              </div>
+            </div>
+
+            <div>
+              <button nbButton class="sign-btn" type="submit">SUBMIT</button>
+            </div>
+
+            <div class="forgot-txt c-p"><span routerLink="/auth/login">SIGN IN</span></div>
+
+          </form>
+        </nb-card>
+      </div>
+    </div>
+  </nb-layout-column>
+</nb-layout>

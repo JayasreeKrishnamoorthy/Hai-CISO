@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { GeoService } from '../../../Services/geo.service';
 import { HttpServiceService } from '../../../Services/http_service/http-service.service';
+import { UtilityService } from '../../../Services/utility.service';
 
 @Component({
   selector: 'ngx-role-view',
@@ -20,6 +21,7 @@ export class RoleViewComponent implements OnInit {
     public dialog: MatDialog,
     public http: HttpServiceService,
     public geo: GeoService,
+    public utility: UtilityService,
   ) {
     this.roleForm = this.fb.group({
       role: ['', Validators.required],
@@ -47,6 +49,7 @@ export class RoleViewComponent implements OnInit {
 
 
   getroles(id): void {
+    this.utility.showloader();
     this.http.getToken(`/roles/${id}`).subscribe(data => {
       if (data[`success`] === true) {
         this.userDetails = data?.data;
@@ -60,9 +63,13 @@ export class RoleViewComponent implements OnInit {
         this.roleForm.controls.edit.patchValue(this.convertToBoolean(JSON.parse(newArray).eedit));
         this.roleForm.controls.add.patchValue(this.convertToBoolean(JSON.parse(newArray).eadd));
         this.roleForm.controls.schedule.patchValue(this.convertToBoolean(JSON.parse(newArray).eschedule));
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.userDetails = [];
       }
+      this.utility.dismissloader();
     });
   }
 
@@ -75,6 +82,7 @@ export class RoleViewComponent implements OnInit {
   }
 
   updateRole(): void {
+    this.utility.showloader();
     const obj = {
       rolename: this.roleForm.controls.role.value,
       schedule: this.roleForm.controls.schedule.value,
@@ -92,12 +100,18 @@ export class RoleViewComponent implements OnInit {
     this.http.putroles(JSON.parse(old2)).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
+      this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 
 
   addRole(): void {
+    this.utility.showloader();
     const obj = {
       rolename: this.roleForm.controls.role.value,
       schedule: this.roleForm.controls.schedule.value,
@@ -114,7 +128,12 @@ export class RoleViewComponent implements OnInit {
     this.http.postroles(JSON.parse(old2)).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
+      this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 

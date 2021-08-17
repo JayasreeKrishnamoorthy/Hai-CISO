@@ -100,6 +100,13 @@
       }
       .input-fld {
         padding-bottom: 15px;
+        height: 68px;
+        .error-text {
+          color: #e21717;
+          text-align: left !important;
+          padding: 1px 0 0px 75px;
+          align-self: baseline;
+        }
         input {
           background: rgba(0, 0, 0, 0.5);
           border: unset !important;

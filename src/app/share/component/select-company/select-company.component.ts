@@ -1,8 +1,9 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Datum, SelectCompany, UserGroupID } from '../../Responses/select-companies';
-import { HttpServiceService } from '../../Services/http_service/http-service.service';
+import { Datum, SelectCompany, UserGroupID } from '../../../Responses/select-companies';
+import { HttpServiceService } from '../../../Services/http_service/http-service.service';
+import { UtilityService } from '../../../Services/utility.service';
 
 @Component({
   selector: 'ngx-select-company',
@@ -23,6 +24,7 @@ export class SelectCompanyComponent implements OnInit {
   constructor(
     private httpService: HttpServiceService,
     public router: Router,
+    public utility: UtilityService,
   ) { }
 
   ngOnInit(): void {
@@ -30,15 +32,15 @@ export class SelectCompanyComponent implements OnInit {
   }
 
   companieslist(): void {
+    this.utility.showloader();
     this.httpService.getcompanies().subscribe((res) => {
       if (res['success'] === true) {
         this.company = res?.data.map((d: any) => {
           return { name: d.userGroupId.susergroupname, id: d.userGroupId.iid, customerid: d.userGroupId.customerid };
         });
       }
-    },
-    ); (err) => {
-    };
+      this.utility.dismissloader();
+    });
   }
 
 

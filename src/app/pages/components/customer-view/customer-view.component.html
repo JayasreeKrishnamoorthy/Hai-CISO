@@ -112,9 +112,9 @@
           </div>
           <div class="df-ac f-w pb-1">
             <div class="w33">
-              <div class="form-lable-name">Annual Revenu</div>
+              <div class="form-lable-name">Annual Revenue</div>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dannualrevenue" placeholder="Anual Revenu"
+                <input matInput formControlName="dannualrevenue" placeholder="Annual Revenue"
                   pattern="(^0$)|(^[1-9]\d{0,30}$)">
               </mat-form-field>
             </div>
@@ -148,9 +148,9 @@
               </mat-form-field>
             </div>
             <div class="w33">
-              <div class="form-lable-name">Cheif Privacy Officer</div>
+              <div class="form-lable-name">Chief Privacy Officer</div>
               <mat-form-field appearance="outline">
-                <mat-select formControlName="ischeifprivacyofficer" placeholder="Cheif Privacy Officer">
+                <mat-select formControlName="ischeifprivacyofficer" placeholder="Chief Privacy Officer">
                   <mat-option *ngFor="let g of selectOption" [value]="g">
                     {{g | uppercase}}
                   </mat-option>
@@ -292,7 +292,7 @@
 
         </div>
 
-        <div *ngIf="step == 2">
+        <div [hidden]="step !== 2">
 
           <form [formGroup]="addressForm" #f1="ngForm" autocomplete="off" class="form-sec"
             (ngSubmit)="addressForm.valid && addAddress(f1)" *ngIf="data?.name !== 'View Customer'">
@@ -312,22 +312,65 @@
               <div class="w33">
                 <div class="form-lable-name">Country</div>
                 <mat-form-field appearance="outline">
-                  <input matInput formControlName="country" placeholder="Country">
+                  <mat-select formControlName="country" (ngModelChange)="getStateList($event)" placeholder="Country"
+                    (openedChange)="selectPanelOpen()">
+                    <mat-option>
+                      <ngx-mat-select-search placeholderLabel="Search...." noEntriesFoundLabel="'no match found'"
+                        (keyup)="searchFilter($event, 'country')">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let c of countryList|search:countrySearch" [value]="c?.name">
+                      {{c?.name | titlecase}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
+
+
               </div>
             </div>
             <div class="df-ac f-w pb-1">
               <div class="w33">
                 <div class="form-lable-name">State</div>
-                <mat-form-field appearance="outline">
+                <!-- <mat-form-field appearance="outline">
                   <input matInput formControlName="state" placeholder="State">
+                </mat-form-field> -->
+
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="state" placeholder="State" (ngModelChange)="getCityList($event)"
+                    (openedChange)="selectPanelOpen()"
+                    [disabled]="data?.name == 'View Customer' ? true : !addressForm.controls.country.value">
+                    <mat-option>
+                      <ngx-mat-select-search placeholderLabel="Search...." noEntriesFoundLabel="'no match found'"
+                        (keyup)="searchFilter($event, 'state')">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let c of stateList|search:stateSearch" [value]="c?.name">
+                      {{c?.name | titlecase}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
+
               </div>
               <div class="w33">
                 <div class="form-lable-name">City</div>
-                <mat-form-field appearance="outline">
+                <!-- <mat-form-field appearance="outline">
                   <input matInput formControlName="city" placeholder="City">
+                </mat-form-field> -->
+
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="city" placeholder="City" (openedChange)="selectPanelOpen()"
+                    [disabled]="data?.name == 'View Customer' ? true : !addressForm.controls.state.value">
+                    <mat-option>
+                      <ngx-mat-select-search placeholderLabel="Search...." noEntriesFoundLabel="'no match found'"
+                        (keyup)="searchFilter($event, 'city')">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let c of cityList|search:citySearch" [value]="c?.name">
+                      {{c?.name | titlecase}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
+
               </div>
               <div class="w33">
                 <div class="form-lable-name">Zip Code</div>
@@ -374,6 +417,7 @@
                   </div>
                 </div>
               </div>
+              <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
               <div class="table-card">
                 <div class="table-sec">
                   <table mat-table [dataSource]="addressListTable" matSort style="width: 100%;">
@@ -433,7 +477,7 @@
                   </div>
 
 
-                  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+
                 </div>
               </div>
             </nb-card>

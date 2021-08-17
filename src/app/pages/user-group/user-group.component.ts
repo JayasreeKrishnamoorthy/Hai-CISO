@@ -48,32 +48,41 @@ export class UserGroupComponent implements OnInit {
   }
 
   getUserGroupList() {
+    this.utility.showloader();
     this.http.getToken(`/user-group`).subscribe(data => {
       if (data[`success`] === true) {
         this.userGroupList = new MatTableDataSource(data?.data);
         this.userGroupList.paginator = this.paginator;
         this.userGroupList.sort = this.sort;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.userGroupList = [];
       }
+      this.utility.dismissloader();
     });
   }
 
   getUserGroupList_cus() {
+    this.utility.showloader();
     const obj = {
       customerid: this.pspuser.customerid.cusid,
     };
 
     this.http.postToken(`/user-group/customer-usergroups`, obj).subscribe(data => {
-
       //  console.log(data?.data)
       if (data[`success`] === true) {
         this.userGroupList = new MatTableDataSource(data?.data[0]);
         this.userGroupList.paginator = this.paginator;
         this.userGroupList.sort = this.sort;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.userGroupList = [];
       }
+      this.utility.dismissloader();
     });
   }
 
@@ -129,11 +138,16 @@ export class UserGroupComponent implements OnInit {
   }
 
   deleteUser(val: any): void {
+    this.utility.showloader();
     this.http.delToken(`/user-group/${val?.iid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.getUserGroupList();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 

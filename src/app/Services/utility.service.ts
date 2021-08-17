@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ConfirmationComponent } from '../pages/components/confirmation/confirmation.component';
 import { HttpServiceService } from './http_service/http-service.service';
+declare var $: any;
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,20 @@ export class UtilityService {
     localStorage.removeItem('PSPCUSTOMER');
     this.router.navigate(['/auth/login']);
     this.updateUserDetails();
+  }
+
+
+
+  showloader() {
+    // tslint:disable-next-line:ban
+    $('#preloader-active').css('display', 'block');
+  }
+
+  dismissloader() {
+    setTimeout(() => {
+      // tslint:disable-next-line:ban
+      $('#preloader-active').css('display', 'none');
+    }, 1000);
   }
 
 

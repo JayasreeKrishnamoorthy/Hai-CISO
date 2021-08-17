@@ -43,14 +43,19 @@ export class CustomersComponent implements OnInit {
   }
 
   getCustomerList() {
+    this.utility.showloader();
     this.http.getToken(`/customer-onboard`).subscribe(data => {
       if (data[`success`] === true) {
         this.customerList = new MatTableDataSource(data?.data);
         this.customerList.paginator = this.paginator;
         this.customerList.sort = this.sort;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.customerList = [];
       }
+      this.utility.dismissloader();
     });
   }
 
@@ -117,11 +122,16 @@ export class CustomersComponent implements OnInit {
   }
 
   deleteCustomer(val: any): void {
+    this.utility.showloader();
     this.http.delToken(`/customer-onboard/${val?.cusid}`).subscribe(data => {
       if (data[`success`] === true) {
         this.getCustomerList();
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       }
       this.utility.openToast(data[`message`]);
+      this.utility.dismissloader();
     });
   }
 

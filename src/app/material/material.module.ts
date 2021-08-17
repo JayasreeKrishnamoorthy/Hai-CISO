@@ -43,10 +43,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MdePopoverModule } from '@material-extended/mde';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { SearchPipe } from '../share/pipe/search.pipe';
+
 
 
 @NgModule({
-  declarations: [],
+  declarations: [SearchPipe],
   imports: [
     CommonModule,
     A11yModule,
@@ -94,6 +98,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ScrollingModule,
     FormsModule,
     ReactiveFormsModule,
+    MdePopoverModule,
+    NgxMatSelectSearchModule,
   ],
   exports: [
     CommonModule,
@@ -142,6 +148,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ScrollingModule,
     FormsModule,
     ReactiveFormsModule,
+    MdePopoverModule,
+    NgxMatSelectSearchModule,
+    SearchPipe,
   ],
 })
 export class MaterialModule { }
