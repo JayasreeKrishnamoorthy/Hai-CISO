@@ -34,6 +34,7 @@ import { LogsComponent } from './logs/logs.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { MdePopoverModule } from '@material-extended/mde';
 import { CustomerAddressComponent } from '../share/component/customer-address/customer-address.component';
+import { CompanyProfileComponent } from '../share/component/company-profile/company-profile.component';
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import { CustomerAddressComponent } from '../share/component/customer-address/cu
     LogsComponent,
     ChangePasswordComponent,
     CustomerAddressComponent,
+    CompanyProfileComponent,
   ],
 })
 export class PagesModule {

@@ -5,7 +5,7 @@
       <div class="card-sec df-c-jc w100">
         <div class="com-item" *ngFor="let c of company">
           <mat-card (click)="movetodashboard(c)">
-            PS
+            {{c?.name. slice(0, 2)}}
           </mat-card>
           <div class="com-name">{{c?.name}}</div>
         </div>

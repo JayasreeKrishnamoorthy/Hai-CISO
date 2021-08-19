@@ -183,6 +183,8 @@
 
       <div class="company-profile-sec" [hidden]="currentTab !== 'COMPANY PROFILE'">
 
+        <ngx-company-profile></ngx-company-profile>
+
         <!-- <div class="w25 profile-details">
           <mat-card>
             <div class="line-bg"></div>
@@ -201,7 +203,7 @@
             </div>
           </mat-card>
         </div> -->
-        <div class="profile-basic-info">
+        <!-- <div class="profile-basic-info">
           <mat-card>
 
             <div class="df-c-b profile-title">
@@ -479,7 +481,7 @@
             </div>
 
           </mat-card>
-        </div>
+        </div> -->
       </div>
 
       <div class="privacy-status-sec" *ngIf="currentTab == 'PRIVACY STATUS'">
@@ -602,7 +604,7 @@
                 <table mat-table [dataSource]="subDomainList" matSort style="width: 100%;">
                   <ng-container matColumnDef="url">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> URL </th>
-                    <td mat-cell *matCellDef="let row"> {{domain?.url}} </td>
+                    <td mat-cell *matCellDef="let row"> {{subDomain?.url}} </td>
                   </ng-container>
                   <ng-container matColumnDef="test">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Test SSL </th>

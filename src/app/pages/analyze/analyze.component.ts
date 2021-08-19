@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { CustomerAddressComponent } from '../../share/component/customer-address/customer-address.component';
 import { CustomerViewComponent } from '../components/customer-view/customer-view.component';
 import { UtilityService } from '../../Services/utility.service';
+import { CompanyProfileComponent } from '../../share/component/company-profile/company-profile.component';
 
 @Component({
   selector: 'ngx-analyze',
@@ -35,7 +36,8 @@ export class AnalyzeComponent implements OnInit {
   subDomain: any;
   step = 1;
   customerAddressList: any;
-  @ViewChild(CustomerAddressComponent) public myChild: CustomerAddressComponent;
+  @ViewChild(CustomerAddressComponent, { static: false }) public myChild: CustomerAddressComponent;
+  @ViewChild(CompanyProfileComponent, { static: false }) public profileComponent: CompanyProfileComponent;
 
 
   companys = true;   // changed   //testssl_output //cve_list
@@ -244,40 +246,37 @@ export class AnalyzeComponent implements OnInit {
         this.domainList = [];
       }
     });
-    this.getCustomerProfile(val?.customer_id?.cusid);
+    this.profileComponent.getCustomerProfile(val?.customer_id?.cusid);
   }
 
-  getCustomerProfile(val) {
-    this.http.get(`/customer-onboard/${val}`).subscribe(data => {
-      if (data[`success`] === true) {
-        this.profileData = data?.data;
-        this.getAddress();
-      }
-    });
-  }
+  // getCustomerProfile(val) {
+  //   this.http.get(`/customer-onboard/${val}`).subscribe(data => {
+  //     if (data[`success`] === true) {
+  //       this.profileData = data?.data;
+  //       this.getAddress();
+  //     }
+  //   });
+  // }
 
-  getAddress() {
-    const obj = {
-      id: this.profileData?.cusid,
-      count: 100,
-      page: 1,
-    };
-    this.http.postToken(`/customer-onboard/get-customer-address`, obj).subscribe(data => {
-      if (data[`success`] === true) {
-        this.customerAddressList = data?.data?.data;
-        this.myChild.getAddressList(this.customerAddressList);
-        // this.addressListTable = new MatTableDataSource(data?.data?.data);
-        // this.addressListTable.paginator = this.addPaginator;
-        // this.addressListTable.sort = this.addSort;
-      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
-        this.utility.openToast(data[`message`]);
-        this.utility.logOut();
-      } else {
-        this.customerAddressList = [];
-        this.myChild.getAddressList(this.customerAddressList);
-      }
-    });
-  }
+  // getAddress() {
+  //   const obj = {
+  //     id: this.profileData?.cusid,
+  //     count: 100,
+  //     page: 1,
+  //   };
+  //   this.http.postToken(`/customer-onboard/get-customer-address`, obj).subscribe(data => {
+  //     if (data[`success`] === true) {
+  //       this.customerAddressList = data?.data?.data;
+  //       this.myChild.getAddressList(this.customerAddressList);
+  //     } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+  //       this.utility.openToast(data[`message`]);
+  //       this.utility.logOut();
+  //     } else {
+  //       this.customerAddressList = [];
+  //       this.myChild.getAddressList(this.customerAddressList);
+  //     }
+  //   });
+  // }
 
   stepControl(val) {
     this.step = val;
@@ -300,7 +299,7 @@ export class AnalyzeComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getCustomerProfile(this.profileData?.cusid);
+      this.profileComponent.getCustomerProfile(this.profileData?.cusid);
     });
   }
 
@@ -325,8 +324,10 @@ export class AnalyzeComponent implements OnInit {
         this.domainList = [];
       }
       this.utility.dismissloader();
+      // tslint:disable-next-line:no-console
+      console.log('profileComponent', this.profileComponent);
+      this.profileComponent.getCustomerProfile(+this.pspCustomerDetails?.customerid?.cusid);
     });
-    this.getCustomerProfile(+this.pspCustomerDetails?.customerid?.cusid);
   }
 
   refreshDomain(): void {
@@ -346,6 +347,8 @@ export class AnalyzeComponent implements OnInit {
     this.http.postToken(`/analyze/subdomain-info`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.subDomain = eve;
+        // tslint:disable-next-line:no-console
+        console.log('subDomain', this.subDomain);
         if (data?.data?.domain_info?.length !== 0) {
           this.subDomainList = new MatTableDataSource(data?.data?.domain_info);
           this.subDomainList.paginator = this.paginator.toArray()[2];

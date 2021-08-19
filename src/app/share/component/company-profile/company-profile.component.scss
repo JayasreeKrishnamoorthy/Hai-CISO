@@ -1,0 +1,82 @@
+.company-profile-page {
+  .profile-card {
+    mat-card {
+      padding: 0;
+      border-radius: 10px;
+      .profile-bg {
+        background: url(../../../../assets/img/login5.jpg) no-repeat;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        height: 125px;
+        border-radius: 10px 10px 0 0;
+      }
+      .company-logo {
+        position: absolute;
+        bottom: -30px;
+        text-align: center;
+        img {
+          background: #fff;
+          border-radius: 50%;
+          padding: 9px;
+        }
+      }
+      .profile-info {
+        padding: 40px 16px 20px;
+        .name-txt {
+          font-weight: 600;
+          padding-bottom: 15px;
+        }
+        .profile-contact {
+          padding: 0 0 0 50px;
+          .con-item {
+            padding-bottom: 5px;
+            font-weight: 500;
+          }
+          mat-icon {
+            font-size: 20px;
+            color: #ff4a00;
+          }
+        }
+      }
+    }
+  }
+  .company-info {
+    padding: 5px 0 5px 20px;
+    .tab-sec {
+      background: #e1e1e1;
+      border-radius: 3px;
+      padding: 4px 4px;
+      .tab-item {
+        margin-right: 15px;
+        font-size: 13px;
+        padding: 5px 10px;
+      }
+      .tab-select {
+        background: #fff;
+        color: #ff4a00;
+        border-radius: 3px;
+        box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.1),
+          0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+      }
+    }
+    .company-Details {
+      padding-top: 20px;
+      .profile-item {
+        padding-bottom: 20px;
+        .p-lable {
+          width: 35%;
+          color: #363636;
+          font-weight: 600;
+          font-size: 11px;
+        }
+        .p-value {
+          color: #a1a8be;
+          font-weight: 600;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

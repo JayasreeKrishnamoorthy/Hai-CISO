@@ -39,30 +39,30 @@ export class LoginComponent implements OnInit {
     };
     this.httpService.doLogin(data).subscribe(res => {
       if (res.success === true) {
-        // if (res?.data?.temppass === true) {
-        //   localStorage.setItem('pspkey', res.data.token);
-        //   const navigationExtras: NavigationExtras = {
-        //     queryParams: {
-        //       loginDetails: JSON.stringify(res?.data),
-        //     },
-        //   };
-        //   this.router.navigate(['/auth/reset-password'], navigationExtras);
-        // } else {
-        //   localStorage.setItem('pspkey', res.data.token);
-        //   localStorage.setItem('PSPUser', JSON.stringify(res.data));
-        //   if (res.data.idendifier === 'CUSTOMER') {
-        //     this.movetocompany();
-        //   } else {
-        //     this.movetohome();
-        //   }
-        // }
-        localStorage.setItem('pspkey', res.data.token);
-        localStorage.setItem('PSPUser', JSON.stringify(res.data));
-        if (res.data.idendifier === 'CUSTOMER') {
-          this.movetocompany();
+        if (res?.data?.temppass === true) {
+          localStorage.setItem('pspkey', res.data.token);
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              loginDetails: JSON.stringify(res?.data),
+            },
+          };
+          this.router.navigate(['/auth/reset-password'], navigationExtras);
         } else {
-          this.movetohome();
+          localStorage.setItem('pspkey', res.data.token);
+          localStorage.setItem('PSPUser', JSON.stringify(res.data));
+          if (res.data.idendifier === 'CUSTOMER') {
+            this.movetocompany();
+          } else {
+            this.movetohome();
+          }
         }
+        // localStorage.setItem('pspkey', res.data.token);
+        // localStorage.setItem('PSPUser', JSON.stringify(res.data));
+        // if (res.data.idendifier === 'CUSTOMER') {
+        //   this.movetocompany();
+        // } else {
+        //   this.movetohome();
+        // }
       } else {
         this.utility.openToast(res[`message`]);
       }
