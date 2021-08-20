@@ -59,8 +59,8 @@
     <div [hidden]='showCompany == true'>
 
 
-      <div (click)="back('company')" class="back-arrow" *ngIf="userDetails.idendifier !== 'CUSTOMER'">
-        <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
+      <div class="back-arrow" *ngIf="userDetails.idendifier !== 'CUSTOMER'">
+        <mat-icon matTooltip="Back" class="c-p" (click)="back('company')">arrow_back</mat-icon>
       </div>
 
 
@@ -580,8 +580,8 @@
 
         <div class="data-table" [hidden]='showDomain == true'>
           <nb-card>
-            <div (click)="back('domain')" class="back-arrow">
-              <mat-icon matTooltip="Back" class="c-p">arrow_back</mat-icon>
+            <div class="back-arrow">
+              <mat-icon matTooltip="Back" class="c-p" (click)="back('domain')">arrow_back</mat-icon>
             </div>
             <div class="df-b-b table-name-header">
               <div class="table-title">{{subDomain?.url | titlecase}}</div>

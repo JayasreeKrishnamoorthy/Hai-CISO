@@ -247,16 +247,17 @@ export class AnalyzeComponent implements OnInit {
       }
     });
     this.profileComponent.getCustomerProfile(val?.customer_id?.cusid);
+    this.getCustomerProfile(val?.customer_id?.cusid);
   }
 
-  // getCustomerProfile(val) {
-  //   this.http.get(`/customer-onboard/${val}`).subscribe(data => {
-  //     if (data[`success`] === true) {
-  //       this.profileData = data?.data;
-  //       this.getAddress();
-  //     }
-  //   });
-  // }
+  getCustomerProfile(val) {
+    this.http.get(`/customer-onboard/${val}`).subscribe(data => {
+      if (data[`success`] === true) {
+        this.profileData = data?.data;
+        // this.getAddress();
+      }
+    });
+  }
 
   // getAddress() {
   //   const obj = {
@@ -300,6 +301,7 @@ export class AnalyzeComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.profileComponent.getCustomerProfile(this.profileData?.cusid);
+      this.getCustomerProfile(this.profileData?.cusid);
     });
   }
 
@@ -327,6 +329,7 @@ export class AnalyzeComponent implements OnInit {
       // tslint:disable-next-line:no-console
       console.log('profileComponent', this.profileComponent);
       this.profileComponent.getCustomerProfile(+this.pspCustomerDetails?.customerid?.cusid);
+      this.getCustomerProfile(+this.pspCustomerDetails?.customerid?.cusid);
     });
   }
 
