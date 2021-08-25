@@ -35,6 +35,7 @@ import { MdePopoverModule } from '@material-extended/mde';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SearchPipe } from './share/pipe/search.pipe';
 import { CompanyProfileComponent } from './share/component/company-profile/company-profile.component';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 
 @NgModule({
   providers: [
@@ -71,6 +72,7 @@ import { CompanyProfileComponent } from './share/component/company-profile/compa
     NbContextMenuModule,
     MdePopoverModule,
     NgxMatSelectSearchModule,
+    NgIdleKeepaliveModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })

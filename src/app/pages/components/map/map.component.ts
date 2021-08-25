@@ -38,12 +38,8 @@ export class MapComponent implements OnInit {
 
 
   async getAddressList(event: any) {
-    // tslint:disable-next-line:no-console
-    console.log('event.target.value', event.target.value);
     if (event.target.value) {
       this.addressList = await this.geo.updatePredictions(event.target.value);
-      // tslint:disable-next-line:no-console
-      console.log('addressList', this.addressList);
     } else {
       this.addressList = [];
     }

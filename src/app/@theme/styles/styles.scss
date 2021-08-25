@@ -716,6 +716,11 @@ mat-drawer-content {
   background-color: #979797;
 }
 
+.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: #ff4081 !important;
+}
+
 .nodataFound {
   text-align: center;
   padding: 15px 3px 0px;

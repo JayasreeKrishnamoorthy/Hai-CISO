@@ -1,10 +1,17 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { HttpServiceService } from '../Services/http_service/http-service.service';
 import { UtilityService } from '../Services/utility.service';
 
 import { MENU_ITEMS } from './pages-menu';
+declare var $: any;
+declare global {
+  interface Window {
+    FB: any;
+  }
+}
 
 @Component({
   selector: 'ngx-pages',
@@ -145,11 +152,64 @@ export class PagesComponent {
   menuToggle = false;
   userDetails: any;
 
+
   constructor(
     public http: HttpServiceService,
     public router: Router,
     public utility: UtilityService,
-  ) { }
+  ) {
+    const utilityMethod = this.utility;
+    // window.addEventListener('unload', function (e) {
+    //   utilityMethod.logOut();
+    //   e.preventDefault();
+    // });
+
+    // window.onbeforeunload = function (e) {
+    //   this.router.events
+    //     .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
+    //     .subscribe(event => {
+    //       if (
+    //         event.id === 1 &&
+    //         event.url === event.urlAfterRedirects
+    //       ) {
+    //       }
+    //     });
+    //   return undefined;
+    // };
+
+  }
+
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeunloadHandler(event) {
+  //   this.utility.logOut();
+  // }
+
+
+
+
+
+  // @HostListener('window:beforeunload', ['$event'])
+  // public saveAndClosePromt(event) {
+  //   // tslint:disable-next-line:no-console
+  //   console.log('$event', event);
+  //   if (window.onbeforeunload != null) {
+  //     window.onbeforeunload = null;
+  //   }
+  //   window.addEventListener('beforeunload', function (e) {
+  //     if (window.onbeforeunload != null) {
+  //       window.onbeforeunload = null;
+  //     }
+  //   });
+  //   window.onunload = () => {
+  //     if (window.onbeforeunload != null) {
+  //       window.onbeforeunload = null;
+  //     }
+  //     this.utility.logOut();
+  //   };
+  //   event.preventDefault();
+  //   event.returnValue = '';
+  //   this.utility.logOut();
+  // }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
@@ -326,6 +386,8 @@ export class PagesComponent {
     this.http.postToken(`/auth/verify`).subscribe(data => {
       if (data[`success`] === true) {
 
+      } else if (data[`success`] === true && data?.data) {
+        this.utility.openToast(data?.data[`message`]);
       } else {
         this.utility.openToast(data[`message`]);
         this.utility.logOut();
@@ -347,17 +409,7 @@ export class PagesComponent {
 
   profileAction(val) {
     if (val?.name === 'Logout') {
-      localStorage.removeItem('pspkey');
-      localStorage.removeItem('PSPUser');
-      localStorage.removeItem('PSPCUSTOMER');
-      this.router.navigate(['/auth/login']);
-      this.utility.updateUserDetails();
-      this.http.postToken(`/auth/logout`).subscribe(data => {
-        if (data[`success`] === true) {
-        } else {
-          // this.utility.openToast(data[`message`]);
-        }
-      });
+      this.utility.logOut();
     } else if (val?.name === 'PSP') {
       if (this.userDetails.idendifier === 'CUSTOMER') {
         this.router.navigate(['/select-company']);
@@ -368,3 +420,9 @@ export class PagesComponent {
   }
 
 }
+
+
+
+
+
+

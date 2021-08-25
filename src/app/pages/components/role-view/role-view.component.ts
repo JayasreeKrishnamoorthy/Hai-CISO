@@ -41,7 +41,7 @@ export class RoleViewComponent implements OnInit {
       // this.roleForm.controls?.resetpass.patchValue(false);
       // this.getUserDetails();
     }
-    if (this.data?.name === 'View User') {
+    if (this.data?.name === 'View Role') {
       this.roleForm.disable();
     }
   }
@@ -85,19 +85,19 @@ export class RoleViewComponent implements OnInit {
     this.utility.showloader();
     const obj = {
       rolename: this.roleForm.controls.role.value,
-      schedule: this.roleForm.controls.schedule.value,
-      execute: this.roleForm.controls.execute.value,
-      readonly: this.roleForm.controls.read.value,
-      Delete: this.roleForm.controls.delete.value,
-      edit: this.roleForm.controls.edit.value,
-      add: this.roleForm.controls.add.value,
+      schedule: this.roleForm.controls.schedule.value === true ? 'Yes' : 'No',
+      execute: this.roleForm.controls.execute.value === true ? 'Yes' : 'No',
+      readonly: this.roleForm.controls.read.value === true ? 'Yes' : 'No',
+      Delete: this.roleForm.controls.delete.value === true ? 'Yes' : 'No',
+      edit: this.roleForm.controls.edit.value === true ? 'Yes' : 'No',
+      add: this.roleForm.controls.add.value === true ? 'Yes' : 'No',
       id: this.data?.roleDetails?.iid,
     };
 
-    const old0 = JSON.stringify(obj, this.replacer);
-    const old = JSON.stringify(old0).replace(/true/g, 'YES');
-    const old2 = old.replace(/false/g, 'NO');
-    this.http.putroles(JSON.parse(old2)).subscribe(data => {
+    // const old0 = JSON.stringify(obj, this.replacer);
+    // const old = JSON.stringify(old0).replace(/true/g, 'YES');
+    // const old2 = old.replace(/false/g, 'NO');
+    this.http.putroles(obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
       } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
@@ -114,18 +114,18 @@ export class RoleViewComponent implements OnInit {
     this.utility.showloader();
     const obj = {
       rolename: this.roleForm.controls.role.value,
-      schedule: this.roleForm.controls.schedule.value,
-      execute: this.roleForm.controls.execute.value,
-      readonly: this.roleForm.controls.read.value,
-      Delete: this.roleForm.controls.delete.value,
-      edit: this.roleForm.controls.edit.value,
-      add: this.roleForm.controls.add.value,
-      id: this.data?.roleDetails?.iid,
+      schedule: this.roleForm.controls.schedule.value === true ? 'Yes' : 'No',
+      execute: this.roleForm.controls.execute.value === true ? 'Yes' : 'No',
+      readonly: this.roleForm.controls.read.value === true ? 'Yes' : 'No',
+      Delete: this.roleForm.controls.delete.value === true ? 'Yes' : 'No',
+      edit: this.roleForm.controls.edit.value === true ? 'Yes' : 'No',
+      add: this.roleForm.controls.add.value === true ? 'Yes' : 'No',
+      // id: this.data?.roleDetails?.iid,
     };
-    const old0 = JSON.stringify(obj, this.replacer);
-    const old = JSON.stringify(old0).replace(/true/g, 'YES');
-    const old2 = old.replace(/false/g, 'NO');
-    this.http.postroles(JSON.parse(old2)).subscribe(data => {
+    // const old0 = JSON.stringify(obj, this.replacer);
+    // const old = JSON.stringify(old0).replace(/true/g, 'YES');
+    // const old2 = old.replace(/false/g, 'NO');
+    this.http.postroles(obj).subscribe(data => {
       if (data[`success`] === true) {
         this.dialogRef.close();
       } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {

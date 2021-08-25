@@ -51,11 +51,11 @@ export class AnalyzeComponent implements OnInit {
       name: 'Project',
     },
     {
-      count: 155,
+      count: 1,
       name: 'Domain',
     },
     {
-      count: 155,
+      count: 0,
       name: 'Sub Domain',
     },
   ];
@@ -235,6 +235,11 @@ export class AnalyzeComponent implements OnInit {
     this.http.postToken(`/analyze/getsubdomains`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.domain = val;
+        this.contList.forEach(element => {
+          if (element?.name === 'Sub Domain') {
+            element[`count`] = data?.data?.data.length;
+          }
+        });
         this.domainList = new MatTableDataSource(data?.data?.data);
         this.domainList.paginator = this.paginator.toArray()[1];
         this.domainList.sort = this.sort.toArray()[1];
@@ -315,6 +320,11 @@ export class AnalyzeComponent implements OnInit {
     this.http.postToken(`/analyze/get-customer-subdomain`, obj).subscribe(data => {
       if (data[`success`] === true) {
         // this.domain = val;
+        this.contList.forEach(element => {
+          if (element?.name === 'Sub Domain') {
+            element[`count`] = data?.data?.data.length;
+          }
+        });
         this.domainList = new MatTableDataSource(data?.data?.data);
         this.domainList.paginator = this.paginator.toArray()[1];
         this.domainList.sort = this.sort.toArray()[1];

@@ -13,12 +13,21 @@ export class UtilityService {
 
   private getUserDetail = new Subject<any>();
   userdetails = this.getUserDetail.asObservable();
+  ipAddress: any;
+  userInfo: any;
 
   constructor(
     public dialog: MatDialog,
     public http: HttpServiceService,
     public router: Router,
-  ) { }
+  ) {
+    this.userInfo = localStorage.getItem('PSPUser');
+    this.userInfo = JSON.parse(this.userInfo);
+    const publicIp = require('public-ip');
+    (async () => {
+      this.ipAddress = await publicIp.v4();
+    })();
+  }
 
 
   openToast(message) {
@@ -44,8 +53,15 @@ export class UtilityService {
 
 
   logOut() {
-    // tslint:disable-next-line:no-console
-    console.log('working');
+    const obj = {
+      user_id: this.userInfo.id,
+      ip: this.ipAddress,
+    };
+    this.http.postToken(`/auth/logout`, obj).subscribe(data => {
+      if (data[`success`] === true) {
+      } else {
+      }
+    });
     localStorage.removeItem('pspkey');
     localStorage.removeItem('PSPUser');
     localStorage.removeItem('PSPCUSTOMER');

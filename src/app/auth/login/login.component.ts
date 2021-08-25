@@ -15,6 +15,7 @@ import { UtilityService } from '../../Services/utility.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   cView = false;
+  ipAddress: any;
   constructor(
     public fb: FormBuilder,
     public router: Router,
@@ -25,6 +26,12 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    const publicIp = require('public-ip');
+    (async () => {
+      this.ipAddress = await publicIp.v4();
+    })();
+
   }
 
   ngOnInit(): void {
@@ -36,6 +43,7 @@ export class LoginComponent implements OnInit {
     const data = {
       password: this.loginForm.value.password,
       email: this.loginForm.value.email,
+      ip: this.ipAddress,
     };
     this.httpService.doLogin(data).subscribe(res => {
       if (res.success === true) {
