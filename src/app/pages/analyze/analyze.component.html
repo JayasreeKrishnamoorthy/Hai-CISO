@@ -66,34 +66,71 @@
 
       <div class="analyse-profile">
         <mat-card class="profile-details">
-          <div class="company-name" *ngIf="userDetails.idendifier !== 'CUSTOMER'">{{domain?.scompanyname | titlecase}}
-          </div>
-          <div class="company-name" *ngIf="userDetails.idendifier == 'CUSTOMER'">
-            {{pspCustomerDetails?.customerid?.scompanyname | titlecase}}
-          </div>
-          <div class="df-ac contact-detail">
-            <div class="df-ac c-info">
+
+
+          <div class="df-ac profile-gap">
+            <div class="w10">
               <div>
-                <mat-icon class="df-c-jc">person</mat-icon>
+                <img src="" onError="this.src='assets/img/user2.png'" class="profile-image">
               </div>
-              <div>Developer</div>
             </div>
-            <div class="df-ac c-info">
-              <div>
-                <mat-icon class="df-c-jc">place</mat-icon>
+            <div class="w60">
+              <div class="company-name" *ngIf="userDetails.idendifier !== 'CUSTOMER'">{{domain?.scompanyname |
+                titlecase}}
               </div>
-              <div>{{profileData?.address?.city | titlecase}}</div>
+              <div class="company-name" *ngIf="userDetails.idendifier == 'CUSTOMER'">
+                {{pspCustomerDetails?.customerid?.scompanyname | titlecase}}
+              </div>
+              <div class="df-ac contact-detail">
+                <div class="df-ac c-info">
+                  <div>
+                    <mat-icon class="df-c-jc">person</mat-icon>
+                  </div>
+                  <div>{{profileData?.contect?.customer_contect_primary_name | titlecase}}</div>
+                </div>
+                <div class="df-ac c-info">
+                  <div>
+                    <mat-icon class="df-c-jc">place</mat-icon>
+                  </div>
+                  <div>{{profileData?.address?.city | titlecase}}</div>
+                </div>
+                <div class="df-ac c-info">
+                  <div>
+                    <mat-icon class="df-c-jc">alternate_email</mat-icon>
+                  </div>
+                  <div>{{profileData?.contect?.customer_contact_primary_email}}</div>
+                </div>
+                <div class="df-ac c-info">
+                  <div>
+                    <mat-icon class="df-c-jc">call</mat-icon>
+                  </div>
+                  <div>{{profileData?.contect?.customer_contact_primary}}</div>
+                </div>
+              </div>
+              <div class="df-ac count-sec">
+                <div class="count-cnt" *ngFor="let c of contList">
+                  <div class="count-item">
+                    <div class="count">{{c?.count}}</div>
+                    <div class="count-txt">{{c?.name}}</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="df-ac c-info">
-              <div>
-                <mat-icon class="df-c-jc">alternate_email</mat-icon>
+            <div class="w30 progress-sec">
+              <div class="df-fe-b progress-name">
+                <div class="pro-title">Profile Completion</div>
+                <div class="pro-count">50%</div>
               </div>
-              <div>{{profileData?.contect?.customer_contact_primary_email}}</div>
+              <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
             </div>
           </div>
 
 
-          <div class="df-ac">
+
+
+
+
+          <!-- <div class="df-ac">
             <div class="df-ac w70 count-sec">
               <div class="count-cnt" *ngFor="let c of contList">
                 <div class="count-item">
@@ -109,7 +146,7 @@
               </div>
               <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
             </div>
-          </div>
+          </div> -->
 
 
           <div class="tab-sec df-ac">

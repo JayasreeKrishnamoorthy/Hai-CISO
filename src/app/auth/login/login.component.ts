@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
         } else {
           localStorage.setItem('pspkey', res.data.token);
           localStorage.setItem('PSPUser', JSON.stringify(res.data));
+          this.utility.updateUserDetails();
           if (res.data.idendifier === 'CUSTOMER') {
             this.movetocompany();
           } else {

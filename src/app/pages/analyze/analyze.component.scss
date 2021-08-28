@@ -222,6 +222,13 @@
 .analyse-profile {
   .profile-details {
     padding: 16px 16px 0;
+    .profile-gap {
+      column-gap: 15px;
+    }
+    .profile-image {
+      width: 100px;
+      height: 100px;
+    }
     .company-name {
       color: #000;
       font-weight: 600;

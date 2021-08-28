@@ -16,7 +16,8 @@ import { UtilityService } from '../../../Services/utility.service';
   styleUrls: ['./customer-view.component.scss'],
 })
 export class CustomerViewComponent implements OnInit {
-  customerForm: FormGroup;
+  generalInfoForm: FormGroup;
+  contactForm: FormGroup;
   addressForm: FormGroup;
   usergroup: any;
   groupList: any = [];
@@ -47,20 +48,7 @@ export class CustomerViewComponent implements OnInit {
     public http: HttpServiceService,
     public utility: UtilityService,
   ) {
-    this.addressForm = this.fb.group({
-      address: ['', Validators.required],
-      addresstype: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      country: ['', Validators.required],
-      zipcode: ['', Validators.required],
-      contectnum: ['', Validators.required],
-      lat: ['', Validators.required],
-      long: ['', Validators.required],
-      landmark: ['', Validators.required],
-      cusaddid: [''],
-    });
-    this.customerForm = this.fb.group({
+    this.generalInfoForm = this.fb.group({
       iaccountid: [''],
       scompanyname: ['', Validators.required],
       scompanytype: ['', Validators.required],
@@ -86,16 +74,22 @@ export class CustomerViewComponent implements OnInit {
       website_url: ['', Validators.required],
       accountstartdate: ['', Validators.required],
       accountenddate: ['', Validators.required],
-      // address: ['', Validators.required],
-      // addresstype: ['', Validators.required],
-      // city: ['', Validators.required],
-      // state: ['', Validators.required],
-      // country: ['', Validators.required],
-      // zipcode: ['', Validators.required],
-      // contectnum: ['', Validators.required],
-      // lat: ['', Validators.required],
-      // long: ['', Validators.required],
-      // landmark: ['', Validators.required],
+    });
+
+    this.addressForm = this.fb.group({
+      address: ['', Validators.required],
+      addresstype: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      country: ['', Validators.required],
+      zipcode: ['', Validators.required],
+      contectnum: ['', Validators.required],
+      lat: ['', Validators.required],
+      long: ['', Validators.required],
+      landmark: ['', Validators.required],
+      cusaddid: [''],
+    });
+    this.contactForm = this.fb.group({
       customer_contect_primary_name: ['', Validators.required],
       customer_contect_secondary_name: ['', Validators.required],
       customer_contact_primary: ['', Validators.required],
@@ -127,7 +121,8 @@ export class CustomerViewComponent implements OnInit {
         'landMark',
         'contact',
       ];
-      this.customerForm.disable();
+      this.generalInfoForm.disable();
+      this.contactForm.disable();
     } else {
       this.displayedColumns = [
         // 'sNo',
@@ -194,9 +189,10 @@ export class CustomerViewComponent implements OnInit {
     this.utility.showloader();
     this.http.getToken(`/customer-onboard/${this.data?.customerDetails?.cusid}`).subscribe(data => {
       if (data[`success`] === true) {
-        this.customerForm.patchValue(data?.data);
-        this.customerForm.controls.scompanytype.patchValue(data?.data?.scompanytype.toLowerCase());
-        this.customerForm.patchValue(data?.data?.contect);
+        this.generalInfoForm.patchValue(data?.data);
+        this.generalInfoForm.patchValue(data?.data?.contect);
+        this.generalInfoForm.controls.scompanytype.patchValue(data?.data?.scompanytype.toLowerCase());
+        this.contactForm.patchValue(data?.data?.contect);
       } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
         this.utility.openToast(data[`message`]);
         this.utility.logOut();
@@ -229,7 +225,17 @@ export class CustomerViewComponent implements OnInit {
   }
 
   pageNavigation(val, step) {
-    this.step = step;
+    // tslint:disable-next-line:no-console
+    console.log('working');
+    if (step === 3) {
+      if (this.addressList?.length !== 0) {
+        this.step = step;
+      } else {
+        this.utility.openToast('Please add customer address!');
+      }
+    } else {
+      this.step = step;
+    }
   }
 
   addAddress(form): void {
@@ -418,50 +424,41 @@ export class CustomerViewComponent implements OnInit {
       const obj = {
         // iaccountid: +this.customerForm.controls.iaccountid.value,
         iaccountid: 1002,
-        scompanyname: this.customerForm.controls.scompanyname.value,
-        scompanytype: this.customerForm.controls.scompanytype.value,
-        sbusinessunti: this.customerForm.controls.sbusinessunti.value,
-        snumofemployee: this.customerForm.controls.snumofemployee.value,
-        ispublictradedcomp: this.customerForm.controls.ispublictradedcomp.value,
-        isgovowned: this.customerForm.controls.isgovowned.value,
-        dannualrevenue: this.customerForm.controls.dannualrevenue.value,
-        issaasappplatform: this.customerForm.controls.issaasappplatform.value,
-        iscisopresent: this.customerForm.controls.iscisopresent.value,
-        noofsectemmember: this.customerForm.controls.noofsectemmember.value,
-        ischeifprivacyofficer: this.customerForm.controls.ischeifprivacyofficer.value,
-        ishipaaofficer: this.customerForm.controls.ishipaaofficer.value,
-        isriskofficer: this.customerForm.controls.isriskofficer.value,
-        issecopsteam: this.customerForm.controls.issecopsteam.value,
-        isuspresence: this.customerForm.controls.isuspresence.value,
-        isemeapresence: this.customerForm.controls.isemeapresence.value,
-        isapacpresence: this.customerForm.controls.isapacpresence.value,
-        islatmpresence: this.customerForm.controls.islatmpresence.value,
-        ischinapresence: this.customerForm.controls.ischinapresence.value,
-        ipspacctexec: +this.customerForm.controls.ipspacctexec.value,
-        website_url: this.customerForm.controls.website_url.value,
-        accountstartdate: this.customerForm.controls.accountstartdate.value,
-        accountenddate: this.customerForm.controls.accountenddate.value,
-        // address: this.customerForm.controls.address.value,
-        // addresstype: this.customerForm.controls.addresstype.value,
-        // city: this.customerForm.controls.city.value,
-        // state: this.customerForm.controls.state.value,
-        // country: this.customerForm.controls.country.value,
-        // zipcode: this.customerForm.controls.zipcode.value,
-        // contectnum: this.customerForm.controls.contectnum.value,
-        // lat: this.customerForm.controls.lat.value,
-        // long: this.customerForm.controls.long.value,
-        // landmark: this.customerForm.controls.landmark.value,
-        customer_contect_primary_name: this.customerForm.controls.customer_contect_primary_name.value,
-        customer_contect_secondary_name: this.customerForm.controls.customer_contect_secondary_name.value,
-        customer_contact_primary: this.customerForm.controls.customer_contact_primary.value,
-        customer_contact_secondary: this.customerForm.controls.customer_contact_secondary.value,
-        customer_contact_primary_email: this.customerForm.controls.customer_contact_primary_email.value,
-        customer_contact_secondary_email: this.customerForm.controls.customer_contact_secondary_email.value,
-        customer_contact_primary_phone: this.customerForm.controls.customer_contact_primary_phone.value,
-        customer_contact_secondary_phone: this.customerForm.controls.customer_contact_secondary_phone.value,
-        customer_contact_primary_designation: this.customerForm.controls.customer_contact_primary_designation.value,
-        customer_contact_secondary_designation: this.customerForm.controls.customer_contact_secondary_designation.value,
-        isriskTeam: this.customerForm.controls.isriskTeam.value,
+        scompanyname: this.generalInfoForm.controls.scompanyname.value,
+        scompanytype: this.generalInfoForm.controls.scompanytype.value,
+        sbusinessunti: this.generalInfoForm.controls.sbusinessunti.value,
+        snumofemployee: this.generalInfoForm.controls.snumofemployee.value,
+        ispublictradedcomp: this.generalInfoForm.controls.ispublictradedcomp.value,
+        isgovowned: this.generalInfoForm.controls.isgovowned.value,
+        dannualrevenue: this.generalInfoForm.controls.dannualrevenue.value,
+        issaasappplatform: this.generalInfoForm.controls.issaasappplatform.value,
+        iscisopresent: this.generalInfoForm.controls.iscisopresent.value,
+        noofsectemmember: this.generalInfoForm.controls.noofsectemmember.value,
+        ischeifprivacyofficer: this.generalInfoForm.controls.ischeifprivacyofficer.value,
+        ishipaaofficer: this.generalInfoForm.controls.ishipaaofficer.value,
+        isriskofficer: this.generalInfoForm.controls.isriskofficer.value,
+        issecopsteam: this.generalInfoForm.controls.issecopsteam.value,
+        isuspresence: this.generalInfoForm.controls.isuspresence.value,
+        isemeapresence: this.generalInfoForm.controls.isemeapresence.value,
+        isapacpresence: this.generalInfoForm.controls.isapacpresence.value,
+        islatmpresence: this.generalInfoForm.controls.islatmpresence.value,
+        ischinapresence: this.generalInfoForm.controls.ischinapresence.value,
+        ipspacctexec: this.generalInfoForm.controls.ipspacctexec.value,
+        isriskTeam: this.generalInfoForm.controls.isriskTeam.value,
+        website_url: this.generalInfoForm.controls.website_url.value,
+        accountstartdate: this.generalInfoForm.controls.accountstartdate.value,
+        accountenddate: this.generalInfoForm.controls.accountenddate.value,
+        customer_contect_primary_name: this.contactForm.controls.customer_contect_primary_name.value,
+        customer_contect_secondary_name: this.contactForm.controls.customer_contect_secondary_name.value,
+        customer_contact_primary: this.contactForm.controls.customer_contact_primary.value,
+        customer_contact_secondary: this.contactForm.controls.customer_contact_secondary.value,
+        customer_contact_primary_email: this.contactForm.controls.customer_contact_primary_email.value,
+        customer_contact_secondary_email: this.contactForm.controls.customer_contact_secondary_email.value,
+        customer_contact_primary_phone: this.contactForm.controls.customer_contact_primary_phone.value,
+        customer_contact_secondary_phone: this.contactForm.controls.customer_contact_secondary_phone.value,
+        customer_contact_primary_designation: this.contactForm.controls.customer_contact_primary_designation.value,
+        customer_contact_secondary_designation: this.contactForm.controls.customer_contact_secondary_designation.value,
+
         customer_address: this.addressList,
       };
       this.http.postToken(`/customer-onboard`, obj).subscribe(data => {
@@ -485,52 +482,41 @@ export class CustomerViewComponent implements OnInit {
     this.utility.showloader();
     const obj = {
       id: this.data?.customerDetails?.cusid,
-      iaccountid: +this.customerForm.controls.iaccountid.value,
-      scompanyname: this.customerForm.controls.scompanyname.value,
-      scompanytype: this.customerForm.controls.scompanytype.value,
-      sbusinessunti: this.customerForm.controls.sbusinessunti.value,
-      snumofemployee: this.customerForm.controls.snumofemployee.value,
-      ispublictradedcomp: this.customerForm.controls.ispublictradedcomp.value,
-      isgovowned: this.customerForm.controls.isgovowned.value,
-      dannualrevenue: this.customerForm.controls.dannualrevenue.value,
-      issaasappplatform: this.customerForm.controls.issaasappplatform.value,
-      iscisopresent: this.customerForm.controls.iscisopresent.value,
-      noofsectemmember: this.customerForm.controls.noofsectemmember.value,
-      ischeifprivacyofficer: this.customerForm.controls.ischeifprivacyofficer.value,
-      ishipaaofficer: this.customerForm.controls.ishipaaofficer.value,
-      isriskofficer: this.customerForm.controls.isriskofficer.value,
-      issecopsteam: this.customerForm.controls.issecopsteam.value,
-      isuspresence: this.customerForm.controls.isuspresence.value,
-      isemeapresence: this.customerForm.controls.isemeapresence.value,
-      isapacpresence: this.customerForm.controls.isapacpresence.value,
-      islatmpresence: this.customerForm.controls.islatmpresence.value,
-      ischinapresence: this.customerForm.controls.ischinapresence.value,
-      ipspacctexec: +this.customerForm.controls.ipspacctexec.value,
-      website_url: this.customerForm.controls.website_url.value,
-      accountstartdate: this.customerForm.controls.accountstartdate.value,
-      accountenddate: this.customerForm.controls.accountenddate.value,
-      // address: this.customerForm.controls.address.value,
-      // addresstype: this.customerForm.controls.addresstype.value,
-      // city: this.customerForm.controls.city.value,
-      // state: this.customerForm.controls.state.value,
-      // country: this.customerForm.controls.country.value,
-      // zipcode: this.customerForm.controls.zipcode.value,
-      // contectnum: this.customerForm.controls.contectnum.value,
-      // lat: this.customerForm.controls.lat.value,
-      // long: this.customerForm.controls.long.value,
-      // landmark: this.customerForm.controls.landmark.value,
-      customer_contect_primary_name: this.customerForm.controls.customer_contect_primary_name.value,
-      customer_contect_secondary_name: this.customerForm.controls.customer_contect_secondary_name.value,
-      customer_contact_primary: this.customerForm.controls.customer_contact_primary.value,
-      customer_contact_secondary: this.customerForm.controls.customer_contact_secondary.value,
-      customer_contact_primary_email: this.customerForm.controls.customer_contact_primary_email.value,
-      customer_contact_secondary_email: this.customerForm.controls.customer_contact_secondary_email.value,
-      customer_contact_primary_phone: this.customerForm.controls.customer_contact_primary_phone.value,
-      customer_contact_secondary_phone: this.customerForm.controls.customer_contact_secondary_phone.value,
-      customer_contact_primary_designation: this.customerForm.controls.customer_contact_primary_designation.value,
-      customer_contact_secondary_designation: this.customerForm.controls.customer_contact_secondary_designation.value,
-      isriskTeam: this.customerForm.controls.isriskTeam.value,
-      // customer_address: this.addressList,
+      iaccountid: +this.generalInfoForm.controls.iaccountid.value,
+      scompanyname: this.generalInfoForm.controls.scompanyname.value,
+      scompanytype: this.generalInfoForm.controls.scompanytype.value,
+      sbusinessunti: this.generalInfoForm.controls.sbusinessunti.value,
+      snumofemployee: this.generalInfoForm.controls.snumofemployee.value,
+      ispublictradedcomp: this.generalInfoForm.controls.ispublictradedcomp.value,
+      isgovowned: this.generalInfoForm.controls.isgovowned.value,
+      dannualrevenue: this.generalInfoForm.controls.dannualrevenue.value,
+      issaasappplatform: this.generalInfoForm.controls.issaasappplatform.value,
+      iscisopresent: this.generalInfoForm.controls.iscisopresent.value,
+      noofsectemmember: this.generalInfoForm.controls.noofsectemmember.value,
+      ischeifprivacyofficer: this.generalInfoForm.controls.ischeifprivacyofficer.value,
+      ishipaaofficer: this.generalInfoForm.controls.ishipaaofficer.value,
+      isriskofficer: this.generalInfoForm.controls.isriskofficer.value,
+      issecopsteam: this.generalInfoForm.controls.issecopsteam.value,
+      isuspresence: this.generalInfoForm.controls.isuspresence.value,
+      isemeapresence: this.generalInfoForm.controls.isemeapresence.value,
+      isapacpresence: this.generalInfoForm.controls.isapacpresence.value,
+      islatmpresence: this.generalInfoForm.controls.islatmpresence.value,
+      ischinapresence: this.generalInfoForm.controls.ischinapresence.value,
+      ipspacctexec: this.generalInfoForm.controls.ipspacctexec.value,
+      isriskTeam: this.generalInfoForm.controls.isriskTeam.value,
+      website_url: this.generalInfoForm.controls.website_url.value,
+      accountstartdate: this.generalInfoForm.controls.accountstartdate.value,
+      accountenddate: this.generalInfoForm.controls.accountenddate.value,
+      customer_contect_primary_name: this.contactForm.controls.customer_contect_primary_name.value,
+      customer_contect_secondary_name: this.contactForm.controls.customer_contect_secondary_name.value,
+      customer_contact_primary: this.contactForm.controls.customer_contact_primary.value,
+      customer_contact_secondary: this.contactForm.controls.customer_contact_secondary.value,
+      customer_contact_primary_email: this.contactForm.controls.customer_contact_primary_email.value,
+      customer_contact_secondary_email: this.contactForm.controls.customer_contact_secondary_email.value,
+      customer_contact_primary_phone: this.contactForm.controls.customer_contact_primary_phone.value,
+      customer_contact_secondary_phone: this.contactForm.controls.customer_contact_secondary_phone.value,
+      customer_contact_primary_designation: this.contactForm.controls.customer_contact_primary_designation.value,
+      customer_contact_secondary_designation: this.contactForm.controls.customer_contact_secondary_designation.value,
     };
     this.http.putToken(`/customer-onboard`, obj).subscribe(data => {
       if (data[`success`] === true) {

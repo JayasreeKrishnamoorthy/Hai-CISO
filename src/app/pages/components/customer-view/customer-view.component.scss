@@ -3,6 +3,9 @@
   button {
     width: 10% !important;
     margin-right: 10px;
+    background: linear-gradient(165deg, #ff4a00, #f3895f);
+    color: #fff;
+    border-radius: 5px;
   }
 }
 
@@ -29,13 +32,25 @@
       font-size: 18px;
     }
   }
+  .step-name {
+    padding-left: 10px;
+  }
   .line-sec {
     border-bottom: 1px solid #d6d5d5;
   }
 }
 
 .input-cnt-sec {
-  padding: 35px 0px 10px 42px;
+  padding: 20px 0px 10px 42px;
+  .stepTitle {
+    padding-bottom: 15px;
+    color: #0d0d0d;
+    font-weight: 600;
+    text-transform: uppercase;
+    span {
+      border-bottom: 1px solid #ff4a00;
+    }
+  }
 }
 
 .nodataFound {

@@ -21,6 +21,10 @@ export class UtilityService {
     public http: HttpServiceService,
     public router: Router,
   ) {
+    this.userdetails.subscribe((data: any) => {
+      this.userInfo = localStorage.getItem('PSPUser');
+      this.userInfo = JSON.parse(this.userInfo);
+    });
     this.userInfo = localStorage.getItem('PSPUser');
     this.userInfo = JSON.parse(this.userInfo);
     const publicIp = require('public-ip');
@@ -54,7 +58,7 @@ export class UtilityService {
 
   logOut() {
     const obj = {
-      user_id: this.userInfo.id,
+      user_id: this.userInfo?.id,
       ip: this.ipAddress,
     };
     this.http.postToken(`/auth/logout`, obj).subscribe(data => {

@@ -1,6 +1,8 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { NavigationEnd, Router } from '@angular/router';
+import { Idle } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 import { filter } from 'rxjs/operators';
 import { HttpServiceService } from '../Services/http_service/http-service.service';
 import { UtilityService } from '../Services/utility.service';
@@ -157,59 +159,24 @@ export class PagesComponent {
     public http: HttpServiceService,
     public router: Router,
     public utility: UtilityService,
+    public idle: Idle,
+    public keepalive: Keepalive,
   ) {
     const utilityMethod = this.utility;
-    // window.addEventListener('unload', function (e) {
-    //   utilityMethod.logOut();
-    //   e.preventDefault();
-    // });
-
-    // window.onbeforeunload = function (e) {
-    //   this.router.events
-    //     .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
-    //     .subscribe(event => {
-    //       if (
-    //         event.id === 1 &&
-    //         event.url === event.urlAfterRedirects
-    //       ) {
-    //       }
-    //     });
-    //   return undefined;
-    // };
-
+    this.idle.watch();
+    this.idle.setIdle(1200);
+    this.idle.setTimeout(10);
+    this.idle.onTimeout.subscribe(() => {
+      this.utility.logOut();
+    });
+    this.idle.onTimeoutWarning.subscribe((countdown) => {
+      if (countdown === 10) {
+        this.utility.openToast('You will session out in ' + countdown + ' seconds!');
+      }
+    });
+    keepalive.interval(1200);
   }
 
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeunloadHandler(event) {
-  //   this.utility.logOut();
-  // }
-
-
-
-
-
-  // @HostListener('window:beforeunload', ['$event'])
-  // public saveAndClosePromt(event) {
-  //   // tslint:disable-next-line:no-console
-  //   console.log('$event', event);
-  //   if (window.onbeforeunload != null) {
-  //     window.onbeforeunload = null;
-  //   }
-  //   window.addEventListener('beforeunload', function (e) {
-  //     if (window.onbeforeunload != null) {
-  //       window.onbeforeunload = null;
-  //     }
-  //   });
-  //   window.onunload = () => {
-  //     if (window.onbeforeunload != null) {
-  //       window.onbeforeunload = null;
-  //     }
-  //     this.utility.logOut();
-  //   };
-  //   event.preventDefault();
-  //   event.returnValue = '';
-  //   this.utility.logOut();
-  // }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {

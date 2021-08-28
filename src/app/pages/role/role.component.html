@@ -29,7 +29,7 @@
               </ng-container> -->
               <ng-container matColumnDef="role">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Role / Previlages </th>
-                <td mat-cell *matCellDef="let row"> {{row.srolename}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.srolename | uppercase}} </td>
               </ng-container>
               <ng-container matColumnDef="read">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Read </th>

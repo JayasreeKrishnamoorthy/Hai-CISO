@@ -763,6 +763,7 @@ mat-drawer-content {
           text-align: left !important;
           padding: 1px 0 0px 75px;
           align-self: baseline;
+          font-size: 12px;
         }
         input {
           background: rgba(0, 0, 0, 0.5) !important;
@@ -828,4 +829,21 @@ mat-card {
 
 .nb-theme-default [nbInput].status-basic:hover {
   background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.nb-theme-default .nb-form-field-addon-basic-highlight {
+  color: #8f9bb3 !important;
+}
+
+.customer-onboard-page .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+  padding: unset !important;
+}
+
+.customer-onboard-page mat-error {
+  padding-top: 15px;
+  font-size: 13px;
+}
+
+.pb-20 {
+  padding-bottom: 20px !important;
 }

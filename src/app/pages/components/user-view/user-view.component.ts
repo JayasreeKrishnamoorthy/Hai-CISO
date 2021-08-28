@@ -19,6 +19,7 @@ export class UserViewComponent implements OnInit {
   pspCustomerDetails: any;
   accountUnlock: any;
   userGroupSearch: any;
+  isLogin: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<UserViewComponent>,
@@ -34,6 +35,7 @@ export class UserViewComponent implements OnInit {
       icontectnumber: ['', Validators.required],
       accountLock: [''],
       resetpass: [''],
+      user_logout: [''],
     });
   }
 
@@ -54,6 +56,7 @@ export class UserViewComponent implements OnInit {
     if (this.data?.userDetails?.iuserid) {
       this.userForm.controls?.accountLock.patchValue(false);
       this.userForm.controls?.resetpass.patchValue(false);
+      this.userForm.controls?.user_logout.patchValue(false);
       this.getUserDetails();
     }
     if (this.data?.name === 'View User') {
@@ -131,6 +134,7 @@ export class UserViewComponent implements OnInit {
       if (data[`success`] === true) {
         this.userForm.patchValue(data?.data);
         this.accountUnlock = data?.data?.userdtls?.baccountlocked;
+        this.isLogin = data?.data?.userdtls?.isLogin;
         this.userForm.controls.group.patchValue(data?.data?.groups[0]?.userGroupId?.iid);
         this.groupId = data?.data?.groups[0]?.userGroupId?.iid;
       } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
@@ -181,6 +185,7 @@ export class UserViewComponent implements OnInit {
       icontectnumber: this.userForm.controls.icontectnumber.value,
       accountLock: this.userForm.controls.accountLock.value,
       resetpass: this.userForm.controls.resetpass.value,
+      user_logout: this.userForm.controls.user_logout.value,
       id: this.data?.userDetails?.iuserid,
     };
     if (this.userForm.controls.group.value !== this.groupId) {
