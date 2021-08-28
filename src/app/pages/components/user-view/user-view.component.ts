@@ -40,7 +40,6 @@ export class UserViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.userDetails = localStorage.getItem('PSPUser');
     this.userDetails = JSON.parse(this.userDetails);
     this.pspCustomerDetails = localStorage.getItem('PSPCUSTOMER');
