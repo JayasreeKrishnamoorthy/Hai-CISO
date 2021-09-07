@@ -2,7 +2,8 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, Htt
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-declare var $: any;
+import * as $ from 'jquery';
+// declare var $: any;
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
   loaderToShow: any;

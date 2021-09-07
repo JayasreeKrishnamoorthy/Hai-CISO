@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ConfirmationComponent } from '../pages/components/confirmation/confirmation.component';
 import { HttpServiceService } from './http_service/http-service.service';
-declare var $: any;
+import * as $ from 'jquery';
+// declare var $: any;
 
 @Injectable({
   providedIn: 'root',

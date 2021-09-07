@@ -1,4 +1,5 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { NavigationEnd, Router } from '@angular/router';
 import { Idle } from '@ng-idle/core';
@@ -6,6 +7,7 @@ import { Keepalive } from '@ng-idle/keepalive';
 import { filter } from 'rxjs/operators';
 import { HttpServiceService } from '../Services/http_service/http-service.service';
 import { UtilityService } from '../Services/utility.service';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 import { MENU_ITEMS } from './pages-menu';
 declare var $: any;
@@ -161,6 +163,7 @@ export class PagesComponent {
     public utility: UtilityService,
     public idle: Idle,
     public keepalive: Keepalive,
+    public dialog: MatDialog,
   ) {
     const utilityMethod = this.utility;
     this.idle.watch();
@@ -171,7 +174,7 @@ export class PagesComponent {
     });
     this.idle.onTimeoutWarning.subscribe((countdown) => {
       if (countdown === 10) {
-        this.utility.openToast('You will session out in ' + countdown + ' seconds!');
+        this.openToast('You will session out in ' + countdown + ' seconds!');
       }
     });
     keepalive.interval(1200);
@@ -384,6 +387,25 @@ export class PagesComponent {
     } else if (val?.name === 'Password Reset') {
       this.router.navigate(['/pages/change-password']);
     }
+  }
+
+  openToast(message) {
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      width: 'auto',
+      height: 'auto',
+      minWidth: '35%',
+      disableClose: true,
+      panelClass: '',
+      data: {
+        message,
+        type: 'idel',
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'yes') {
+        this.idle.watch();
+      }
+    });
   }
 
 }
