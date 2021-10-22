@@ -360,19 +360,17 @@ export class AnalyzeComponent implements OnInit {
     this.http.postToken(`/analyze/subdomain-info`, obj).subscribe(data => {
       if (data[`success`] === true) {
         this.subDomain = eve;
-        // tslint:disable-next-line:no-console
-        console.log('subDomain', this.subDomain);
-        if (data?.data?.domain_info?.length !== 0) {
-          this.subDomainList = new MatTableDataSource(data?.data?.domain_info);
+        if (data?.data[0]?.domain_info?.length !== 0) {
+          this.subDomainList = new MatTableDataSource(data?.data[0]?.domain_info);
           this.subDomainList.paginator = this.paginator.toArray()[2];
           this.subDomainList.sort = this.sort.toArray()[2];
-        } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
-          this.utility.openToast(data[`message`]);
-          this.utility.logOut();
         } else {
           this.subDomainList = [];
         }
         this.showDomain = false;
+      } else if (data[`success`] === false && data[`message`] === 'Invalid Authentication Credentials') {
+        this.utility.openToast(data[`message`]);
+        this.utility.logOut();
       } else {
         this.subDomainList = [];
       }

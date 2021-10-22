@@ -166,6 +166,8 @@ export class PagesComponent {
     public dialog: MatDialog,
   ) {
     const utilityMethod = this.utility;
+    // tslint:disable-next-line:no-console
+    console.log('working pages');
     this.idle.watch();
     this.idle.setIdle(1200);
     this.idle.setTimeout(10);
@@ -350,6 +352,12 @@ export class PagesComponent {
         // },
       ];
     }
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.idle.onTimeout.unsubscribe();
+    this.idle.onTimeoutWarning.unsubscribe();
   }
 
   verifyUser() {
