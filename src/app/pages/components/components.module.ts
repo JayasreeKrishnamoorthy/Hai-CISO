@@ -43,7 +43,8 @@ import { SubdomaincveComponent } from './subdomaincve/subdomaincve.component';
     UserGroupViewComponent,
     ConfirmationComponent,
     CustomerViewComponent,
-    MapComponent,SubdomainComponent
+    MapComponent,
+    SubdomainComponent,
   ],
   imports: [
     CommonModule,
